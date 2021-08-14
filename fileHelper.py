@@ -1,6 +1,6 @@
 import os
 
-def getArquivos(path):
+def getArquivos(path = "./input"):
     
     arquivos = []
     for arquivo in os.listdir(path):
@@ -22,3 +22,6 @@ def gerarArquivosDeSaida(text = "teste"):
     for arquivo in arquivos:
         numero = getNumeracaoByNameFile(arquivo)
         escreverArquivo("saida" + numero + ".txt", text)
+        
+def getCaminhoAbsoluto(arquivo, path = "./input/"):
+    return os.path.abspath(path + arquivo)
