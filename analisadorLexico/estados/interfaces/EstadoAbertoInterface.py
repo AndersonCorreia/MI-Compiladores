@@ -7,7 +7,7 @@ class EstadoAbertoInterface(EstadoInterface):
         return False
     
     @staticmethod
-    def isErro():
+    def isError():
         return False
     
     @staticmethod

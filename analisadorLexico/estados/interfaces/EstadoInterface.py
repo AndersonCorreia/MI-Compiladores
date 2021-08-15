@@ -54,3 +54,11 @@ class EstadoInterface:
         :return: dict com os metadados do estado
         """
         return {}
+    
+    @staticmethod
+    def finalDoArquivo():
+        """
+        Método para retornar o estado caso chegue ao final do arquivo
+        :return: EstadoInterface
+        """
+        raise NotImplementedError("Método não implementado")

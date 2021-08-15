@@ -1,3 +1,4 @@
+from analisadorLexico.estados.AguardandoDelimitadorState import AguardandoDelimitadorState
 from estados.TokenVazioState import TokenVazioState
 from estruturaLexica import *
 
@@ -9,27 +10,40 @@ class TokenAutomato:
         self.tokens = []
         self.errors = []
         self.lexemaAtual = ""
-        self.linhaAtual = 1
+        self.linhaAtual = 0
         
     def analisarArquivo(self):
         line = self.file.readline()
         while line:
-            for pos in range(len(line)):
+            self.linhaAtual += 1
+            pos = 0
+            # print(line)
+            while pos < len(line):
+                # print('pos: ' + str(pos))
                 char = line[pos]
+                # print('for')
+                # print(self.estado)
                 self.estado = self.estado.getProximoEstado(char, self.lexemaAtual)
-                
+                # print('char: ' + char)
+                # print('lexema: ' + self.lexemaAtual)
+                # print(self.estado)
                 if self.estado.caractereCompoemLexema():
-                    self.lexemaAtual += char
-                else:
-                    pos = pos - 1 #para analisar posteriomente em outro token
+                    self.lexemaAtual = self.lexemaAtual + char
+                    pos = pos + 1
                     
+                if isDelimitadorSemToken(char):
+                    pos = pos + 1
+                        
                 if self.estado.lexemaCompleto():
                     self.tokens.append(self.getToken())
                     self.lexemaAtual = ""
-                    self.estado = TokenVazioState
-                if self.estado.isError:
+                    if isDelimitador(char):
+                        self.estado = TokenVazioState
+                    else:
+                        self.estado = AguardandoDelimitadorState
+                if self.estado.isError():
                     while not isDelimitador(char):
-                        pos += 1
+                        pos = pos + 1
                         char = line[pos]
                         self.lexemaAtual += char
                         
@@ -37,9 +51,19 @@ class TokenAutomato:
                     self.lexemaAtual = ""
                     self.estado = TokenVazioState
                 
-            self.linhaAtual += 1
             line = self.file.readline()
+        self.fimDoArquivo()
+    
+    def fimDoArquivo(self):
+        if self.lexemaAtual != "":
+            self.estado = self.estado.finalDoArquivo()
+               
+            if self.estado.lexemaCompleto():
+                self.tokens.append(self.getToken())
             
+            if self.estado.isError():
+                self.errors.append(self.getError())
+                
     def getToken(self):
         token = { 
                 'lexema': self.lexemaAtual, 
@@ -58,6 +82,6 @@ class TokenAutomato:
                 }
         return error
     
-    def isDelimitador(self, char):
-        return self.estado.isDelimitador(char)
+    def getListaTokens(self):
+        return self.tokens
     

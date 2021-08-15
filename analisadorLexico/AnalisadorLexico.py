@@ -11,3 +11,4 @@ arquivos = getArquivos()
 for arquivo in arquivos:
     automato = TokenAutomato(getCaminhoAbsoluto(arquivo))
     automato.analisarArquivo()
+    print(automato.getListaTokens())

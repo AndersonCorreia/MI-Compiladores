@@ -7,5 +7,5 @@ class EstadoCompletoInterface(EstadoInterface):
         return True
     
     @staticmethod
-    def isErro():
+    def isError():
         return False
