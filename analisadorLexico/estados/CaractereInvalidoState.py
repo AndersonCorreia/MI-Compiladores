@@ -12,5 +12,9 @@ class CaractereInvalidoState(EstadoDeErrorInterface):
         return True
     
     @staticmethod
+    def getTipo():
+        return "simbolo invalido"
+    
+    @staticmethod
     def finalDoArquivo():
         return TokenVazioState

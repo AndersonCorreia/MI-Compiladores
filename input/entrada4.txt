@@ -1,3 +1,4 @@
 teste op char
-io
-kok
+operacao funcao
+letraedigito12
+l3

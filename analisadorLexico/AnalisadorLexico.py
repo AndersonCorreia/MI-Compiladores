@@ -11,4 +11,8 @@ arquivos = getArquivos()
 for arquivo in arquivos:
     automato = TokenAutomato(getCaminhoAbsoluto(arquivo))
     automato.analisarArquivo()
-    print(automato.getListaTokens())
+    # print(automato.getListaTokens())
+    tokens = automato.getListaTokens()
+    for t in tokens:
+        print("Lexema: " + t['lexema'] + "; " + "Tipo: " + t['tipo'] + "; " + "Linha: " + str(t['linha']))
+
