@@ -1,30 +1,32 @@
 from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
-from analisadorLexico.estados.DelimitadorState import DelimitadorState
+from analisadorLexico.estados.IndentificadorCompletoState import IndentificadorCompletoState
 from analisadorLexico.estados.IndentificadorIncompletoState import IndentificadorIncompletoState
-from analisadorLexico.estados.IndentificadorOuPalavraReservadaState import IndentificadorOuPalavraReservadaState
-from estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
+from analisadorLexico.estados.PalavraReservadaState import PalavraReservadaState
+from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
-class TokenVazioState(EstadoAbertoInterface):
+class IndentificadorOuPalavraReservadaState(EstadoAbertoInterface):
     
     @staticmethod
     def getProximoEstado(char, lexema):
         if isSimboloPermitido(char):
-            if isLetra(char):
+            if isLetraDigito(char) or char == '_':
                 if maybePalavraReservada(lexema):
                     return IndentificadorOuPalavraReservadaState
+                
                 return IndentificadorIncompletoState
+            
             if isDelimitador(char):
-                if isDelimitadorSemToken(char):
-                    return TokenVazioState
-                return DelimitadorState
+                if isPalavraReservada(lexema):
+                    return PalavraReservadaState
+                return IndentificadorCompletoState
             
         return CaractereInvalidoState
         
     @staticmethod
     def caractereCompoemLexema():
-        return False
+        return True
     
     @staticmethod
     def finalDoArquivo():
-        return TokenVazioState
+        return IndentificadorCompletoState

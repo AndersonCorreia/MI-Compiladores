@@ -1,20 +1,21 @@
+from analisadorLexico.estados.AguardandoDelimitadorState import AguardandoDelimitadorState
 from analisadorLexico.estados.interfaces.EstadoCompletoInterface import EstadoCompletoInterface
 from estruturaLexica import *
 
-class DelimitadorState(EstadoCompletoInterface):
+class PalavraReservadaState(EstadoCompletoInterface):
     
     @staticmethod
     def getProximoEstado(char, lexema):
-        return TokenVazioState
+        return AguardandoDelimitadorState
         
     @staticmethod
     def caractereCompoemLexema():
-        return True
+        return False
     
     @staticmethod
     def getTipo():
-        return "delimitador"
+        return "palavra reservada"
     
     @staticmethod
     def finalDoArquivo():
-        return TokenVazioState
+        return TokenVazioState 

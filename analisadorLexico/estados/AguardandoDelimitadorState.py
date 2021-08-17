@@ -1,6 +1,4 @@
-from analisadorLexico.estados.AusenciaDeDelimitadorState import AusenciaDeDelimitadorState
-from analisadorLexico.estados.DelimitadorState import DelimitadorState
-from estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
+from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
 class AguardandoDelimitadorState(EstadoAbertoInterface):

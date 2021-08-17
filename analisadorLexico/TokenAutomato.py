@@ -1,5 +1,12 @@
 from analisadorLexico.estados.AguardandoDelimitadorState import AguardandoDelimitadorState
-from estados.TokenVazioState import TokenVazioState
+from analisadorLexico.estados.AusenciaDeDelimitadorState import AusenciaDeDelimitadorState
+from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
+from analisadorLexico.estados.DelimitadorState import DelimitadorState
+from analisadorLexico.estados.IndentificadorCompletoState import IndentificadorCompletoState
+from analisadorLexico.estados.IndentificadorIncompletoState import IndentificadorIncompletoState
+from analisadorLexico.estados.IndentificadorOuPalavraReservadaState import IndentificadorOuPalavraReservadaState
+from analisadorLexico.estados.PalavraReservadaState import PalavraReservadaState
+from analisadorLexico.estados.TokenVazioState import TokenVazioState
 from estruturaLexica import *
 
 class TokenAutomato:

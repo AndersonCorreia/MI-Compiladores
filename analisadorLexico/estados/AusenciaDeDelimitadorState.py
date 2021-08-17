@@ -1,4 +1,4 @@
-from estados.interfaces.EstadoDeErrorInterface import EstadoDeErrorInterface
+from analisadorLexico.estados.interfaces.EstadoDeErrorInterface import EstadoDeErrorInterface
 from estruturaLexica import *
 
 class AusenciaDeDelimitadorState(EstadoDeErrorInterface):

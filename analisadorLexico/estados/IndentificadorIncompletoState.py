@@ -1,6 +1,6 @@
-from analisadorLexico.estados.IndentificadorCompletoState import IndentificadorCompletoState
+from analisadorLexico.estados import IndentificadorCompletoState
 from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
-from estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
+from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
 class IndentificadorIncompletoState(EstadoAbertoInterface):
