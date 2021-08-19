@@ -28,5 +28,7 @@ class IndentificadorOuPalavraReservadaState(EstadoAbertoInterface):
         return True
     
     @staticmethod
-    def finalDoArquivo():
+    def finalDoArquivo( lexema ):
+        if isPalavraReservada(lexema):
+            return PalavraReservadaState
         return IndentificadorCompletoState

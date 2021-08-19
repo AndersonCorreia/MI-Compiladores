@@ -56,3 +56,31 @@ def maybePalavraReservada(lexema):
             return True
         
     return False
+
+
+def isOperadorLogico(lexema):
+    return lexema in operadoresLogicos
+
+def maybeOperadorLogico(lexema):
+    for operador in operadoresLogicos:
+        if operador.startswith(lexema):
+            return True
+    return False
+
+def isOperadorAritimetrico(lexema):
+    return lexema in operadoresAritimeticos
+
+def maybeOperadorAritimetrico(lexema):
+    for operador in operadoresAritimeticos:
+        if operador.startswith(lexema):
+            return True
+    return False
+
+def isOperadorRelacional(lexema):
+    return lexema in operadoresRelacionais
+
+def maybeOperadorRelacional(lexema):
+    for operador in operadoresRelacionais:
+        if operador.startswith(lexema):
+            return True
+    return False

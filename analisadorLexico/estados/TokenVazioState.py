@@ -1,5 +1,6 @@
 from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
 from analisadorLexico.estados.DelimitadorState import DelimitadorState
+from analisadorLexico.estados.OperadorLogicoIncompletoState import OperadorLogicoIncompletoState
 from analisadorLexico.estados.IndentificadorIncompletoState import IndentificadorIncompletoState
 from analisadorLexico.estados.IndentificadorOuPalavraReservadaState import IndentificadorOuPalavraReservadaState
 from estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
@@ -14,6 +15,10 @@ class TokenVazioState(EstadoAbertoInterface):
                 if maybePalavraReservada(lexema):
                     return IndentificadorOuPalavraReservadaState
                 return IndentificadorIncompletoState
+            
+            if maybeOperadorLogico(char):
+                return OperadorLogicoIncompletoState
+            
             if isDelimitador(char):
                 if isDelimitadorSemToken(char):
                     return TokenVazioState
@@ -26,5 +31,5 @@ class TokenVazioState(EstadoAbertoInterface):
         return False
     
     @staticmethod
-    def finalDoArquivo():
+    def finalDoArquivo( lexema ):
         return TokenVazioState

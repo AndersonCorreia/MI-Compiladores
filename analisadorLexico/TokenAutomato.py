@@ -63,7 +63,7 @@ class TokenAutomato:
     
     def fimDoArquivo(self):
         if self.lexemaAtual != "":
-            self.estado = self.estado.finalDoArquivo()
+            self.estado = self.estado.finalDoArquivo(self.lexemaAtual)
                
             if self.estado.lexemaCompleto():
                 self.tokens.append(self.getToken())

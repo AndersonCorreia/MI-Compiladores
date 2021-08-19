@@ -64,9 +64,9 @@ class EstadoInterface:
         return {}
     
     @staticmethod
-    def finalDoArquivo():
+    def finalDoArquivo(lexema):
         """
-        Método para retornar o estado caso chegue ao final do arquivo
+        Método para retornar o estado final caso chegue ao final do arquivo
         :return: EstadoInterface
         """
         raise NotImplementedError("Método não implementado")

@@ -1,4 +1,6 @@
-teste op char
+teste && ! op char
 operacao funcao
-letraedigito12
+letraedigito12 ||
 l3
+&
+&&

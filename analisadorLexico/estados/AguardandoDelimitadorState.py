@@ -1,4 +1,7 @@
+from analisadorLexico.estados.AusenciaDeDelimitadorState import AusenciaDeDelimitadorState
+from analisadorLexico.estados.DelimitadorState import DelimitadorState
 from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
+from analisadorLexico.estados.TokenVazioState import TokenVazioState
 from estruturaLexica import *
 
 class AguardandoDelimitadorState(EstadoAbertoInterface):
@@ -18,5 +21,5 @@ class AguardandoDelimitadorState(EstadoAbertoInterface):
         return False
     
     @staticmethod
-    def finalDoArquivo():
+    def finalDoArquivo( lexema ):
         return TokenVazioState

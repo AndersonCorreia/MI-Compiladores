@@ -20,5 +20,5 @@ class IndentificadorIncompletoState(EstadoAbertoInterface):
         return True
     
     @staticmethod
-    def finalDoArquivo():
+    def finalDoArquivo( lexema ):
         return IndentificadorCompletoState

@@ -16,5 +16,5 @@ class CaractereInvalidoState(EstadoDeErrorInterface):
         return "simbolo invalido"
     
     @staticmethod
-    def finalDoArquivo():
+    def finalDoArquivo( lexema ):
         return TokenVazioState

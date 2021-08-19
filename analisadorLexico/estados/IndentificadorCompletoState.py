@@ -1,4 +1,3 @@
-from analisadorLexico.estados.AguardandoDelimitadorState import AguardandoDelimitadorState
 from analisadorLexico.estados.interfaces.EstadoCompletoInterface import EstadoCompletoInterface
 from estruturaLexica import *
 
@@ -17,5 +16,5 @@ class IndentificadorCompletoState(EstadoCompletoInterface):
         return "identificador"
     
     @staticmethod
-    def finalDoArquivo():
+    def finalDoArquivo( lexema ):
         return IndentificadorCompletoState
