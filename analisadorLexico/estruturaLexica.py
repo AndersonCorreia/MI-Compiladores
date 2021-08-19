@@ -1,5 +1,5 @@
 delimitadores = [' ', ';', '(', ')', '{', '}', '[', ']', '.', '\n', '\t']
-delimitadorSemToken = ['\n','\t'] # lista de caracteres que funcionam como delimitadores mas não são tokens e devem ser ignorados
+delimitadorSemToken = ['\n','\t', ' '] # lista de caracteres que funcionam como delimitadores mas não são tokens e devem ser ignorados
 simbolosPermitidos = [ hex(32) , hex(126) ]# intervalo fechado de valores hexadecimais dos simbolos permitidos
 simbolosExcecoes = [ hex(34), hex(39) ]# valores hexadecimais no intervalo que não são simbolos permitidos
 operadoresAritimeticos = ['+', '-', '*', '/', '++', '--']

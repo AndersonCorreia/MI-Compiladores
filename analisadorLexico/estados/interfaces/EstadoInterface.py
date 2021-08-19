@@ -48,6 +48,14 @@ class EstadoInterface:
         raise NotImplementedError("Método não implementado")
     
     @staticmethod
+    def getSigla():
+        """
+        Método que retorna a sigla do token ou do erro
+        :return: string sigla que indentifica o tipo do token ou do erro
+        """
+        raise NotImplementedError("Método não implementado")
+    
+    @staticmethod
     def getMetadados():
         """
         Método que retorna os metadados possiveis de se indentificar deste token
