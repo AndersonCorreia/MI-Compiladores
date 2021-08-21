@@ -1,25 +1,19 @@
-from analisadorLexico.estados.AusenciaDeDelimitadorState import AusenciaDeDelimitadorState
-from analisadorLexico.estados.DelimitadorState import DelimitadorState
 from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
-from analisadorLexico.estados.TokenVazioState import TokenVazioState
 from estruturaLexica import *
 
 class AguardandoDelimitadorState(EstadoAbertoInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
+    def getProximoEstado(self, char, lexema):
         if isDelimitador(char):
             if isDelimitadorSemToken(char):
-                return TokenVazioState
+                return self.automato.setEstado("TokenVazio")
             
-            return DelimitadorState
+            return self.automato.setEstado("Delimitador")
         
-        return AusenciaDeDelimitadorState
+        return self.automato.setEstado("AusenciaDeDelimitador")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return False
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
-        return TokenVazioState
+    def finalDoArquivo(self,  lexema ):
+        return self.automato.setEstado("TokenVazio")

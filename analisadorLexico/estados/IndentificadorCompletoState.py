@@ -3,18 +3,14 @@ from estruturaLexica import *
 
 class IndentificadorCompletoState(EstadoCompletoInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
-        return AguardandoDelimitadorState
+    def getProximoEstado(self, char, lexema):
+        return self.automato.setEstado("AguardandoDelimitador")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return False
     
-    @staticmethod
-    def getTipo():
+    def getTipo(self):
         return "identificador"
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
-        return IndentificadorCompletoState
+    def finalDoArquivo(self,  lexema ):
+        return self.automato.setEstado("IndentificadorCompleto")

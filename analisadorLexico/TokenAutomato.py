@@ -5,6 +5,8 @@ from analisadorLexico.estados.DelimitadorState import DelimitadorState
 from analisadorLexico.estados.IndentificadorCompletoState import IndentificadorCompletoState
 from analisadorLexico.estados.IndentificadorIncompletoState import IndentificadorIncompletoState
 from analisadorLexico.estados.IndentificadorOuPalavraReservadaState import IndentificadorOuPalavraReservadaState
+from analisadorLexico.estados.OperadorLogicoCompletoState import OperadorLogicoCompletoState
+from analisadorLexico.estados.OperadorLogicoIncompletoState import OperadorLogicoIncompletoState
 from analisadorLexico.estados.PalavraReservadaState import PalavraReservadaState
 from analisadorLexico.estados.TokenVazioState import TokenVazioState
 from estruturaLexica import *
@@ -12,12 +14,30 @@ from estruturaLexica import *
 class TokenAutomato:
     
     def __init__(self, fileName):
-        self.estado = TokenVazioState
         self.file = open(fileName, 'r')
         self.tokens = []
         self.errors = []
         self.lexemaAtual = ""
         self.linhaAtual = 0
+        self.setEstados()
+        self.estado = self.estados["TokenVazio"]
+        
+    def setEstados(self):
+        self.estados = {}
+        self.estados["AguardandoDelimitador"] = AguardandoDelimitadorState(self)
+        self.estados["AusenciaDeDelimitador"] = AusenciaDeDelimitadorState(self)
+        self.estados["CaractereInvalido"] = CaractereInvalidoState(self)
+        self.estados["Delimitador"] = DelimitadorState(self)
+        self.estados["IndentificadorCompleto"] = IndentificadorCompletoState(self)
+        self.estados["IndentificadorIncompleto"] = IndentificadorIncompletoState(self)
+        self.estados["IndentificadorOuPalavraReservada"] = IndentificadorOuPalavraReservadaState(self)
+        self.estados["OperadorLogicoCompleto"] = OperadorLogicoCompletoState(self)
+        self.estados["OperadorLogicoIncompleto"] = OperadorLogicoIncompletoState(self)
+        self.estados["PalavraReservada"] = PalavraReservadaState(self)
+        self.estados["TokenVazio"] = TokenVazioState(self)
+    
+    def setEstado(self, estadoName):
+        self.estado = self.estados[estadoName]
         
     def analisarArquivo(self):
         line = self.file.readline()
@@ -30,7 +50,7 @@ class TokenAutomato:
                 char = line[pos]
                 # print('for')
                 # print(self.estado)
-                self.estado = self.estado.getProximoEstado(char, self.lexemaAtual)
+                self.estado.getProximoEstado(char, self.lexemaAtual)
                 # print('char: ' + char)
                 # print('lexema: ' + self.lexemaAtual)
                 # print(self.estado)
@@ -45,9 +65,9 @@ class TokenAutomato:
                     self.tokens.append(self.getToken())
                     self.lexemaAtual = ""
                     if isDelimitador(char):
-                        self.estado = TokenVazioState
+                        self.estado = self.estados["TokenVazio"]
                     else:
-                        self.estado = AguardandoDelimitadorState
+                        self.estado = self.estados["AguardandoDelimitador"]
                 if self.estado.isError():
                     while not isDelimitador(char):
                         pos = pos + 1
@@ -56,14 +76,14 @@ class TokenAutomato:
                         
                     self.errors.append(self.getError())
                     self.lexemaAtual = ""
-                    self.estado = TokenVazioState
+                    self.estado = self.estados["TokenVazio"]
                 
             line = self.file.readline()
         self.fimDoArquivo()
     
     def fimDoArquivo(self):
         if self.lexemaAtual != "":
-            self.estado = self.estado.finalDoArquivo(self.lexemaAtual)
+            self.estado.finalDoArquivo(self.lexemaAtual)
                
             if self.estado.lexemaCompleto():
                 self.tokens.append(self.getToken())

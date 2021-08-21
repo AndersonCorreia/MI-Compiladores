@@ -2,14 +2,11 @@ from estados.interfaces.EstadoInterface import EstadoInterface
 
 class EstadoAbertoInterface(EstadoInterface):
     
-    @staticmethod
-    def lexemaCompleto():
+    def lexemaCompleto(self):
         return False
     
-    @staticmethod
-    def isError():
+    def isError(self):
         return False
     
-    @staticmethod
-    def getTipo():
+    def getTipo(self):
         return "token incompleto"

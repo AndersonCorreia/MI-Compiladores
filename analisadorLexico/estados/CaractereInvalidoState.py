@@ -3,18 +3,14 @@ from estruturaLexica import *
 
 class CaractereInvalidoState(EstadoDeErrorInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
-        return CaractereInvalidoState
+    def getProximoEstado(self, char, lexema):
+        return self.automato.setEstado("CaractereInvalido")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return True
     
-    @staticmethod
-    def getTipo():
+    def getTipo(self):
         return "simbolo invalido"
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
-        return TokenVazioState
+    def finalDoArquivo(self,  lexema ):
+        return self.automato.setEstado("TokenVazio")

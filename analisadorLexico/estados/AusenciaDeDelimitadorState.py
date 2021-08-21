@@ -1,17 +1,13 @@
-from analisadorLexico.estados.TokenVazioState import TokenVazioState
 from analisadorLexico.estados.interfaces.EstadoDeErrorInterface import EstadoDeErrorInterface
 from estruturaLexica import *
 
 class AusenciaDeDelimitadorState(EstadoDeErrorInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
-        return AusenciaDeDelimitadorState
+    def getProximoEstado(self, char, lexema):
+        return self.automato.setEstado("AusenciaDeDelimitador")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return True
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
-        return TokenVazioState
+    def finalDoArquivo(self,  lexema ):
+        return self.automato.setEstado("TokenVazio")

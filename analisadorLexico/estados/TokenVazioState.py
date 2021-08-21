@@ -1,35 +1,27 @@
-from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
-from analisadorLexico.estados.DelimitadorState import DelimitadorState
-from analisadorLexico.estados.OperadorLogicoIncompletoState import OperadorLogicoIncompletoState
-from analisadorLexico.estados.IndentificadorIncompletoState import IndentificadorIncompletoState
-from analisadorLexico.estados.IndentificadorOuPalavraReservadaState import IndentificadorOuPalavraReservadaState
 from estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
 class TokenVazioState(EstadoAbertoInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
+    def getProximoEstado(self, char, lexema):
         if isSimboloPermitido(char):
             if isLetra(char):
                 if maybePalavraReservada(lexema):
-                    return IndentificadorOuPalavraReservadaState
-                return IndentificadorIncompletoState
+                    return self.automato.setEstado("IndentificadorOuPalavraReservada")
+                return self.automato.setEstado("IndentificadorIncompleto")
             
             if maybeOperadorLogico(char):
-                return OperadorLogicoIncompletoState
+                return self.automato.setEstado("OperadorLogicoIncompleto")
             
             if isDelimitador(char):
                 if isDelimitadorSemToken(char):
-                    return TokenVazioState
-                return DelimitadorState
+                    return self.automato.setEstado("TokenVazio")
+                return self.automato.setEstado("Delimitador")
             
-        return CaractereInvalidoState
+        return self.automato.setEstado("CaractereInvalido")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return False
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
-        return TokenVazioState
+    def finalDoArquivo(self,  lexema ):
+        return self.automato.setEstado("TokenVazio")

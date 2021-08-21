@@ -1,34 +1,27 @@
-from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
-from analisadorLexico.estados.IndentificadorCompletoState import IndentificadorCompletoState
-from analisadorLexico.estados.IndentificadorIncompletoState import IndentificadorIncompletoState
-from analisadorLexico.estados.PalavraReservadaState import PalavraReservadaState
 from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
 class IndentificadorOuPalavraReservadaState(EstadoAbertoInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
+    def getProximoEstado(self, char, lexema):
         if isSimboloPermitido(char):
             if isLetraDigito(char) or char == '_':
                 if maybePalavraReservada(lexema):
-                    return IndentificadorOuPalavraReservadaState
+                    return self.automato.setEstado("IndentificadorOuPalavraReservada")
                 
-                return IndentificadorIncompletoState
+                return self.automato.setEstado("IndentificadorIncompleto")
             
             if isDelimitador(char):
                 if isPalavraReservada(lexema):
-                    return PalavraReservadaState
-                return IndentificadorCompletoState
+                    return self.automato.setEstado("PalavraReservada")
+                return self.automato.setEstado("IndentificadorCompleto")
             
-        return CaractereInvalidoState
+        return self.automato.setEstado("CaractereInvalido")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return True
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
+    def finalDoArquivo(self,  lexema ):
         if isPalavraReservada(lexema):
-            return PalavraReservadaState
-        return IndentificadorCompletoState
+            return self.automato.setEstado("PalavraReservada")
+        return self.automato.setEstado("IndentificadorCompleto")

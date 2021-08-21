@@ -3,18 +3,14 @@ from estruturaLexica import *
 
 class PalavraReservadaState(EstadoCompletoInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
-        return AguardandoDelimitadorState
+    def getProximoEstado(self, char, lexema):
+        return self.automato.setEstado("AguardandoDelimitador")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return False
     
-    @staticmethod
-    def getTipo():
+    def getTipo(self):
         return "palavra reservada"
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
-        return TokenVazioState 
+    def finalDoArquivo(self,  lexema ):
+        return self.automato.setEstado("TokenVazio") 

@@ -1,29 +1,24 @@
-from analisadorLexico.estados.OperadorLogicoCompletoState import OperadorLogicoCompletoState
-from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
 from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
 class OperadorLogicoIncompletoState(EstadoAbertoInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
+    def getProximoEstado(self, char, lexema):
         if isSimboloPermitido(char):
             if isDelimitador(char):
                 if isOperadorLogico(lexema):
-                    return OperadorLogicoCompletoState
-                return CaractereInvalidoState # depois trocar para o estado de simbolo
+                    return self.automato.setEstado("OperadorLogicoCompleto")
+                return self.automato.setEstado("CaractereInvalido") # depois trocar para o estado de simbolo
             
             if ( maybeOperadorLogico(lexema) ):
-                return OperadorLogicoIncompletoState
+                return self.automato.setEstado("OperadorLogicoIncompleto")
             
-        return CaractereInvalidoState
+        return self.automato.setEstado("CaractereInvalido")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return True
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
+    def finalDoArquivo(self,  lexema ):
         if isOperadorLogico(lexema):
-            return OperadorLogicoCompletoState
-        return CaractereInvalidoState # depois trocar para o estado de simbolo
+            return self.automato.setEstado("OperadorLogicoCompleto")
+        return self.automato.setEstado("CaractereInvalido") # depois trocar para o estado de simbolo

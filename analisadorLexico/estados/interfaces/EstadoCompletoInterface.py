@@ -2,10 +2,8 @@ from estados.interfaces.EstadoInterface import EstadoInterface
 
 class EstadoCompletoInterface(EstadoInterface):
     
-    @staticmethod
-    def lexemaCompleto():
+    def lexemaCompleto(self):
         return True
     
-    @staticmethod
-    def isError():
+    def isError(self):
         return False

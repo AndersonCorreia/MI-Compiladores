@@ -1,24 +1,19 @@
-from analisadorLexico.estados.IndentificadorCompletoState import IndentificadorCompletoState
-from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
 from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
 class IndentificadorIncompletoState(EstadoAbertoInterface):
     
-    @staticmethod
-    def getProximoEstado(char, lexema):
+    def getProximoEstado(self, char, lexema):
         if isSimboloPermitido(char):
             if isLetraDigito(char) or char == '_':
-                return IndentificadorIncompletoState
+                return self.automato.setEstado("IndentificadorIncompleto")
             if isDelimitador(char):
-                return IndentificadorCompletoState
+                return self.automato.setEstado("IndentificadorCompleto")
             
-        return CaractereInvalidoState
+        return self.automato.setEstado("CaractereInvalido")
         
-    @staticmethod
-    def caractereCompoemLexema():
+    def caractereCompoemLexema(self):
         return True
     
-    @staticmethod
-    def finalDoArquivo( lexema ):
-        return IndentificadorCompletoState
+    def finalDoArquivo(self,  lexema ):
+        return self.automato.setEstado("IndentificadorCompleto")
