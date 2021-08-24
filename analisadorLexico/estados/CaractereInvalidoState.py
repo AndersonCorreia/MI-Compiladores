@@ -7,7 +7,7 @@ class CaractereInvalidoState(EstadoDeErrorInterface):
         return self.automato.setEstado("CaractereInvalido")
         
     def caractereCompoemLexema(self):
-        return True
+        return False
     
     def getTipo(self):
         return "simbolo invalido"

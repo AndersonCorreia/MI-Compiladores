@@ -1,17 +1,17 @@
 from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
-class OperadorAritimeticoIncompletoState(EstadoAbertoInterface):
+class OperadorAritimetricoIncompletoState(EstadoAbertoInterface):
     
     def getProximoEstado(self, char, lexema):
         if isSimboloPermitido(char):
             if isDelimitador(char):
                 if isOperadorAritimetrico(lexema):
-                    return self.automato.setEstado("OperadorAritimeticoCompleto")
+                    return self.automato.setEstado("OperadorAritimetricoCompleto")
                 return self.automato.setEstado("CaractereInvalido") # depois trocar para o estado de simbolo
             
             if ( maybeOperadorAritimetrico(lexema) ):
-                return self.automato.setEstado("OperadorAritimeticoIncompleto")
+                return self.automato.setEstado("OperadorAritimetricoIncompleto")
             
         return self.automato.setEstado("CaractereInvalido")
         
@@ -20,5 +20,5 @@ class OperadorAritimeticoIncompletoState(EstadoAbertoInterface):
     
     def finalDoArquivo(self,  lexema ):
         if isOperadorLogico(lexema):
-            return self.automato.setEstado("OperadorAritimeticoCompleto")
+            return self.automato.setEstado("OperadorAritimetricoCompleto")
         return self.automato.setEstado("CaractereInvalido") # depois trocar para o estado de simbolo

@@ -1,7 +1,7 @@
 from analisadorLexico.estados.interfaces.EstadoCompletoInterface import EstadoCompletoInterface
 from estruturaLexica import *
 
-class OperadorAritimeticoCompletoState(EstadoCompletoInterface):
+class OperadorAritimetricoCompletoState(EstadoCompletoInterface):
     
     def getProximoEstado(self, char, lexema):
         if isSimboloPermitido(char):
@@ -12,7 +12,7 @@ class OperadorAritimeticoCompletoState(EstadoCompletoInterface):
         return False
     
     def getTipo(self):
-        return "operador aritimetico"
+        return "operador Aritimetrico"
     
     def finalDoArquivo(self, lexema):
         return self.automato.setEstado("TokenVazio")

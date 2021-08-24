@@ -13,6 +13,12 @@ class TokenVazioState(EstadoAbertoInterface):
             if maybeOperadorLogico(char):
                 return self.automato.setEstado("OperadorLogicoIncompleto")
             
+            if maybeOperadorAritimetrico(char):
+                return self.automato.setEstado("OperadorAritimetricoIncompleto")
+            
+            if maybeOperadorRelacional(char):
+                return self.automato.setEstado("OperadorRelacionalIncompleto")
+            
             if isDelimitador(char):
                 if isDelimitadorSemToken(char):
                     return self.automato.setEstado("TokenVazio")

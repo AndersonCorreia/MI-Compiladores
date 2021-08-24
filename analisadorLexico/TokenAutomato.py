@@ -1,7 +1,7 @@
 from analisadorLexico.estados.OperadorRelacionalCompletoState import OperadorRelacionalCompletoState
 from analisadorLexico.estados.OperadorRelacionalIncompletoState import OperadorRelacionalIncompletoState
-from analisadorLexico.estados.OperadorAritimeticoCompletoState import OperadorAritimeticoCompletoState
-from analisadorLexico.estados.OperadorAritimeticoIncompletoState import OperadorAritimeticoIncompletoState
+from analisadorLexico.estados.OperadorAritimetricoCompletoState import OperadorAritimetricoCompletoState
+from analisadorLexico.estados.OperadorAritimetricoIncompletoState import OperadorAritimetricoIncompletoState
 from analisadorLexico.estados.AguardandoDelimitadorState import AguardandoDelimitadorState
 from analisadorLexico.estados.AusenciaDeDelimitadorState import AusenciaDeDelimitadorState
 from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
@@ -37,8 +37,8 @@ class TokenAutomato:
         self.estados["IndentificadorOuPalavraReservada"] = IndentificadorOuPalavraReservadaState(self)
         self.estados["OperadorLogicoCompleto"] = OperadorLogicoCompletoState(self)
         self.estados["OperadorLogicoIncompleto"] = OperadorLogicoIncompletoState(self)
-        self.estados["OperadorAritimeticoCompleto"] = OperadorAritimeticoCompletoState(self)
-        self.estados["OperadorAritimeticoIncompleto"] = OperadorAritimeticoIncompletoState(self)
+        self.estados["OperadorAritimetricoCompleto"] = OperadorAritimetricoCompletoState(self)
+        self.estados["OperadorAritimetricoIncompleto"] = OperadorAritimetricoIncompletoState(self)
         self.estados["OperadorRelacionalCompleto"] = OperadorRelacionalCompletoState(self)
         self.estados["OperadorRelacionalIncompleto"] = OperadorRelacionalIncompletoState(self)
         self.estados["PalavraReservada"] = PalavraReservadaState(self)
@@ -52,16 +52,16 @@ class TokenAutomato:
         while line:
             self.linhaAtual += 1
             pos = 0
-            # print(line)
+            print(line)
             while pos < len(line):
-                # print('pos: ' + str(pos))
+                print('pos: ' + str(pos))
                 char = line[pos]
-                # print('for')
-                # print(self.estado)
+                print('for')
+                print(self.estado)
                 self.estado.getProximoEstado(char, self.lexemaAtual)
-                # print('char: ' + char)
-                # print('lexema: ' + self.lexemaAtual)
-                # print(self.estado)
+                print('char: ' + char)
+                print('lexema: ' + self.lexemaAtual)
+                print(self.estado)
                 if self.estado.caractereCompoemLexema():
                     self.lexemaAtual = self.lexemaAtual + char
                     pos = pos + 1
@@ -77,14 +77,18 @@ class TokenAutomato:
                     else:
                         self.estado = self.estados["AguardandoDelimitador"]
                 if self.estado.isError():
-                    while not isDelimitador(char):
+                    if not isDelimitador(char):
+                        print('linha: ' + line)
+                        print('pos: ' + str(pos))
+                        print('char: ' + char)
+                        print('lexema: ' + self.lexemaAtual)
+                        self.lexemaAtual = self.lexemaAtual + char
                         pos = pos + 1
-                        char = line[pos]
-                        self.lexemaAtual += char
+                    else:
+                        self.errors.append(self.getError())
+                        self.lexemaAtual = ""
+                        self.estado = self.estados["TokenVazio"]
                         
-                    self.errors.append(self.getError())
-                    self.lexemaAtual = ""
-                    self.estado = self.estados["TokenVazio"]
                 
             line = self.file.readline()
         self.fimDoArquivo()
@@ -119,4 +123,7 @@ class TokenAutomato:
     
     def getListaTokens(self):
         return self.tokens
+    
+    def getListaErrors(self):
+        return self.errors
     

@@ -2,7 +2,7 @@ delimitadores = [' ', ';', '(', ')', '{', '}', '[', ']', '.', '\n', '\t']
 delimitadorSemToken = ['\n','\t', ' '] # lista de caracteres que funcionam como delimitadores mas não são tokens e devem ser ignorados
 simbolosPermitidos = [ hex(32) , hex(126) ]# intervalo fechado de valores hexadecimais dos simbolos permitidos
 simbolosExcecoes = [ hex(34), hex(39) ]# valores hexadecimais no intervalo que não são simbolos permitidos
-operadoresAritimeticos = ['+', '-', '*', '/', '++', '--']
+operadoresAritimetricos = ['+', '-', '*', '/', '++', '--']
 operadoresRelacionais = ['>', '<', '>=', '<=', '==', '!=', '=']
 operadoresLogicos = [ '&&', '||', '!' ]
 palavrasReservadas = [
@@ -68,10 +68,10 @@ def maybeOperadorLogico(lexema):
     return False
 
 def isOperadorAritimetrico(lexema):
-    return lexema in operadoresAritimeticos
+    return lexema in operadoresAritimetricos
 
 def maybeOperadorAritimetrico(lexema):
-    for operador in operadoresAritimeticos:
+    for operador in operadoresAritimetricos:
         if operador.startswith(lexema):
             return True
     return False
