@@ -1,3 +1,7 @@
+from analisadorLexico.estados.OperadorRelacionalCompletoState import OperadorRelacionalCompletoState
+from analisadorLexico.estados.OperadorRelacionalIncompletoState import OperadorRelacionalIncompletoState
+from analisadorLexico.estados.OperadorAritimeticoCompletoState import OperadorAritimeticoCompletoState
+from analisadorLexico.estados.OperadorAritimeticoIncompletoState import OperadorAritimeticoIncompletoState
 from analisadorLexico.estados.AguardandoDelimitadorState import AguardandoDelimitadorState
 from analisadorLexico.estados.AusenciaDeDelimitadorState import AusenciaDeDelimitadorState
 from analisadorLexico.estados.CaractereInvalidoState import CaractereInvalidoState
@@ -33,6 +37,10 @@ class TokenAutomato:
         self.estados["IndentificadorOuPalavraReservada"] = IndentificadorOuPalavraReservadaState(self)
         self.estados["OperadorLogicoCompleto"] = OperadorLogicoCompletoState(self)
         self.estados["OperadorLogicoIncompleto"] = OperadorLogicoIncompletoState(self)
+        self.estados["OperadorAritimeticoCompleto"] = OperadorAritimeticoCompletoState(self)
+        self.estados["OperadorAritimeticoIncompleto"] = OperadorAritimeticoIncompletoState(self)
+        self.estados["OperadorRelacionalCompleto"] = OperadorRelacionalCompletoState(self)
+        self.estados["OperadorRelacionalIncompleto"] = OperadorRelacionalIncompletoState(self)
         self.estados["PalavraReservada"] = PalavraReservadaState(self)
         self.estados["TokenVazio"] = TokenVazioState(self)
     
