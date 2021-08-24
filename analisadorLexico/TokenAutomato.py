@@ -54,14 +54,14 @@ class TokenAutomato:
             pos = 0
             print(line)
             while pos < len(line):
-                print('pos: ' + str(pos))
+                # print('pos: ' + str(pos))
                 char = line[pos]
-                print('for')
-                print(self.estado)
+                # print('for')
+                # print(self.estado)
                 self.estado.getProximoEstado(char, self.lexemaAtual)
-                print('char: ' + char)
-                print('lexema: ' + self.lexemaAtual)
-                print(self.estado)
+                # print('char: ' + char)
+                # print('lexema: ' + self.lexemaAtual)
+                # print(self.estado)
                 if self.estado.caractereCompoemLexema():
                     self.lexemaAtual = self.lexemaAtual + char
                     pos = pos + 1
@@ -78,10 +78,10 @@ class TokenAutomato:
                         self.estado = self.estados["AguardandoDelimitador"]
                 if self.estado.isError():
                     if not isDelimitador(char):
-                        print('linha: ' + line)
-                        print('pos: ' + str(pos))
-                        print('char: ' + char)
-                        print('lexema: ' + self.lexemaAtual)
+                        # print('linha: ' + line)
+                        # print('pos: ' + str(pos))
+                        # print('char: ' + char)
+                        # print('lexema: ' + self.lexemaAtual)
                         self.lexemaAtual = self.lexemaAtual + char
                         pos = pos + 1
                     else:
