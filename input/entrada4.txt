@@ -1,6 +1,0 @@
-teste && ! op char
-operacao funcao
-letraedigito12 ||
-l3 + - ++ --
-& __
-&&

@@ -1,6 +1,7 @@
 delimitadores = [' ', ';', '(', ')', '{', '}', '[', ']', '.', '\n', '\t']
 delimitadorSemToken = ['\n','\t', ' '] # lista de caracteres que funcionam como delimitadores mas não são tokens e devem ser ignorados
 simbolosPermitidos = [ hex(32) , hex(126) ]# intervalo fechado de valores hexadecimais dos simbolos permitidos
+simbolosPermitidosOutros = [ hex(25) ]# valores hexadecimais de outros simbolos permitidos, 25 = %
 simbolosExcecoes = [ hex(34), hex(39) ]# valores hexadecimais no intervalo que não são simbolos permitidos
 operadoresAritimetricos = ['+', '-', '*', '/', '++', '--']
 operadoresRelacionais = ['>', '<', '>=', '<=', '==', '!=', '=']
@@ -21,7 +22,7 @@ def isDelimitadorSemToken(char):
 def isSimboloPermitido(char):
     try:
         charHex = '0x'+bytes(char, 'ascii').hex()
-        return simbolosPermitidos[0] <= charHex <= simbolosPermitidos[1] and charHex not in simbolosExcecoes or isDelimitador(char)
+        return simbolosPermitidos[0] <= charHex <= simbolosPermitidos[1] and charHex not in simbolosExcecoes or isDelimitador(char) or charHex in simbolosPermitidosOutros
     except: # se o simbolo não estiver na tabela ascii ocorre um erro
         return False
     
