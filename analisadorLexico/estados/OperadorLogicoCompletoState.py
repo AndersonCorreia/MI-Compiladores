@@ -15,5 +15,8 @@ class OperadorLogicoCompletoState(EstadoCompletoInterface):
     def getTipo(self):
         return "operador logico"
     
+    def getSigla(self):
+        return "LOG"
+    
     def finalDoArquivo(self,  lexema ):
         return self.automato.setEstado("TokenVazio")

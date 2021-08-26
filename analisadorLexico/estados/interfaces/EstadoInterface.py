@@ -36,6 +36,7 @@ class EstadoInterface:
         Método que retorna se o estado é um estado de erro
         :return: True se for um erro, False caso contrário.
         """
+        print(self)
         raise NotImplementedError("Método não implementado")
     
     def getTipo(self):
@@ -43,6 +44,7 @@ class EstadoInterface:
         Método que retorna o tipo do token ou do erro
         :return: string que indentifica o tipo do token ou do erro
         """
+        print(self)
         raise NotImplementedError("Método não implementado")
     
     def getSigla(self):

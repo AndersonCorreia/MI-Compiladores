@@ -14,5 +14,8 @@ class OperadorAritimetricoCompletoState(EstadoCompletoInterface):
     def getTipo(self):
         return "operador Aritimetrico"
     
+    def getSigla(self):
+        return "ART"
+    
     def finalDoArquivo(self, lexema):
         return self.automato.setEstado("TokenVazio")

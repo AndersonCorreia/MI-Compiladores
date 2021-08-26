@@ -12,5 +12,8 @@ class CaractereInvalidoState(EstadoDeErrorInterface):
     def getTipo(self):
         return "simbolo invalido"
     
+    def getSigla(self):
+        return "SII"
+    
     def finalDoArquivo(self,  lexema ):
         return self.automato.setEstado("TokenVazio")

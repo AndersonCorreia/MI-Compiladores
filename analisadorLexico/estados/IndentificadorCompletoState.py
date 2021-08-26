@@ -12,5 +12,8 @@ class IndentificadorCompletoState(EstadoCompletoInterface):
     def getTipo(self):
         return "identificador"
     
+    def getSigla(self):
+        return "IDE"
+    
     def finalDoArquivo(self,  lexema ):
         return self.automato.setEstado("IndentificadorCompleto")

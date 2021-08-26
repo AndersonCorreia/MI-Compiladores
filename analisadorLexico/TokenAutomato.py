@@ -107,7 +107,7 @@ class TokenAutomato:
         token = { 
                 'lexema': self.lexemaAtual, 
                 'linha': self.linhaAtual, 
-                'tipo': self.estado.getTipo(), 
+                'tipo': self.estado.getSigla(),
                 'metadados': self.estado.getMetadados() 
                 }
         return token
@@ -116,7 +116,7 @@ class TokenAutomato:
         error = {
                 'lexema': self.lexemaAtual,
                 'linha': self.linhaAtual, 
-                'tipo': self.estado.getTipo(), 
+                'tipo': self.estado.getSigla(), 
                 'metadados': self.estado.getMetadados() 
                 }
         return error

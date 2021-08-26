@@ -14,5 +14,8 @@ class OperadorRelacionalCompletoState(EstadoCompletoInterface):
     def getTipo(self):
         return "operador relacional"
     
+    def getSigla(self):
+        return "REL"
+    
     def finalDoArquivo(self, lexema):
         return self.automato.setEstado("TokenVazio")

@@ -1,4 +1,4 @@
-sem erros por ser um comentario
+sem& erros por ser um comentario
 {#
 arquivo com &rros
 89 98.8p9 

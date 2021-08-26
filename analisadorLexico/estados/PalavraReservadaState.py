@@ -12,5 +12,8 @@ class PalavraReservadaState(EstadoCompletoInterface):
     def getTipo(self):
         return "palavra reservada"
     
+    def getSigla(self):
+        return "PRE"
+    
     def finalDoArquivo(self,  lexema ):
         return self.automato.setEstado("TokenVazio") 
