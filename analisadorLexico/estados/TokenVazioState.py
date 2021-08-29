@@ -8,6 +8,9 @@ class TokenVazioState(EstadoAbertoInterface):
         if char == '"':
             return self.automato.setEstado("StringIncompleta")
         
+        if char == "'":
+            return self.automato.setEstado("CharIncompleto")
+        
         if isSimboloPermitido(char):
             if isLetra(char):
                 if maybePalavraReservada(lexema):

@@ -1,3 +1,9 @@
 "Esta e uma cadeia de caracteres"
 "Esta e uma cadeia ' de caracteres"
+"\""
+'a'
+'asss'
+'\''
+'a
+''
 "Esta e uma cadeia de

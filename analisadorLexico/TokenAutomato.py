@@ -15,6 +15,9 @@ from analisadorLexico.estados.PalavraReservadaState import PalavraReservadaState
 from analisadorLexico.estados.StringIncompletaState import StringIncompletaState
 from analisadorLexico.estados.StringMalFormadaState import StringMalFormadaState
 from analisadorLexico.estados.StringState import StringState
+from analisadorLexico.estados.CharIncompletoState import CharIncompletoState
+from analisadorLexico.estados.CharMalFormadoState import CharMalFormadoState
+from analisadorLexico.estados.CharState import CharState
 from analisadorLexico.estados.TokenVazioState import TokenVazioState
 from estruturaLexica import *
 
@@ -48,6 +51,9 @@ class TokenAutomato:
         self.estados["StringIncompleta"] = StringIncompletaState(self)
         self.estados["StringMalFormada"] = StringMalFormadaState(self)
         self.estados["String"] = StringState(self)
+        self.estados["CharIncompleto"] = CharIncompletoState(self)
+        self.estados["CharMalFormado"] = CharMalFormadoState(self)
+        self.estados["Char"] = CharState(self)
         self.estados["TokenVazio"] = TokenVazioState(self)
     
     def setEstado(self, estadoName):
@@ -64,9 +70,9 @@ class TokenAutomato:
                 char = line[pos]
                 # print('for')
                 # print(self.estado)
-                self.estado.getProximoEstado(char, self.lexemaAtual)
                 # print('char: ' + char)
                 # print('lexema: ' + self.lexemaAtual)
+                self.estado.getProximoEstado(char, self.lexemaAtual)
                 # print(self.estado)
                 if self.estado.caractereCompoemLexema():
                     self.lexemaAtual = self.lexemaAtual + char
