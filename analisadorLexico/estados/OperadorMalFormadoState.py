@@ -1,10 +1,11 @@
 from analisadorLexico.estados.interfaces.EstadoDeErrorInterface import EstadoDeErrorInterface
 from estruturaLexica import *
+from re import findall
 
-class CaractereInvalidoState(EstadoDeErrorInterface):
+class OperadorMalFormadoState(EstadoDeErrorInterface):
     
     def getProximoEstado(self, char, lexema):
-        return self.automato.setEstado("CaractereInvalido")
+        return self.automato.setEstado("OperadorMalFormadoString")
         
     def caractereCompoemLexema(self):
         return False
@@ -13,7 +14,10 @@ class CaractereInvalidoState(EstadoDeErrorInterface):
         return "simbolo invalido"
     
     def getSigla(self):
-        return "SII"
+        return "OpMF"
     
     def finalDoArquivo(self,  lexema ):
-        return self.automato.setEstado("CaractereInvalido")
+        return self.automato.setEstado("OperadorMalFormadoString")
+    
+    def pularDelimitadorSemToken(self):
+        return False

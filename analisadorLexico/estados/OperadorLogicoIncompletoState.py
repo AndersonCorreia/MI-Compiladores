@@ -8,12 +8,18 @@ class OperadorLogicoIncompletoState(EstadoAbertoInterface):
             if isDelimitador(char):
                 if isOperadorLogico(lexema):
                     return self.automato.setEstado("OperadorLogicoCompleto")
-                return self.automato.setEstado("CaractereInvalido") # depois trocar para o estado de simbolo
+                return self.automato.setEstado("OperadorMalFormado")
             
             if ( maybeOperadorLogico(lexema) ):
                 return self.automato.setEstado("OperadorLogicoIncompleto")
-            
-        return self.automato.setEstado("CaractereInvalido")
+         
+        if char == "\"":
+            return self.automato.setEstado("OperadorMalFormadoString")
+         
+        if char == "\'":
+            return self.automato.setEstado("OperadorMalFormadoChar")  
+        
+        return self.automato.setEstado("OperadorMalFormado")
         
     def caractereCompoemLexema(self):
         return True
@@ -21,4 +27,4 @@ class OperadorLogicoIncompletoState(EstadoAbertoInterface):
     def finalDoArquivo(self,  lexema ):
         if isOperadorLogico(lexema):
             return self.automato.setEstado("OperadorLogicoCompleto")
-        return self.automato.setEstado("CaractereInvalido") # depois trocar para o estado de simbolo
+        return self.automato.setEstado("OperadorMalFormado")

@@ -1,9 +1,16 @@
-"Esta e uma cadeia de caracteres"
-"Esta e uma cadeia ' de caracteres"
-"\""
-'a'
-'asss'
-'\''
-'a
-''
-"Esta e uma cadeia de
+++
+&&
+>
+++'a'
+++"add"
+++"
+++'
+&&'a'
+&&"add"
+&&"
+&&'
+>'a'
+>"add"
+>"
+>'
+"

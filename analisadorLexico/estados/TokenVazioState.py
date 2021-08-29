@@ -31,6 +31,8 @@ class TokenVazioState(EstadoAbertoInterface):
                     return self.automato.setEstado("TokenVazio")
                 return self.automato.setEstado("Delimitador")
             
+            return self.automato.setEstado("Simbolo")
+            
         return self.automato.setEstado("CaractereInvalido")
         
     def caractereCompoemLexema(self):

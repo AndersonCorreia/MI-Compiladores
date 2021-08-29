@@ -11,7 +11,11 @@ from analisadorLexico.estados.IndentificadorIncompletoState import Indentificado
 from analisadorLexico.estados.IndentificadorOuPalavraReservadaState import IndentificadorOuPalavraReservadaState
 from analisadorLexico.estados.OperadorLogicoCompletoState import OperadorLogicoCompletoState
 from analisadorLexico.estados.OperadorLogicoIncompletoState import OperadorLogicoIncompletoState
+from analisadorLexico.estados.OperadorMalFormadoCharState import OperadorMalFormadoCharState
+from analisadorLexico.estados.OperadorMalFormadoState import OperadorMalFormadoState
+from analisadorLexico.estados.OperadorMalFormadoStringState import OperadorMalFormadoStringState
 from analisadorLexico.estados.PalavraReservadaState import PalavraReservadaState
+from analisadorLexico.estados.SimboloState import SimboloState
 from analisadorLexico.estados.StringIncompletaState import StringIncompletaState
 from analisadorLexico.estados.StringMalFormadaState import StringMalFormadaState
 from analisadorLexico.estados.StringState import StringState
@@ -43,11 +47,15 @@ class TokenAutomato:
         self.estados["IndentificadorOuPalavraReservada"] = IndentificadorOuPalavraReservadaState(self)
         self.estados["OperadorLogicoCompleto"] = OperadorLogicoCompletoState(self)
         self.estados["OperadorLogicoIncompleto"] = OperadorLogicoIncompletoState(self)
+        self.estados["OperadorMalFormado"] = OperadorMalFormadoState(self)
+        self.estados["OperadorMalFormadoChar"] = OperadorMalFormadoCharState(self)
+        self.estados["OperadorMalFormadoString"] = OperadorMalFormadoStringState(self)
         self.estados["OperadorAritimetricoCompleto"] = OperadorAritimetricoCompletoState(self)
         self.estados["OperadorAritimetricoIncompleto"] = OperadorAritimetricoIncompletoState(self)
         self.estados["OperadorRelacionalCompleto"] = OperadorRelacionalCompletoState(self)
         self.estados["OperadorRelacionalIncompleto"] = OperadorRelacionalIncompletoState(self)
         self.estados["PalavraReservada"] = PalavraReservadaState(self)
+        self.estados["Simbolo"] = SimboloState(self)
         self.estados["StringIncompleta"] = StringIncompletaState(self)
         self.estados["StringMalFormada"] = StringMalFormadaState(self)
         self.estados["String"] = StringState(self)

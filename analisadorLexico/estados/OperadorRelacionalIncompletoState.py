@@ -8,17 +8,23 @@ class OperadorRelacionalIncompletoState(EstadoAbertoInterface):
             if isDelimitador(char):
                 if isOperadorRelacional(lexema):
                     return self.automato.setEstado("OperadorRelacionalCompleto")
-                return self.automato.setEstado("CaractereInvalido") # depois trocar para o estado de simbolo
+                return self.automato.setEstado("OperadorMalFormado")
             
             if ( maybeOperadorRelacional(lexema) ):
                 return self.automato.setEstado("OperadorRelacionalIncompleto")
-            
-        return self.automato.setEstado("CaractereInvalido")
+        
+        if char == "\"":
+            return self.automato.setEstado("OperadorMalFormadoString")
+         
+        if char == "\'":
+            return self.automato.setEstado("OperadorMalFormadoChar")  
+        
+        return self.automato.setEstado("OperadorMalFormado")
         
     def caractereCompoemLexema(self):
         return True
     
     def finalDoArquivo(self,  lexema ):
-        if isOperadorLogico(lexema):
+        if isOperadorRelacional(lexema):
             return self.automato.setEstado("OperadorRelacionalCompleto")
-        return self.automato.setEstado("CaractereInvalido") # depois trocar para o estado de simbolo
+        return self.automato.setEstado("OperadorMalFormado")
