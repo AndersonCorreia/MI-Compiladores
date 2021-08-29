@@ -4,6 +4,10 @@ from estruturaLexica import *
 class TokenVazioState(EstadoAbertoInterface):
     
     def getProximoEstado(self, char, lexema):
+        
+        if char == '"':
+            return self.automato.setEstado("StringIncompleta")
+        
         if isSimboloPermitido(char):
             if isLetra(char):
                 if maybePalavraReservada(lexema):

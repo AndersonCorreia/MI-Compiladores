@@ -6,10 +6,10 @@ sys.path.insert(0, abspath(join(dirname(__file__), '..')))
 from fileHelper import *
 from analisadorLexico.TokenAutomato import TokenAutomato
 
-arquivos = getArquivos()
+arquivos = getArquivos("./input_teste")
 
 for arquivo in arquivos:
-    automato = TokenAutomato(getCaminhoAbsoluto(arquivo))
+    automato = TokenAutomato(getCaminhoAbsoluto(arquivo, "./input_teste"))
     automato.analisarArquivo()
     tokens = automato.getListaTokens()
     for t in tokens:

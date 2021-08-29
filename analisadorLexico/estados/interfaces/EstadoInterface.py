@@ -1,5 +1,4 @@
-
-
+from estruturaLexica import *
 class EstadoInterface:
     """
     Classe que representa a interface para o conjunto de estados do analisador léxico.
@@ -67,3 +66,17 @@ class EstadoInterface:
         :return: EstadoInterface
         """
         raise NotImplementedError("Método não implementado")
+    
+    def isLexemaErrorCompleto(self, char, lexema):
+        """
+        Método para determinar quando o lexema de um erro está completo
+        :return: True se o lexema de um erro está completo, False caso contrário.
+        """
+        raise NotImplementedError("Método não implementado")
+    
+    def pularDelimitadorSemToken(self):
+        """
+        Método para determinar se deve pular um delimitador sem token
+        :return: True se deve pular, False caso contrário.
+        """
+        return True

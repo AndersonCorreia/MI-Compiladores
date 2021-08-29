@@ -12,6 +12,9 @@ from analisadorLexico.estados.IndentificadorOuPalavraReservadaState import Inden
 from analisadorLexico.estados.OperadorLogicoCompletoState import OperadorLogicoCompletoState
 from analisadorLexico.estados.OperadorLogicoIncompletoState import OperadorLogicoIncompletoState
 from analisadorLexico.estados.PalavraReservadaState import PalavraReservadaState
+from analisadorLexico.estados.StringIncompletaState import StringIncompletaState
+from analisadorLexico.estados.StringMalFormadaState import StringMalFormadaState
+from analisadorLexico.estados.StringState import StringState
 from analisadorLexico.estados.TokenVazioState import TokenVazioState
 from estruturaLexica import *
 
@@ -42,6 +45,9 @@ class TokenAutomato:
         self.estados["OperadorRelacionalCompleto"] = OperadorRelacionalCompletoState(self)
         self.estados["OperadorRelacionalIncompleto"] = OperadorRelacionalIncompletoState(self)
         self.estados["PalavraReservada"] = PalavraReservadaState(self)
+        self.estados["StringIncompleta"] = StringIncompletaState(self)
+        self.estados["StringMalFormada"] = StringMalFormadaState(self)
+        self.estados["String"] = StringState(self)
         self.estados["TokenVazio"] = TokenVazioState(self)
     
     def setEstado(self, estadoName):
@@ -66,7 +72,7 @@ class TokenAutomato:
                     self.lexemaAtual = self.lexemaAtual + char
                     pos = pos + 1
                     
-                if isDelimitadorSemToken(char):
+                if isDelimitadorSemToken(char) and self.estado.pularDelimitadorSemToken():
                     pos = pos + 1
                         
                 if self.estado.lexemaCompleto():
@@ -77,7 +83,7 @@ class TokenAutomato:
                     else:
                         self.estado = self.estados["AguardandoDelimitador"]
                 if self.estado.isError():
-                    if not isDelimitador(char):
+                    if not self.estado.isLexemaErrorCompleto(char, self.lexemaAtual):
                         # print('linha: ' + line)
                         # print('pos: ' + str(pos))
                         # print('char: ' + char)
@@ -94,6 +100,8 @@ class TokenAutomato:
         self.fimDoArquivo()
     
     def fimDoArquivo(self):
+        # print(self.estado)
+        # print(self.lexemaAtual)
         if self.lexemaAtual != "":
             self.estado.finalDoArquivo(self.lexemaAtual)
                

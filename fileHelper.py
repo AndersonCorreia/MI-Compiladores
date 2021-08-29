@@ -23,5 +23,6 @@ def gerarArquivosDeSaida(text = "teste"):
         numero = getNumeracaoByNameFile(arquivo)
         escreverArquivo("saida" + numero + ".txt", text)
         
-def getCaminhoAbsoluto(arquivo, path = "./input/"):
+def getCaminhoAbsoluto(arquivo, path = "./input"):
+    path = path + "/"
     return os.path.abspath(path + arquivo)
