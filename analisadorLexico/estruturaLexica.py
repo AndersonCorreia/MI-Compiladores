@@ -27,11 +27,7 @@ def isSimboloPermitido(char):
         return False
     
 def isDigito(char):
-    try:
-        charHex = bytes(char, 'ascii')
-        return charHex.isnumeric()
-    except: # se o simbolo não estiver na tabela ascii ocorre um erro
-        return False
+    return char.isdigit()
     
 def isLetra(char):
     try:

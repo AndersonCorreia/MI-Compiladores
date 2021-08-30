@@ -1,3 +1,6 @@
+from analisadorLexico.estados.NumeroMalFormadoState import NumeroMalFormadoState
+from analisadorLexico.estados.NumeroIncompletoState import NumeroIncompletoState
+from analisadorLexico.estados.NumeroCompletoState import NumeroCompletoState
 from analisadorLexico.estados.OperadorRelacionalCompletoState import OperadorRelacionalCompletoState
 from analisadorLexico.estados.OperadorRelacionalIncompletoState import OperadorRelacionalIncompletoState
 from analisadorLexico.estados.OperadorAritimetricoCompletoState import OperadorAritimetricoCompletoState
@@ -63,6 +66,9 @@ class TokenAutomato:
         self.estados["CharMalFormado"] = CharMalFormadoState(self)
         self.estados["Char"] = CharState(self)
         self.estados["TokenVazio"] = TokenVazioState(self)
+        self.estados["NumeroCompleto"] = NumeroCompletoState(self)
+        self.estados["NumeroIncompleto"] = NumeroIncompletoState(self)
+        self.estados["NumeroMalFormado"] = NumeroMalFormadoState(self)
     
     def setEstado(self, estadoName):
         self.estado = self.estados[estadoName]
