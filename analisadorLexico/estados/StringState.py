@@ -4,7 +4,7 @@ from estruturaLexica import *
 class StringState(EstadoCompletoInterface):
     
     def getProximoEstado(self, char, lexema):
-        return self.automato.setEstado("AguardandoDelimitador")
+        return self.automato.setEstado("tokenVazio")
         
     def caractereCompoemLexema(self):
         return True

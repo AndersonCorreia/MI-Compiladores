@@ -90,7 +90,7 @@ class TokenAutomato:
         while line:
             self.linhaAtual += 1
             pos = 0
-            print(line)
+            # print(line)
             while pos < len(line):
                 # print('pos: ' + str(pos))
                 char = line[pos]

@@ -51,6 +51,7 @@ class EstadoInterface:
         Método que retorna a sigla do token ou do erro
         :return: string sigla que indentifica o tipo do token ou do erro
         """
+        print(self)
         raise NotImplementedError("Método não implementado")
     
     def getMetadados(self):

@@ -9,8 +9,7 @@ class AguardandoDelimitadorState(EstadoAbertoInterface):
                 return self.automato.setEstado("TokenVazio")
             
             return self.automato.setEstado("Delimitador")
-        
-        return self.automato.setEstado("AusenciaDeDelimitador")
+        return self.automato.setEstado("TokenVazio")
         
     def caractereCompoemLexema(self):
         return False
