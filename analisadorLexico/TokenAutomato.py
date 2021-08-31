@@ -139,7 +139,7 @@ class TokenAutomato:
             self.estado.finalDoArquivo(self.lexemaAtual)
                
             if self.estado.lexemaCompleto():
-                if not self.estado.getTipo() == "CML" or self.estado.getTipo() == "CMB":
+                if not self.estado.getSigla() == "CML" or self.estado.getSigla() == "CMB":
                     self.tokens.append(self.getToken())
             
             if self.estado.isError():
