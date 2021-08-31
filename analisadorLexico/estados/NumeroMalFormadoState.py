@@ -16,10 +16,10 @@ class NumeroMalFormadoState(EstadoDeErrorInterface):
         return "NMF"
     
     def finalDoArquivo(self,  lexema ):
-        return self.automato.setEstado("TokenVazio")
+        return self.automato.setEstado("NumeroMalFormado")
     
-    def isLexemaErrorCompleto(self, char, lexema):
-        return isDigito(lexema.split('.')[-1]) and lexema.count(".") > 1 
+    # def isLexemaErrorCompleto(self, char, lexema):
+    #     return isDigito(lexema.split('.')[-1]) and lexema.count(".") > 1 
     
     def pularDelimitadorSemToken(self):
         return False

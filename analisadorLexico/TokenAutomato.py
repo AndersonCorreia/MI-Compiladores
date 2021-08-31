@@ -76,12 +76,14 @@ class TokenAutomato:
         self.estados["NumeroMalFormado"] = NumeroMalFormadoState(self)
         self.estados["ComentarioLinha"] = ComentarioLinhaState(self)
         self.estados["ComentarioLinhaIncompleto"] = ComentarioLinhaIncompletoState(self)
-        # self.estados["ComentarioBloco"] = ComentarioBlocoCompletoState(self)
-        # self.estados["ComentarioBlocoIncompleto"] = ComentarioBlocoIncompletoState(self)
-        # self.estados["ComentarioBlocoMalFormado"] = ComentarioBlocoMalFormadoState(self)
+        self.estados["ComentarioBlocoCompleto"] = ComentarioBlocoCompletoState(self)
+        self.estados["ComentarioBlocoIncompleto"] = ComentarioBlocoIncompletoState(self)
+        self.estados["ComentarioBlocoMalFormado"] = ComentarioBlocoMalFormadoState(self)
     
-    def setEstado(self, estadoName):
+    def setEstado(self, estadoName, setCharCompoemDelimitador = False, charCompoemDelimitador = True):
         self.estado = self.estados[estadoName]
+        if setCharCompoemDelimitador:
+            self.estado.charCompoemDelimitador = charCompoemDelimitador
         
     def analisarArquivo(self):
         line = self.file.readline()
