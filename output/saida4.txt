@@ -1,1 +1,10 @@
-nome qualquer
+01 PRE funcao
+01 IDE descomplica
+01 DEL (
+01 DEL {
+02 CAD "complica"
+03 CAD "des"
+04 PRE retorno
+04 CAD "descomplica"
+05 CAD "complexo\""
+06 DEL }

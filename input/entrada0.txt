@@ -1,0 +1,3 @@
+funcao oi (){
+escreva("Olá, tudo bom?");
+}

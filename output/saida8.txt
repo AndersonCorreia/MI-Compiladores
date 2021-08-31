@@ -1,0 +1,24 @@
+01 ART ++
+01 PRE inteiro
+01 PRE falso
+02 IDE a
+02 ART +
+02 IDE b
+02 PRE enquanto
+02 PRE variaveis
+02 ART -
+02 ART +
+02 IDE x
+02 ART /
+02 IDE y
+02 IDE D
+02 REL >=
+02 IDE Y
+03 IDE s
+03 REL ==
+03 IDE b
+
+01 OpMF a+b
+01 OpMF -+
+01 OpMF -=
+03 OpMF s=b

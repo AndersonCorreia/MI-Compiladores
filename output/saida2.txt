@@ -1,0 +1,24 @@
+01 PRE funcao
+01 IDE escreverNoArquivo
+01 DEL (
+01 IDE arquivo
+01 DEL .
+01 IDE txt
+01 DEL )
+01 DEL {
+02 PRE leia
+02 DEL (
+02 IDE arquivo
+02 DEL .
+02 IDE txt
+02 DEL )
+02 DEL ;
+03 PRE escreva
+03 DEL (
+03 CAD "isso é um teste"
+03 DEL )
+03 DEL ;
+04
+05
+06
+07 DEL }

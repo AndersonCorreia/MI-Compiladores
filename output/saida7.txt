@@ -1,0 +1,17 @@
+01 ART ++
+01 ART +
+01 ART -
+01 DEL ,
+01 ART --
+01 REL /
+02 ART +
+02 ART -
+02 ART *
+02 DEL ;
+
+01 OpMF **
+01 OpMF //
+02 OpMF +-
+02 OpMF -+
+02 OpMF -/
+02 OpMF /-
