@@ -12,9 +12,9 @@ def getArquivos(path = "./input"):
 def getNumeracaoByNameFile(arquivo):
     return arquivo.replace(".txt","").replace("entrada","")
 
-def escreverArquivo(arquivo, texto):
-    os.makedirs('output', exist_ok=True)
-    with open("output/" + arquivo, "w") as f:
+def escreverArquivo(dir, arquivo, texto):
+    os.makedirs(dir, exist_ok=True)
+    with open(dir + arquivo, "w") as f:
         f.write(texto)
  
 def gerarArquivosDeSaida(text = "teste"):

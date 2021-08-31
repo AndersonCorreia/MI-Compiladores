@@ -7,6 +7,7 @@ from fileHelper import *
 from analisadorLexico.TokenAutomato import TokenAutomato
 
 dir = dirname(__file__) + "/../input"
+dirOutput = dirname(__file__) + "/../output"
 
 arquivos = getArquivos(dir)
 
