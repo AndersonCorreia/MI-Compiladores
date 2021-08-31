@@ -108,9 +108,9 @@ class TokenAutomato:
                     pos = pos + 1
                         
                 if self.estado.lexemaCompleto():
-                    if not self.estado.getTipo() == "CML" or self.estado.getTipo() == "CMB":
-                        self.tokens.append(self.getToken())
-                        self.lexemaAtual = ""
+                    if not (self.estado.getSigla() == "CML" or self.estado.getSigla() == "CMB"):
+                            self.tokens.append(self.getToken())
+                    self.lexemaAtual = ""
                     if isDelimitador(char):
                         self.estado = self.estados["TokenVazio"]
                     else:
@@ -139,7 +139,7 @@ class TokenAutomato:
             self.estado.finalDoArquivo(self.lexemaAtual)
                
             if self.estado.lexemaCompleto():
-                if not self.estado.getSigla() == "CML" or self.estado.getSigla() == "CMB":
+                if not (self.estado.getSigla() == "CML" or self.estado.getSigla() == "CMB"):
                     self.tokens.append(self.getToken())
             
             if self.estado.isError():
