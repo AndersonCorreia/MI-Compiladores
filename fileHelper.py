@@ -1,6 +1,7 @@
+from os.path import join
 import os
 
-def getArquivos(path = "./input"):
+def getArquivos(path = "./input_teste"):
     
     arquivos = []
     for arquivo in os.listdir(path):
@@ -12,17 +13,35 @@ def getArquivos(path = "./input"):
 def getNumeracaoByNameFile(arquivo):
     return arquivo.replace(".txt","").replace("entrada","")
 
-def escreverArquivo(dir, arquivo, texto):
-    os.makedirs(dir, exist_ok=True)
-    with open(dir + arquivo, "w") as f:
-        f.write(texto)
+# def escreverArquivo(dir, arquivo, texto):
+#     os.makedirs(dir, exist_ok=True)
+#     with open(dir + arquivo, "w") as f:
+#         f.write(texto)
  
-def gerarArquivosDeSaida(text = "teste"):
-    arquivos = getArquivos("./input")
-    for arquivo in arquivos:
-        numero = getNumeracaoByNameFile(arquivo)
-        escreverArquivo("saida" + numero + ".txt", text)
+# def gerarArquivosDeSaida(text = "teste"):
+#     arquivos = getArquivos("./input_teste")
+#     for arquivo in arquivos:
+#         numero = getNumeracaoByNameFile(arquivo)
+#         escreverArquivo("saida" + numero + ".txt", text)
         
-def getCaminhoAbsoluto(arquivo, path = "./input"):
+def getCaminhoAbsoluto(arquivo, path = "./input_teste"):
     path = path + "/"
     return os.path.abspath(path + arquivo)
+
+def gerarArquivosDeSaida(dirOutput, fileNumber, tokens, errors):
+    tabs = '\t'
+    with open(join(dirOutput, f'saida{fileNumber}.txt'), 'w+') as file:
+        for token in tokens:
+            linha = token['linha']
+            tipoToken = token['tipo']
+            lexema = token['lexema']
+            numeroLinha = f'0{linha}' if linha <= 9 else linha
+            file.write(f'{numeroLinha}{tabs}{tipoToken}{tabs}{lexema}\n')
+        file.write('\n')
+        if len(errors) > 0:
+            for error in errors:
+                linha = error['linha']
+                tipoErro = error['tipo']
+                erroLexema = error['lexema']
+                numeroLinha = f'0{linha}' if linha <= 9 else linha
+                file.write(f'{numeroLinha}{tabs}{tipoErro}{tabs}{erroLexema}\n')

@@ -1,0 +1,17 @@
+01	ART	++
+02	LOG	&&
+03	REL	>
+
+04	OpMF	++'a'
+05	OpMF	++"add"
+06	OpMF	++"
+07	OpMF	++'
+08	OpMF	&&'a'
+09	OpMF	&&"add"
+10	OpMF	&&"
+11	OpMF	&&'
+12	OpMF	>'a'
+13	OpMF	>"add"
+14	OpMF	>"
+15	OpMF	>'
+16	CMF	"
