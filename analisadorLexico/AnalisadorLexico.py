@@ -9,11 +9,9 @@ from analisadorLexico.TokenAutomato import TokenAutomato
 dir = dirname(__file__) + "/../input"
 
 arquivos = getArquivos(dir)
-# arquivos = getArquivos("./input_teste")
 
 for arquivo in arquivos:
     automato = TokenAutomato(getCaminhoAbsoluto(arquivo, dir))
-    # automato = TokencdAutomato(getCaminhoAbsoluto(arquivo, "./input_teste"))
     automato.analisarArquivo()
     tokens = automato.getListaTokens()
     for t in tokens:
