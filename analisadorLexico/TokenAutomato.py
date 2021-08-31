@@ -1,3 +1,8 @@
+from analisadorLexico.estados.ComentarioBlocoMalFormadoState import ComentarioBlocoMalFormadoState
+from analisadorLexico.estados.ComentarioBlocoIncompletoState import ComentarioBlocoIncompletoState
+from analisadorLexico.estados.ComentarioBlocoCompletoState import ComentarioBlocoCompletoState
+from analisadorLexico.estados.ComentarioLinhaIncompletoState import ComentarioLinhaIncompletoState
+from analisadorLexico.estados.ComentarioLinhaState import ComentarioLinhaState
 from analisadorLexico.estados.NumeroMalFormadoState import NumeroMalFormadoState
 from analisadorLexico.estados.NumeroIncompletoState import NumeroIncompletoState
 from analisadorLexico.estados.NumeroCompletoState import NumeroCompletoState
@@ -69,6 +74,11 @@ class TokenAutomato:
         self.estados["NumeroCompleto"] = NumeroCompletoState(self)
         self.estados["NumeroIncompleto"] = NumeroIncompletoState(self)
         self.estados["NumeroMalFormado"] = NumeroMalFormadoState(self)
+        self.estados["ComentarioLinha"] = ComentarioLinhaState(self)
+        self.estados["ComentarioLinhaIncompleto"] = ComentarioLinhaIncompletoState(self)
+        # self.estados["ComentarioBloco"] = ComentarioBlocoCompletoState(self)
+        # self.estados["ComentarioBlocoIncompleto"] = ComentarioBlocoIncompletoState(self)
+        # self.estados["ComentarioBlocoMalFormado"] = ComentarioBlocoMalFormadoState(self)
     
     def setEstado(self, estadoName):
         self.estado = self.estados[estadoName]
@@ -96,8 +106,9 @@ class TokenAutomato:
                     pos = pos + 1
                         
                 if self.estado.lexemaCompleto():
-                    self.tokens.append(self.getToken())
-                    self.lexemaAtual = ""
+                    if not self.estado.getTipo() == "CML" or self.estado.getTipo() == "CMB":
+                        self.tokens.append(self.getToken())
+                        self.lexemaAtual = ""
                     if isDelimitador(char):
                         self.estado = self.estados["TokenVazio"]
                     else:
@@ -126,7 +137,8 @@ class TokenAutomato:
             self.estado.finalDoArquivo(self.lexemaAtual)
                
             if self.estado.lexemaCompleto():
-                self.tokens.append(self.getToken())
+                if not self.estado.getTipo() == "CML" or self.estado.getTipo() == "CMB":
+                    self.tokens.append(self.getToken())
             
             if self.estado.isError():
                 self.errors.append(self.getError())

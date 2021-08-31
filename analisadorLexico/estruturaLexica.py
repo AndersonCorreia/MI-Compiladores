@@ -81,3 +81,8 @@ def maybeOperadorRelacional(lexema):
         if operador.startswith(lexema):
             return True
     return False
+
+def maybeComentarioBloco(lexema):
+    if lexema == "{":
+        return True
+    return False
