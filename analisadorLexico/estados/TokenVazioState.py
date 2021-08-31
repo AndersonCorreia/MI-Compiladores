@@ -29,11 +29,17 @@ class TokenVazioState(EstadoAbertoInterface):
             if maybeOperadorRelacional(char):
                 return self.automato.setEstado("OperadorRelacionalIncompleto")
             
+            if maybeComentarioBloco(char):
+                return self.automato.setEstado("ComentarioBlocoIncompleto")
+
             if isDelimitador(char):
                 if isDelimitadorSemToken(char):
                     return self.automato.setEstado("TokenVazio")
                 return self.automato.setEstado("Delimitador")
-            
+
+            if char == "%":
+                return self.automato.setEstado("ComentarioLinhaIncompleto")
+
             return self.automato.setEstado("Simbolo")
             
         return self.automato.setEstado("CaractereInvalido")

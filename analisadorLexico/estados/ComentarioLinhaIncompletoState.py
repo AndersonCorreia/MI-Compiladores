@@ -1,18 +1,18 @@
 from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
 from estruturaLexica import *
 
-class ComentarioBlocoIncompletoState(EstadoAbertoInterface):
+class ComentarioLinhaIncompletoState(EstadoAbertoInterface):
     
     def getProximoEstado(self, char, lexema):
-        if char == "#":
-            return self.automato.setEstado("ComentarioBlocoIncompleto")
-        #return self.automato.setEstado("Delimitador")
+      if char == "\n":
+        return self.automato.setEstado("ComentarioLinha")
+      return self.automato.setEstado("ComentarioLinhaIncompleto")
                     
     def caractereCompoemLexema(self):
         return True
     
     def finalDoArquivo(self,  lexema ):
-        return self.automato.setEstado("ComentarioBlocoIncompleto")
+        return self.automato.setEstado("ComentarioLinhaIncompleto")
     
     def pularDelimitadorSemToken(self):
         return False
