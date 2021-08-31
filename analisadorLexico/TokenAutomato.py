@@ -83,7 +83,7 @@ class TokenAutomato:
     def setEstado(self, estadoName, setCharCompoemDelimitador = False, charCompoemDelimitador = True):
         self.estado = self.estados[estadoName]
         if setCharCompoemDelimitador:
-            self.estado.charCompoemDelimitador = charCompoemDelimitador
+            self.estado.setCharCompoemLexema(charCompoemDelimitador)
         
     def analisarArquivo(self):
         line = self.file.readline()

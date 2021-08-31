@@ -12,6 +12,7 @@ dirOutput = dirname(__file__) + "/../output"
 arquivos = getArquivos(dir)
 
 for arquivo in arquivos:
+    print ( "\nArquivo: "+ arquivo + "\n")
     automato = TokenAutomato(getCaminhoAbsoluto(arquivo, dir))
     automato.analisarArquivo()
     tokens = automato.getListaTokens()

@@ -6,6 +6,7 @@ class EstadoInterface:
 
     def __init__(self, automato):
         self.automato = automato
+        self.charCompoemLexema = True
     
     def getProximoEstado(self, char, lexema):
         """

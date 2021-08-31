@@ -29,19 +29,18 @@ def getCaminhoAbsoluto(arquivo, path = "./input_teste"):
     return os.path.abspath(path + arquivo)
 
 def gerarArquivosDeSaida(dirOutput, fileNumber, tokens, errors):
-    tabs = '\t'
     with open(join(dirOutput, f'saida{fileNumber}.txt'), 'w+') as file:
         for token in tokens:
             linha = token['linha']
             tipoToken = token['tipo']
             lexema = token['lexema']
             numeroLinha = f'0{linha}' if linha <= 9 else linha
-            file.write(f'{numeroLinha}{tabs}{tipoToken}{tabs}{lexema}\n')
-        file.write('\n')
+            file.write("" + str(numeroLinha) + " " + str(tipoToken) + " " + str(lexema) + "\n")
         if len(errors) > 0:
+            file.write('\n')
             for error in errors:
                 linha = error['linha']
                 tipoErro = error['tipo']
                 erroLexema = error['lexema']
                 numeroLinha = f'0{linha}' if linha <= 9 else linha
-                file.write(f'{numeroLinha}{tabs}{tipoErro}{tabs}{erroLexema}\n')
+                file.write("" + str(numeroLinha) + " " + str(tipoErro) + " " + str(erroLexema) + "\n")

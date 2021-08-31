@@ -3,14 +3,13 @@ from estruturaLexica import *
 
 class DelimitadorState(EstadoCompletoInterface):
     
-    def __init__(self, fileName):
-        self.charCompoemLexema = True
-    
     def getProximoEstado(self, char, lexema):
         return self.automato.setEstado("TokenVazio")
         
     def caractereCompoemLexema(self):
-        return self.charCompoemLexema
+        retorno = self.charCompoemLexema
+        self.charCompoemLexema = True
+        return retorno
     
     def getTipo(self):
         return "delimitador"
@@ -20,3 +19,6 @@ class DelimitadorState(EstadoCompletoInterface):
     
     def finalDoArquivo(self,  lexema ):
         return self.automato.setEstado("TokenVazio")
+    
+    def setCharCompoemLexema(self, compoem = True):
+        self.charCompoemLexema = compoem
