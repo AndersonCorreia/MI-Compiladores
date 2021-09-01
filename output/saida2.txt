@@ -15,10 +15,8 @@
 02 DEL ;
 03 PRE escreva
 03 DEL (
-03 CAD "isso é um teste"
 03 DEL )
 03 DEL ;
-04
-05
-06
 07 DEL }
+
+03 CMF "isso é um teste"

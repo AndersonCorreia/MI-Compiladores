@@ -1,0 +1,23 @@
+01 IDE UMA
+01 IDE entrada
+01 REL <
+01 REL >
+02 IDE outra
+02 IDE mais
+
+02 OpMF !aa
+05 SII duas+
+19 NMF 2-
+duas*
+duas+a
+=-
+++
++=
+*
+*+
+/
+hahaha
+
+f <= a
+
+f<0

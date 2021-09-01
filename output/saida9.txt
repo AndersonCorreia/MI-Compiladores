@@ -1,19 +1,18 @@
 01 LOG !
-01 REL !=
 01 LOG &&
 01 LOG ||
-01 DEL ,
 02 LOG !
 02 DEL ,
 02 LOG &&
 02 DEL ,
 02 DEL ;
 
+01 OpMF !=
 01 OpMF !!
 01 OpMF &
 01 OpMF &!
 01 OpMF !&
 01 OpMF |
-01 OpMF &&&|!
+01 OpMF &&&|!,
 02 OpMF ||&
 02 OpMF &&teste

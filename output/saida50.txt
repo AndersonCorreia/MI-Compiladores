@@ -1,0 +1,39 @@
+01 PRE funcao
+01 PRE inteiro
+01 IDE soma
+01 DEL (
+01 PRE inteiro
+01 IDE a
+01 DEL ,
+01 PRE inteiro
+01 IDE b
+01 DEL )
+01 DEL {
+02 PRE inteiro
+02 IDE c
+02 REL =
+02 IDE a
+02 ART +
+02 IDE b
+02 DEL ;
+03 PRE retorno
+03 IDE c
+03 DEL ;
+04 DEL }
+06 PRE real
+06 IDE pi
+06 REL =
+06 NRO 3.14
+06 DEL ;
+
+18 NMF 66% # Isto é uma porcentagem aleatória
+
+cadeia mensagem = "Olá, mundo!";
+
+real numero = 1.5;
+
+se (numero <= pi && verdadeiro) {
+   escreva("Entrou!");
+}
+
+se (numero != pi || numero < 7) { }
