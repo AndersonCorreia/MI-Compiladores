@@ -15,6 +15,10 @@ class IndentificadorOuPalavraReservadaState(EstadoAbertoInterface):
                 if isPalavraReservada(lexema):
                     return self.automato.setEstado("PalavraReservada")
                 return self.automato.setEstado("IndentificadorCompleto")
+
+            if isOperadorAritimetrico(char) or isOperadorRelacional(char) or isOperadorLogico(char):
+                return self.automato.setEstado("OperadorMalFormadoChar")
+                
             
         return self.automato.setEstado("CaractereInvalido")
         
