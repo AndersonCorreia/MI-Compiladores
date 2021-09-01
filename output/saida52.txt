@@ -21,7 +21,6 @@
 05 DEL }
 07 IDE contador
 07 REL =
-07 NRO 5
 07 DEL ;
 09 PRE se
 09 DEL (
@@ -55,7 +54,7 @@
 17 DEL ;
 18 DEL }
 
-07 NMF 2..4
+07 NMF 2..45
 09 OpMF >=1
 09 OpMF !sinal) {
 12 SII contador++

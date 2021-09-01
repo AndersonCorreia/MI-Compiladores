@@ -25,15 +25,48 @@
 06 REL =
 06 NRO 3.14
 06 DEL ;
+08 IDE Isto
+08 IDE uma
+08 IDE porcentagem
+10 PRE cadeia
+10 IDE mensagem
+10 REL =
+10 DEL ;
+12 PRE real
+12 IDE numero
+12 REL =
+12 NRO 1.5
+12 DEL ;
+14 PRE se
+14 DEL (
+14 IDE numero
+14 REL <=
+14 IDE pi
+14 LOG &&
+14 PRE verdadeiro
+14 DEL )
+14 DEL {
+15 PRE escreva
+15 DEL (
+15 CAD "Entrou!"
+15 DEL )
+15 DEL ;
+16 DEL }
+18 PRE se
+18 DEL (
+18 IDE numero
+18 IDE pi
+18 LOG ||
+18 IDE numero
+18 REL <
+18 NRO 7
+18 DEL )
+18 DEL {
+18 DEL }
 
-18 NMF 66% # Isto é uma porcentagem aleatória
-
-cadeia mensagem = "Olá, mundo!";
-
-real numero = 1.5;
-
-se (numero <= pi && verdadeiro) {
-   escreva("Entrou!");
-}
-
-se (numero != pi || numero < 7) { }
+08 NMF 66%
+08 SIB #
+08 SII é
+08 SII aleatória
+10 CMF "Olá, mundo!"
+18 OpMF !=

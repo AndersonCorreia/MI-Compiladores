@@ -4,20 +4,20 @@
 01 REL >
 02 IDE outra
 02 IDE mais
+10 ART ++
+12 ART *
+14 ART /
+15 IDE hahaha
+17 IDE f
+17 REL <=
+17 IDE a
 
 02 OpMF !aa
 05 SII duas+
-19 NMF 2-
-duas*
-duas+a
-=-
-++
-+=
-*
-*+
-/
-hahaha
-
-f <= a
-
-f<0
+06 NMF 2-
+07 SII duas*
+08 SII duas+a
+09 OpMF =-
+11 OpMF +=
+13 OpMF *+
+19 OpMF f<0

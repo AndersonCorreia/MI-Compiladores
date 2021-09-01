@@ -1,8 +1,9 @@
+
 01 IDE erros
 01 IDE de
 01 IDE simbolos
 01 IDE na
-01 IDE linha
+01 IDE linha 
 01 NRO 6
 02 LOG &&
 02 LOG !
@@ -11,10 +12,10 @@
 03 PRE funcao
 04 IDE letraedigito12
 04 LOG ||
-05 IDE l3
+05 NRO l3
 05 ART +
 05 ART -
 07 LOG &&
 
-06 OpMF &
+06 SIB &
 06 SIB __

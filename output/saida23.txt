@@ -1,10 +1,12 @@
-01 CAD "ahusahasuhasu!!!"
-02 CAD "teste de cadeia de caracteres"
-03 CAD "54621"
-04 CAD "sss"
-04 IDE a
-06 CAD "hello world"
-06 CAD "duas cadeias"
+1 CAD "ahusahasuhasu!!!"
+2 CAD "teste de cadeia de caracteres"
+3 CAD "54621"
+4 CAD "sss"
+4 IDE a
+5 CMF "aa
 
-05 CMF "aa
-07 CMF "
+6 CAD "hello world"
+6 CMF  "duas cadeias"
+
+7 CMF "
+
