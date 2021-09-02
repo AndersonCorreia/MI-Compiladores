@@ -26,6 +26,8 @@
 09 DEL (
 09 IDE contador
 09 LOG &&
+09 DEL )
+09 DEL {
 10 PRE enquanto
 10 DEL (
 10 IDE contador
@@ -56,5 +58,5 @@
 
 07 NMF 2..45
 09 OpMF >=1
-09 OpMF !sinal) {
+09 OpMF !sinal
 12 SII contador++

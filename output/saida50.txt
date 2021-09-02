@@ -55,6 +55,7 @@
 18 PRE se
 18 DEL (
 18 IDE numero
+18 REL !=
 18 IDE pi
 18 LOG ||
 18 IDE numero
@@ -69,4 +70,3 @@
 08 SII é
 08 SII aleatória
 10 CMF "Olá, mundo!"
-18 OpMF !=

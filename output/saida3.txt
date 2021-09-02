@@ -13,14 +13,13 @@
 07 REL =
 07 NRO 8
 07 NRO 1
-08
-10 DEL }
 
 01 NMF 5bomdia
-02 SII $$
+02 SIB $$
 03 OpMF +"isso é um teste;"
-04 CMF teste@
+04 SII teste@
 05 NMF 5+5
-06 NMF +-1
+06 OpMF +-1
 07 OpMF ++--
-09 CoMF {#
+10 CoMF {#
+}

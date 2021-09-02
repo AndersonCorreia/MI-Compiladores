@@ -11,7 +11,9 @@ class NumeroIncompletoState(EstadoAbertoInterface):
                     return self.automato.setEstado("NumeroMalFormado")
                 return self.automato.setEstado("NumeroIncompleto")
             if isDelimitador(char):
-                return self.automato.setEstado("NumeroCompleto")
+                quantidadeDePontos = lexema.count(".")
+                if quantidadeDePontos <= 1 and lexema[-1] != ".":
+                    return self.automato.setEstado("NumeroCompleto")
             return self.automato.setEstado("NumeroMalFormado")
             
         return self.automato.setEstado("CaractereInvalido")

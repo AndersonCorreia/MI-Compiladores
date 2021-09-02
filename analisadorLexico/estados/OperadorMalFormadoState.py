@@ -5,7 +5,7 @@ from re import findall
 class OperadorMalFormadoState(EstadoDeErrorInterface):
     
     def getProximoEstado(self, char, lexema):
-        return self.automato.setEstado("OperadorMalFormadoString")
+        return self.automato.setEstado("OperadorMalFormado")
         
     def caractereCompoemLexema(self):
         return False
@@ -17,7 +17,7 @@ class OperadorMalFormadoState(EstadoDeErrorInterface):
         return "OpMF"
     
     def finalDoArquivo(self,  lexema ):
-        return self.automato.setEstado("OperadorMalFormadoString")
+        return self.automato.setEstado("OperadorMalFormado")
     
     def pularDelimitadorSemToken(self):
         return False

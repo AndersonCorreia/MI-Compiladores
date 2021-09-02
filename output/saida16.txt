@@ -5,6 +5,14 @@
 05 DEL (
 05 IDE F
 05 REL >=
+05 DEL )
+05 DEL ;
+05 LOG &&
+05 DEL (
+05 IDE f
+05 REL <
+05 DEL )
+05 DEL ;
 06 PRE escreva
 06 DEL (
 07 IDE vari
@@ -13,6 +21,6 @@
 08 IDE vari_avel
 
 03 CaMF 'exemplo
-05 OpMF -10); && (f <);
+05 OpMF -10
 06 CaMF 'palavra)
 09 SIB @

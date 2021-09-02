@@ -8,6 +8,11 @@ class OperadorRelacionalIncompletoState(EstadoAbertoInterface):
             if isDelimitador(char):
                 if isOperadorRelacional(lexema):
                     return self.automato.setEstado("OperadorRelacionalCompleto")
+                if isOperadorLogico(lexema):
+                    return self.automato.setEstado("OperadorLogicoCompleto")
+                if isOperadorAritimetrico(lexema):
+                    return self.automato.setEstado("OperadorAritimetricoCompleto")
+                
                 return self.automato.setEstado("OperadorMalFormado")
             
             if ( maybeOperadorRelacional(lexema) ):

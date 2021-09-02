@@ -1,11 +1,12 @@
-01 PRE funcao 
+01 PRE funcao
 01 IDE oi
 01 DEL (
 01 DEL )
 01 DEL {
 02 PRE escreva
 02 DEL (
-02 CAD "Olá, tudo bom?"
 02 DEL )
 02 DEL ;
 03 DEL }
+
+02 CMF "Olá, tudo bom?"

@@ -9,6 +9,8 @@
 06 IDE n2
 06 REL =
 06 IDE n1
+06 DEL .
+06 NRO 4545
 08 PRE para
 08 DEL (
 08 PRE inteiro
@@ -60,7 +62,7 @@
 15 DEL }
 
 01 SII v@r!aveis
-06 OpMF +459849.4545
+06 OpMF +459849
 08 OpMF i++)
 09 SII n2>100
 10 CMF "sucesso!); {# ai sim,

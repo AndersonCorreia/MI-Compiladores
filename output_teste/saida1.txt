@@ -1,17 +1,25 @@
-01	ART	++
-02	LOG	&&
-03	REL	>
+01 PRE funcao
+01 DEL (
+01 DEL )
+01 DEL {
+03 DEL ;
+05 IDE teste
+05 REL =
+05 DEL ;
+06 IDE teste2
+06 REL =
+06 NRO 6
+07 IDE teste3
+07 REL =
+07 NRO 8
+07 NRO 1
 
-04	OpMF	++'a'
-05	OpMF	++"add"
-06	OpMF	++"
-07	OpMF	++'
-08	OpMF	&&'a'
-09	OpMF	&&"add"
-10	OpMF	&&"
-11	OpMF	&&'
-12	OpMF	>'a'
-13	OpMF	>"add"
-14	OpMF	>"
-15	OpMF	>'
-16	CMF	"
+01 NMF 5bomdia
+02 SIB $$
+03 OpMF +"isso é um teste;"
+04 SII teste@
+05 NMF 5+5
+06 OpMF +-1
+07 OpMF ++--
+10 CoMF {#
+}
