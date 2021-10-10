@@ -1,4 +1,4 @@
-from estruturaLexica import *
+from analisadorLexico.estruturaLexica import *
 class EstadoInterface:
     """
     Classe que representa a interface para o conjunto de estados do analisador léxico.

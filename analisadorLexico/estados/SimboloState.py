@@ -1,5 +1,5 @@
 from analisadorLexico.estados.interfaces.EstadoDeErrorInterface import EstadoDeErrorInterface
-from estruturaLexica import *
+from analisadorLexico.estruturaLexica import *
 
 class SimboloState(EstadoDeErrorInterface):
     

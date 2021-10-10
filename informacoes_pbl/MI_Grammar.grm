@@ -1,0 +1,216 @@
+﻿"Case sensitive" = 'True'
+"Start Symbol"  = <Program>
+               
+id      = {Letter}({AlphaNumeric}|'_')*
+number  = {Number}+('.'{Number}+)?
+cad     = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
+char    = ['']( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\'[''] ) ['']
+boolean = 'verdadeiro' | 'falso'
+                
+Comment Start = '{#'
+Comment End   = '#}'
+Comment Line  = '%'
+
+
+!-------------------------------------------------------------
+!Start of the program
+<Program> ::= <declaracao_reg> <declaration_const> <declaration_var> <function_declaration>
+!-------------------------------------------------------------
+
+!------------------------------------------------------------ 
+!- algoritimo function          
+<main_function> ::= <function_parameters> '{' <function_body> '}'
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+! Primitive Types or New Types
+<primitive_type> ::= 'inteiro' | 'real' | 'booleano' | 'char' | 'cadeia' | 'vazio'
+<type>           ::= <primitive_type> | id            
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+! Values Type
+<value>  ::= number | boolean | cad
+!-------------------------------------------------------------
+
+
+!-------------------------------------------------------------
+! Variables Block
+<declaration_var>  ::= variaveis '{' <declaration_var1>
+<declaration_var1> ::= <type> id <declaration_var2> | '}'
+<declaration_var2> ::= '=' <value> <declaration_var3> | <vector_matrix> | <declaration_var3>
+<declaration_var3> ::= ',' id <declaration_var2>  | ';' <declaration_var1>                               
+!-------------------------------------------------------------
+
+!- Declaration and Initialization of Vector and Matrix
+!- Ex:
+!- a[5];
+!- a[5] = [0,1,2,3,4];
+!- b[4], c[4];
+!- a[2][2];
+!- a[2][2] = [0,1,3; 4,5,6; 7,8,9]
+
+<vector_matrix>   ::= '[' number ']' <vector_matrix_1>
+<vector_matrix_1> ::= '[' number ']' <vector_matrix_2> | '=' <init_vector> <declaration_var3> | <declaration_var3>  !- Declara uma matriz ou inicializa o vetor ou finaliza a declaração. 
+<vector_matrix_2> ::= '=' <init_matrix> <declaration_var3> | <declaration_var3>                                     !- Inicializa a matriz ou finaliza a declaração. 
+
+<init_matrix>     ::= '[' <init_matrix_1>
+<init_matrix_1>   ::=     <value_with_IDE> <init_matrix_2>                                  !- Insere um valor para uma posição da matriz.                             
+<init_matrix_2>   ::= ',' <init_matrix_1> | ';' <init_matrix_1> | ']'              !- Após a inserção de um valor, pode vir um ';' ou ',' ou ']' para finalizar.
+
+<init_vector>     ::= '[' <init_vector_1>
+<init_vector_1>   ::=     <value_with_IDE> <init_vector_2>                                  !- Insere um valor para uma posição do vetor.                             
+<init_vector_2>   ::= ',' <init_vector_1> | ']'                                    !- Após a inserção de um valor, pode vir uma ',' ou ']' para finalizar.
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+! Constants Block
+<declaration_const>  ::= constantes '{' <declaration_const1>
+<declaration_const1> ::= <primitive_type> id '=' <value> <declaration_const2> | '}'
+<declaration_const2> ::= ',' id '=' <value> <declaration_const2> | ';' <declaration_const1>
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+! Declaration of Function Blocks
+<function_declaration>  ::= funcao <type> <function_declaration1>
+<function_declaration1> ::= algoritmo <main_function> | <function_declaration2>                       !- Verifica se é a função algoritmo ou outra qualquer.
+<function_declaration2> ::= id <function_parameters> '{' <function_body> '}' <function_declaration>   !- Permite declarar n funções até encontrar a função algortimo.
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+! Declaration of Function Parameters
+<function_parameters>   ::= '(' <function_parameters1> 
+<function_parameters1>  ::= <function_parameters2> id <function_parameters3> | ')'    !- Declara parâmetros ou não.
+<function_parameters2>  ::=      <primitive_type>        | id                         !- tipo primitivo ou um novo tipo criado a partir de um registro.                         
+<function_parameters3>  ::= '['']' <function_parameters4>  | <function_parameters5>   !- verifica se é um vetor ou variável qualquer.
+<function_parameters4>  ::= '['']' <function_parameters5>  | <function_parameters5>   !- verifica se é um vetor ou uma matriz.                                             
+<function_parameters5>  ::= ','  <function_parameters1>  | ')'                        !- verifica se irá declarar outros parâmetros ou irá finalizar.
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+! Declaration of Function Body
+<function_body>         ::= <declaration_const> <function_body1> | <function_body1>
+<function_body1>        ::= <declaration_var>   <function_body2> | <function_body2>
+<function_body2>        ::= <com_enquanto> <function_body2> | <com_para> <function_body2> | <se> <function_body2>
+                         | <write_cmd> <function_body2> | <read_cmd> <function_body2> | <functionCall> <function_body2> | <var_atr> <function_body2> | <retornar>
+<retornar> ::= retorno <retornar1> ';'
+<retornar1> ::= boolean | cad | char | <expressao> | <>
+!-------------------------------------------------------------
+             
+!-------------------------------------------------------------
+!- Function Call
+<functionCall> ::= id '(' <varList0>
+<varList0>     ::= <value_without_IDE> <varList2> | id <varList1> | <varList2>
+<varList1>     ::= <varList2>     | <v_m_access> <varList2> | <elem_registro> <varList2>     !- O identificador pode ser de uma variável, vetor, matriz ou acesso de algum registro.
+<varList2>     ::= ',' <varList0> | ')' ';'                                                  !- Finaliza a lista de parâmetros ou conti
+
+!- Vector and Matrix access
+<v_m_access>   ::= '[' <v_m_access1>
+<v_m_access1>  ::= id  <v_m_access2>                    | number ']' <v_m_access3>                         !- <v_m_access3> é para verificar se irá usar uma matriz  
+<v_m_access2>  ::= <elem_registro> ']' <v_m_access3>    | ']'        <v_m_access3>                         !- <v_m_access3> é para verificar se irá usar uma matriz 
+<v_m_access3>  ::= '[' <v_m_access1> |    
+!------------------------------------------------------------
+
+!-------------------------------------------------------------
+! Values Type
+<value_without_IDE>  ::= number | boolean | cad
+<value_with_IDE>     ::= <value_without_IDE> | id
+!-------------------------------------------------------------
+
+<com_body>        ::= <com_enquanto> <com_body> | <com_para> <com_body> | <se> <com_body> | <write_cmd> <com_body> | <read_cmd> <com_body> | <functionCall> <com_body> | <var_atr> <com_body> | <com_retornar>                       
+<com_retornar> ::= retorno <com_retornar1> ';' | <>
+<com_retornar1> ::= boolean | cad | char | <expressao> | <>
+
+
+!-------------------------------------------------------------
+! Comand enquanto
+<com_enquanto> ::= enquanto '(' <args> ')' '{' <com_body> '}'
+<args> ::= <exprRel> | <exprLog> | boolean |
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+!Comand para
+<com_para> ::= para '(' <init> <stop> ';'  <step>  ')' '{' <com_body> '}'
+<init> ::= <exprAtr>
+<exprAtr> ::= <var_atr>
+<stop> ::= <exprRel> | boolean |
+<step> ::= <exprRel> | <expr> |
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+! expressões
+<expressao> ::= <expr> | <exprRel> | <exprLog>
+
+! Expressões Aritméticas: !
+!<expr0> ::= number <expr2> | id <expr1> | '('<expr>')' <expr4> | <operatorAuto> id <expr4> ! acho que no fim das contas não precisa, um 5 solto em qualquer lugar seria uma exp
+<exprValorMod> ::=  number| <exprValorModID>
+<exprValorModID> ::= id | id <v_m_access> | id <elem_registro>
+<exprValor> ::= <operatorSoma> <exprValorMod> | <exprValorMod> | '('<expr>')'
+<exprMulti0> ::=  <exprValor> <exprMultiPos>
+<exprMulti> ::= <exprValor> <operatorMulti> <exprMulti0>
+<expr>   ::= <exprMulti> <expr2> | number <expr2> | <exprValorModID> <expr1> | '('<expr>')' <expr2> | <operatorAuto> id <expr2>
+<exprMultiPos> ::= <operatorMulti> <exprMulti0> | <>
+<expr1> ::= <operatorSoma><expr> | <operatorAuto><expr2> | <>
+<expr2> ::= <operatorSoma><expr> | <>
+<operatorSoma> ::= '+' | '-'
+<operatorMulti> ::= '*' | '/' 
+<operatorAuto> ::= '++' | '--'
+
+
+! Expressões Relacionais: !
+! o valor da comparação relacional pode ser uma expressão aritmética o que comtempla o valor unico de id e number
+<exprRelValor> ::= <expr> | boolean
+<exprRel>   ::= <exprRelValor> <operatorRel> <exprRel1> | '(' <exprRel> ')' <exprRel2>
+<exprRel1> ::= <exprRelValor> <exprRel2> | '(' <exprRel> ')' <exprRel2>
+<exprRel2> ::= <operatorRel><exprRel1> | <>
+<operatorRel> ::= '==' | '>=' | '<=' | '!=' | '>' | '<'
+
+! Expressões Logicas: !
+! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number
+<exprLogValor> ::= <exprRel> | boolean | <expr>
+<exprLog>   ::= <exprLogValor> <operatorLog> <exprLog1> | '(' <exprLog> ')' <exprLog2> | '!' <exprLog1> 
+<exprLog1> ::= <exprLogValor> <exprLog2>
+<exprLog2> ::= <operatorLog><exprLog1> | <>
+<operatorLog> ::= '&&' | '||'
+!-------------------------------------------------------------
+
+! Declaração de Registro !
+<declaracao_reg>    ::= registro id '{' <declaracao_reg1> |
+<declaracao_reg1>   ::= <primitive_type> id <declaracao_reg4> <declaracao_reg2> | id id <declaracao_reg4> <declaracao_reg2> 
+<declaracao_reg2>   ::= ',' id <declaracao_reg2> | ';' <declaracao_reg1> | ';' <declaracao_reg3>
+<declaracao_reg3>   ::= '}' <declaracao_reg>
+<declaracao_reg4>   ::= <v_m_access> |
+!-------------------------------------------------------------
+
+!- Registry Access
+<elem_registro>         ::= '.' id <nested_elem_registro>
+<nested_elem_registro>  ::= '.' id <nested_elem_registro1> | <v_m_access> <nested_elem_registro1> |     !- Última opção é o vazio.
+<nested_elem_registro1> ::= <elem_registro> |                                                           !- Última opção é o vazio.
+!-------------------------------------------------------------
+                          
+! Se, Se Senão, Senão !
+<se>                ::= 'se' '(' <se_condition_body>
+<se_condition_body> ::= <exprRel> ')' '{' <se_body> | boolean ')' '{' <se_body> | <exprLog> ')' '{' <se_body> | id ')' '{' <se_body>           
+<se_body>           ::= <se_intern_body> |  <se_intern_body> <se> | <se_intern_body> <se_senao> | <se_intern_body> <senao> 
+<se_intern_body>    ::= <com_body> '}' 
+<se_senao>          ::= 'se senao' '(' <se_senao_intern_body>
+<se_senao_intern_body> ::=  <exprLog> ')' '{' <se_senao_body> | <exprRel> ')' '{' <se_senao_body> | boolean ')' '{' <se_senao_body> | id ')' '{' <se_senao_body> 
+<se_senao_body>     ::= <se_intern_body> | <se_intern_body> <senao> | <se_intern_body> <se_senao>
+<senao>             ::= 'senao' '{' <se_intern_body>
+!-------------------------------------------------------------
+
+! Leia e escreva
+<write_cmd>   ::= escreva '(' <write_value> <write_value_list> ')' ';'
+<write_value_list> ::= ',' <write_value> <write_value_list> |
+<write_value> ::= id | number | cad | char | <vector_matrix> | <elem_registro>
+
+<read_cmd> ::= leia '(' <read_value> <read_value_list> ')' ';'
+<read_value_list> ::= ',' <read_value> <read_value_list> |
+<read_value> ::= id | <vector_matrix> | <elem_registro>
+!-------------------------------------------------------------
+
+! Atribuições de Variáveis 
+<var_atr> ::= id <atr> | id <v_m_access> <atr> | id <elem_registro> <atr>
+<atr> ::= '=' boolean <atr_1> | '=' cad <atr_1> | '=' char <atr_1> | '=' <expr> <atr_1> | '=' <functionCall> ',' <var_atr> | '=' <functionCall>
+<atr_1> ::= ',' <var_atr> | ';'
+!-------------------------------------------------------------

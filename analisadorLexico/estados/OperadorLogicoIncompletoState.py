@@ -1,5 +1,5 @@
 from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
-from estruturaLexica import *
+from analisadorLexico.estruturaLexica import *
 
 class OperadorLogicoIncompletoState(EstadoAbertoInterface):
     

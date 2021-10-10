@@ -1,5 +1,5 @@
-from estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
-from estruturaLexica import *
+from analisadorLexico.estados.interfaces.EstadoAbertoInterface import EstadoAbertoInterface
+from analisadorLexico.estruturaLexica import *
 
 class TokenVazioState(EstadoAbertoInterface):
     

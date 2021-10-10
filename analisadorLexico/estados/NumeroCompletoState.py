@@ -1,5 +1,5 @@
 from analisadorLexico.estados.interfaces.EstadoCompletoInterface import EstadoCompletoInterface
-from estruturaLexica import *
+from analisadorLexico.estruturaLexica import *
 
 class NumeroCompletoState(EstadoCompletoInterface):
     

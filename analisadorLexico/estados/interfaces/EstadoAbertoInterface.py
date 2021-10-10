@@ -1,4 +1,4 @@
-from estados.interfaces.EstadoInterface import EstadoInterface
+from analisadorLexico.estados.interfaces.EstadoInterface import EstadoInterface
 
 class EstadoAbertoInterface(EstadoInterface):
     

@@ -31,7 +31,7 @@ from analisadorLexico.estados.CharIncompletoState import CharIncompletoState
 from analisadorLexico.estados.CharMalFormadoState import CharMalFormadoState
 from analisadorLexico.estados.CharState import CharState
 from analisadorLexico.estados.TokenVazioState import TokenVazioState
-from estruturaLexica import *
+from analisadorLexico.estruturaLexica import *
 
 class TokenAutomato:
     

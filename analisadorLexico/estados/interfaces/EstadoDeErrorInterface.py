@@ -1,5 +1,5 @@
-from estados.interfaces.EstadoInterface import EstadoInterface
-from estruturaLexica import *
+from analisadorLexico.estados.interfaces.EstadoInterface import EstadoInterface
+from analisadorLexico.estruturaLexica import *
 
 class EstadoDeErrorInterface(EstadoInterface):
     
