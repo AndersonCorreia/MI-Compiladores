@@ -10,7 +10,7 @@ class AnalisadorSintatico:
         if len(self.tokens) > 0:
             self.token = self.token = self.tokens[0]
         else:
-            self.token = None
+            self.token = {'tipo': 'EOF', 'lexema': ''} #fim dos tokens
     
     def analisarSintaxe(self):
         
@@ -42,6 +42,49 @@ class AnalisadorSintatico:
     
     def program(self):
         self.type()#teste reconhecendo se no arquivo existe apenas um token do tipo type
+        self.declaracao_reg()
+    
+    def declaracao_reg(self):
+        
+        if( self.token['lexema'] == 'registro' ):
+            self.match("PRE", "registro")
+            self.match("IDE")
+            self.match("DEL", "{")
+            self.declaracao_reg1()
+        else:
+            return # declaração vazia
+        
+    def declaracao_reg1(self):
+        
+        if( proximo("type", self.token) ):
+            self.type()
+            self.match("IDE")
+            #self.declaracao_reg4() array falta fazer
+            self.declaracao_reg2()
+        else:
+            raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+         
+    def declaracao_reg2(self):
+        
+        if( self.token['lexema'] == ',' ):
+            self.match("DEL", ",")
+            self.match("IDE")
+            self.declaracao_reg2()
+        elif( self.token['lexema'] == ';' ):
+            self.match("DEL", ";")
+            self.declaracao_reg3()
+        else:
+            raise Exception('Erro sintático', 'Esperado: , ou ;, Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+        
+    def declaracao_reg3(self):
+        
+        if( self.token['lexema'] == '}' ):
+            self.match("DEL", "}")
+            self.declaracao_reg()
+        elif( proximo("declaracao_reg1", self.token) ):
+            self.declaracao_reg1()
+        else:
+            raise Exception('Erro sintático', 'Encontrados: ' + self.token['tipo'] + ' ' + self.token['lexema'])
         
     def type(self):
         

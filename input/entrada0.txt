@@ -1,1 +1,6 @@
 inteiro
+registro teste {
+    inteiro a,b,c;
+    real d,e,f;
+    char letra;
+}
