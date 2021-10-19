@@ -1,6 +1,5 @@
-inteiro
 registro teste errado
-registro  iden {
+registro iden {
     inteiro a,b,c;
     real d,e,f;
     char letra;

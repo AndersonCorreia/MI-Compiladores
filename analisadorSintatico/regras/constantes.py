@@ -2,6 +2,9 @@ from gramatica import *
 
 class Constantes:
 
+  def __init__(self):
+    pass
+  
   def start(self):
     if(self.token['lexema'] == 'constantes'):
       self.match("PRE", "constantes")
@@ -10,7 +13,7 @@ class Constantes:
       self.step2()
       
   def step2(self):
-    if(proximo("type", self.token)):
+    if(primeiro("type", self.token)):
         self.type()
         self.match("IDE")
         self.step3()

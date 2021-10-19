@@ -19,4 +19,4 @@ for arquivo in arquivos:
     tokens = automato.getListaTokens()
     analisadorSintatico = AnalisadorSintatico(tokens)
     analisadorSintatico.analisarSintaxe()
-    exit(0)
+    # exit(0)

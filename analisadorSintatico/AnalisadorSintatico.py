@@ -62,7 +62,7 @@ class AnalisadorSintatico:
         #se essas condições não são atendidas um erro é lançado, para uma recuperação posterior
         
         raise Exception('Erro sintático', erro + ', Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
-    
+      
     def _match(self, tipo, lexema = None):
         
         if self.token['tipo'] == tipo:
@@ -78,7 +78,7 @@ class AnalisadorSintatico:
     def Program(self):
         
         try:
-            self.type()#teste reconhecendo se no arquivo existe apenas um token do tipo type
+            # self.type()#teste reconhecendo se no arquivo existe apenas um token do tipo type
             self.declaracao_reg()
             self.contantes()
             self.variaveis()
@@ -87,7 +87,7 @@ class AnalisadorSintatico:
                 if primeiro("Program", self.token):
                     return self.Program()
                 else:
-                    self.registrarErro("Era esperado a declaração de um registro")
+                    self.proximoToken()
     
     def declaracao_reg(self):
         
@@ -106,7 +106,7 @@ class AnalisadorSintatico:
                 elif sequinte("declaracao_reg", self.token):
                     return
                 else:
-                    self.registrarErro("Era esperado a declaração de um registro")
+                    self.proximoToken()
             raise e
         
     def declaracao_reg1(self):
@@ -118,7 +118,9 @@ class AnalisadorSintatico:
                 #self.declaracao_reg4() array falta fazer
                 self.declaracao_reg2()
             else:
-                raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+                erro = 'Esperado: type'
+                self.registrarErro(erro)
+                raise Exception('Erro sintático', erro + 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
         except Exception as e:
             if primeiro("declaracao_reg1", self.token):
                 return self.declaracao_reg1()
@@ -138,6 +140,8 @@ class AnalisadorSintatico:
                 self.match("DEL", ";")
                 self.declaracao_reg3()
             else:
+                erro = 'Esperado: , ou ;'
+                self.registrarErro(erro)
                 raise Exception('Erro sintático', 'Esperado: , ou ;, Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
         except Exception as e:
             if primeiro("declaracao_reg2", self.token):
@@ -169,10 +173,12 @@ class AnalisadorSintatico:
                 raise e
                 
     def contantes(self):
-        Constantes.start()
+        consts = Constantes()
+        consts.start()
 
     def variaveis(self):
-        Variaveis.start()
+        vars = Variaveis()
+        vars.start()
         
     def type(self):
         

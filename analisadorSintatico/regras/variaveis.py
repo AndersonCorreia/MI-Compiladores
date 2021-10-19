@@ -13,7 +13,7 @@ class Variaveis:
       self.step2()
       
   def step2(self):
-    if(proximo("type", self.token)):
+    if(primeiro("type", self.token)):
         self.type()
         self.match("IDE")
         self.step3()
