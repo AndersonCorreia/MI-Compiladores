@@ -1,3 +1,5 @@
+from analisadorSintatico.regras.constantes import Constantes
+from analisadorSintatico.regras.variaveis import Variaveis
 from gramatica import *
 
 class AnalisadorSintatico:
@@ -78,6 +80,8 @@ class AnalisadorSintatico:
         try:
             self.type()#teste reconhecendo se no arquivo existe apenas um token do tipo type
             self.declaracao_reg()
+            self.contantes()
+            self.variaveis()
         except Exception as e:
             while self.token['tipo'] != 'EOF':
                 if primeiro("Program", self.token):
@@ -163,6 +167,12 @@ class AnalisadorSintatico:
                 return
             else:
                 raise e
+                
+    def contantes(self):
+        Constantes.start()
+
+    def variaveis(self):
+        Variaveis.start()
         
     def type(self):
         
