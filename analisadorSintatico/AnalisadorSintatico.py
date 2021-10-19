@@ -1,3 +1,5 @@
+from analisadorSintatico.regras.constantes import Constantes
+from analisadorSintatico.regras.variaveis import Variaveis
 from gramatica import *
 
 class AnalisadorSintatico:
@@ -43,6 +45,8 @@ class AnalisadorSintatico:
     def program(self):
         self.type()#teste reconhecendo se no arquivo existe apenas um token do tipo type
         self.declaracao_reg()
+        self.contantes()
+        self.variaveis()
     
     def declaracao_reg(self):
         
@@ -110,3 +114,9 @@ class AnalisadorSintatico:
         else:
             print(self.token)
             raise Exception('Erro sintático', 'Esperado: inteiro, real, char, booleano, cadeia, vazio, Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+
+    def contantes(self):
+        Constantes.start()
+
+    def variaveis(self):
+        Variaveis.start()
