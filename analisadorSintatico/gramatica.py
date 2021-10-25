@@ -9,12 +9,21 @@ primeiros = {
 }
 
 def primeiro(NT, token):
+    # exemplos de como estruturar os ifs:
+    # if NT == "declaracao_reg1":
+    #     #se o primeiro do NT for o primeiro de outro NT
+    #     return primeiro("type", token)
+    # elif NT == "type":
+    #     if primeiro("primitive_type", token):
+    #         #se o primeiro do NT for o primeiro de outro NT ou algum Terminal que é verificado no final
+    #         return True
+    
     if NT == "declaracao_reg1":
-        #se o primeiro do NT for o primeiro de outro NT
         return primeiro("type", token)
+    elif NT == "declaracao_reg4":
+        return primeiro("v_m_access", token)
     elif NT == "type":
         if primeiro("primitive_type", token):
-            #se o primeiro do NT for o primeiro de outro NT ou algum Terminal que é verificado no final
             return True
     
     if NT in primeiros:

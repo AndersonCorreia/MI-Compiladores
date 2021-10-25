@@ -115,7 +115,7 @@ class AnalisadorSintatico:
             if( primeiro("type", self.token) ):
                 self.type()
                 self.match("IDE", proximoNT="declaracao_reg2")
-                #self.declaracao_reg4() array falta fazer
+                self.declaracao_reg4()
                 self.declaracao_reg2()
             else:
                 erro = 'Esperado: type'
@@ -171,7 +171,39 @@ class AnalisadorSintatico:
                 return
             else:
                 raise e
-                
+            
+    def declaracao_reg4(self):
+        
+        try:
+            if( primeiro("v_m_access", self.token) ):
+                self.v_m_access()
+            else:
+                return # declaração vazia
+            
+        except Exception as e:
+            if primeiro("declaracao_reg4", self.token):
+                return self.declaracao_reg4()
+            elif sequinte("declaracao_reg4", self.token):
+                return
+            else:
+                raise e
+    
+    def v_m_access(self):
+        try:
+            # if( primeiro("v_m_access", self.token) ):
+            #     self.v_m_access()
+            # else:
+            #     return # declaração vazia
+            return
+            
+        except Exception as e:
+            if primeiro("v_m_access", self.token):
+                return self.v_m_access()
+            elif sequinte("v_m_access", self.token):
+                return
+            else:
+                raise e
+                  
     def contantes(self):
         consts = Constantes()
         consts.start()
