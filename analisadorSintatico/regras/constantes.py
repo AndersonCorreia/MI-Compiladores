@@ -1,4 +1,4 @@
-from gramatica import *
+from gramaticaHelper import *
 
 class Constantes:
 
