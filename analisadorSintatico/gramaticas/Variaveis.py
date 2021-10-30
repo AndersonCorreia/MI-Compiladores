@@ -1,4 +1,3 @@
-from gramaticaHelper import *
 
 class Variaveis:
 

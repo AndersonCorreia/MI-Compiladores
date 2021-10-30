@@ -1,40 +1,35 @@
-from gramaticaHelper import *
 
 class Constantes:
-
-  def __init__(self):
-    pass
   
-  def start(self):
+  def declaration_const(self):
     if(self.token['lexema'] == 'constantes'):
       self.match("PRE", "constantes")
       self.match("IDE")
       self.match("DEL", "{")
-      self.step2()
+      self.declaration_const1()
       
-  def step2(self):
-    if(primeiro("type", self.token)):
-        self.type()
+  def declaration_const1(self):
+    if(primeiro("primitive_type", self.token)):
+        self.primitive_type()
         self.match("IDE")
-        self.step3()
+        self.match("REL", "=")
+        if (self.match("NRO") or self.match("CAD")):
+          self.declaration_const2()
+        else:
+          raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
     else:
         raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
-    
-  def step3(self):
-    if(self.token['lexema'] == '='):
-      self.match("REL")
-      if (self.match("NRO") or self.match("CAD")):
-        self.step4()
-      else:
-        raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
-    else:
-      raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
-
-  def step4(self):
+      
+  def declaration_const2(self):
     if(self.token['lexema'] == ','):
       self.match("DEL", ",")
       self.match("IDE")
-      self.step3()
+      if(self.token['lexema'] == '='):
+        self.match("REL")
+        if (self.match("NRO") or self.match("CAD")):
+          self.declaration_const2()
+        else:
+          raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
     elif(self.token['lexema'] == ';'):
       self.match("DEL", ";")
       self.step5()
