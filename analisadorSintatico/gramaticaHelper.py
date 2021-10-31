@@ -62,7 +62,6 @@ sequintes = {
 }
 
 def sequinte(NT, token):
-    considerar_palavra_vazia = False
     if NT == "primitive_type": 
         if sequinte("type", token):
             return True

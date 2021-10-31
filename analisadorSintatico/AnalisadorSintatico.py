@@ -71,10 +71,13 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis):
                 self.proximoToken()
                 return True
     
-    def registrarErro(self, erro):
+    def registrarErro(self, erro, raiseException = True):
         self.token['erro_sintatico'] = erro
         self.erros.append(self.token)
+        erroMsg = erro + '; Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'"
         self.proximoToken()
+        if raiseException:
+            raise Exception('Erro sintático', erroMsg)
                 
     def Program(self):
         

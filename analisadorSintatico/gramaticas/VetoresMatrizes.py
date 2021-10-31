@@ -12,7 +12,6 @@ class VetoresMatrizes:
             else:
                 erro = "Esperado: lexema '['"
                 self.registrarErro(erro)
-                raise Exception('Erro sintático', erro + '; Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
             return
             
         except Exception as e:
