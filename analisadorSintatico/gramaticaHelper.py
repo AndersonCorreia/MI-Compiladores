@@ -51,15 +51,16 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
         return True
         
     return False
- 
- 
+
+def primeiro_sem_palavra_vazia(NT, token):
+    return primeiro(NT, token, considerar_palavra_vazia=False) 
 
 sequintes = {
     "primitive_type": { 'IDE': []},
     "type": { 'IDE': []},
     "v_m_access": { 'DEL' : ['[']},
 }
-   
+
 def sequinte(NT, token):
     considerar_palavra_vazia = False
     if NT == "primitive_type": 
@@ -72,19 +73,19 @@ def sequinte(NT, token):
         if sequinte("elem_registro", token):
             return True
     elif NT == "v_m_access": 
-        if sequinte("declaracao_reg4", token) or primeiro("nested_elem_registro1", token, considerar_palavra_vazia) or sequinte("nested_elem_registro", token) or sequinte("read_value0", token):
+        if sequinte("declaracao_reg4", token) or primeiro_sem_palavra_vazia("nested_elem_registro1", token) or sequinte("nested_elem_registro", token) or sequinte("read_value0", token):
             return True
     elif NT == "v_m_access1": 
         if sequinte("v_m_access", token):
             return True
     elif NT == "type": 
-        if primeiro("function_declaration1", token):
+        if primeiro_sem_palavra_vazia("function_declaration1", token):
             return True
     elif NT == "declaracao_reg": 
-        if primeiro("declaration_const", token):
+        if primeiro_sem_palavra_vazia("declaration_const", token):
             return True
     elif NT == "declaracao_reg4": 
-        if primeiro("declaracao_reg2", token):
+        if primeiro_sem_palavra_vazia("declaracao_reg2", token):
             return True
     
     if NT in sequintes:
