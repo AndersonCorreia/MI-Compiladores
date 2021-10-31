@@ -166,7 +166,7 @@ Comment Line  = '%'
 <declaracao_reg1>   ::= <type> id <declaracao_reg4> <declaracao_reg2> 
 <declaracao_reg2>   ::= ',' id <declaracao_reg2> | ';' <declaracao_reg3>
 <declaracao_reg3>   ::= '}' <declaracao_reg> | <declaracao_reg1>
-<declaracao_reg4>   ::= <v_m_access> |
+<declaracao_reg4>   ::= <v_m_access> | <>
 !-------------------------------------------------------------
 
 !- Registry Access
