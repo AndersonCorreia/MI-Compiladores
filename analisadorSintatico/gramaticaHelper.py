@@ -11,10 +11,17 @@ primeiros = {
     "nested_elem_registro": { "DEL": ['.'] },
     "v_m_access": { 'DEL' : ['[']},
     "v_m_access1": { 'DEL' : ['[']},
+    "expr_valor_mod": { 'NRO': []},
+    "operator_soma": { 'NRO': ['+', '-']},
+    "operator_multi": { 'NRO': ['*', '/']},
+    "operator_auto0": { 'NRO': ['++', '--']},
+    "operator_auto": { 'NRO': ['++', '--']},
+    "expr_number": { 'IDE': ['(']},
 }
 
 NT_contem_palavra_vazia = [ 
-    "declaracao_reg", "declaracao_reg4", "nested_elem_registro", "v_m_access1"
+    "declaracao_reg", "declaracao_reg4", "nested_elem_registro", "v_m_access1",
+    "expr_multi_pos", "expr_art1", "operator_auto",
 ]
 
 def primeiro(NT, token, considerar_palavra_vazia=True):
@@ -41,6 +48,24 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
             return True
     elif NT == "nested_elem_registro":
         if primeiro("v_m_access", token):
+            return True
+    elif NT == "expr_valor_mod":
+        if primeiro("operator_auto0", token) or primeiro("read_value", token):
+            return True
+    elif NT == "expr_multi":
+        if primeiro("operator_soma", token) or primeiro("expr_valor_mod", token):
+            return True
+    elif NT == "expr_art":
+        if primeiro("expr_multi", token):
+            return True
+    elif NT == "expr_multi_pos":
+        if primeiro("operator_multi", token):
+            return True
+    elif NT == "expr_art1":
+        if primeiro("operator_soma", token):
+            return True
+    elif NT == "expr_number":
+        if primeiro("expr_art", token):
             return True
     
     if NT in primeiros:
@@ -85,6 +110,12 @@ def sequinte(NT, token):
             return True
     elif NT == "declaracao_reg4": 
         if primeiro_sem_palavra_vazia("declaracao_reg2", token):
+            return True
+    elif NT == "expr_art": 
+        if primeiro_sem_palavra_vazia("expr_rel1", token) or sequinte('expr_rel'):
+            return True
+    elif NT == "expr_number": 
+        if sequinte("expr_art", token):
             return True
     
     if NT in sequintes:

@@ -72,7 +72,6 @@ class Registro:
             else:
                 erro = "Esperado: '}' ou declaracao_reg1"
                 self.registrarErro(erro)
-                raise Exception('Erro sintático', erro +'; encontrados: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
             
         except Exception as e:
             if primeiro("declaracao_reg3", self.token):
@@ -108,7 +107,6 @@ class Registro:
             else:
                 erro = "Esperado: '.'"
                 self.registrarErro(erro)
-                raise Exception('Erro sintático', erro +'; encontrados: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
             
         except Exception as e:
             if primeiro("elem_registro", self.token):
