@@ -1,9 +1,9 @@
 from analisadorSintatico.gramaticas.Registro import Registro
-from analisadorSintatico.regras.constantes import Constantes
-from analisadorSintatico.regras.variaveis import Variaveis
+from analisadorSintatico.gramaticas.Constantes import Constantes
+from analisadorSintatico.gramaticas.Variaveis import Variaveis
 from gramaticaHelper import *
 
-class AnalisadorSintatico (Registro):
+class AnalisadorSintatico (Registro, Constantes, Variaveis):
     
     def __init__(self, tokens):
         self.tokens = tokens
