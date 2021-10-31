@@ -12,11 +12,15 @@ primeiros = {
     "v_m_access": { 'DEL' : ['[']},
     "v_m_access1": { 'DEL' : ['[']},
     "expr_valor_mod": { 'NRO': []},
-    "operator_soma": { 'NRO': ['+', '-']},
-    "operator_multi": { 'NRO': ['*', '/']},
-    "operator_auto0": { 'NRO': ['++', '--']},
-    "operator_auto": { 'NRO': ['++', '--']},
+    "operator_soma": { 'ART': ['+', '-']},
+    "operator_multi": { 'ART': ['*', '/']},
+    "operator_auto0": { 'ART': ['++', '--']},
+    "operator_auto": { 'ART': ['++', '--']},
+    "operator_rel" : { 'REL': ['<', '>', '<=', '>=', '==', '!=']},
+    "operator_log" : { 'LOG': ['&&', '||']},
     "expr_number": { 'IDE': ['(']},
+    "expr_rel": { "PRE": ["verdadeiro", "falso"]},
+    "expressao": { "DEL": ["(",], "LOG": ["!"]},
 }
 
 NT_contem_palavra_vazia = [ 
@@ -67,6 +71,12 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     elif NT == "expr_number":
         if primeiro("expr_art", token):
             return True
+    elif NT == "expr_rel":
+        if primeiro("expr_art", token):
+            return True
+    elif NT == "expressao":
+        if primeiro("expr_rel", token):
+            return True
     
     if NT in primeiros:
         if token['tipo'] in primeiros[NT]:
@@ -84,6 +94,7 @@ sequintes = {
     "primitive_type": { 'IDE': []},
     "type": { 'IDE': []},
     "v_m_access": { 'DEL' : ['[']},
+    "expressao": { "DEL": [")", ";", ","]},
 }
 
 def sequinte(NT, token):
@@ -117,11 +128,25 @@ def sequinte(NT, token):
     elif NT == "expr_number": 
         if sequinte("expr_art", token):
             return True
+    elif NT == "expr_rel": 
+        if primeiro_sem_palavra_vazia("expr_log1", token) or sequinte("expressao"):
+            return True
+    elif NT in ["expr_rel1", "expr_rel0"]: 
+        if sequinte("expr_rel", token):
+            return True
+    elif NT in ["expr_log1", "expr_log2"]: 
+        if sequinte("expressao", token):
+            return True
+    elif NT == "expressao": 
+        if sequinte("value_with_expressao"):
+            #sequinte de outros terminais são ')' e ';' que já estão na lista de sequinte
+            # mantendo o value_with_expressao por segurança já que o mais usado
+            return True
     
     if NT in sequintes:
         if token['tipo'] in sequintes[NT]:
             if sequintes[NT][token['tipo']] == [] or token['lexema'] in sequintes[NT][token['tipo']]:
                 return True
-        
+    
     return False
     
