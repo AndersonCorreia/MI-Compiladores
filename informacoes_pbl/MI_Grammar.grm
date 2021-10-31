@@ -44,8 +44,8 @@ Comment Line  = '%'
 !- a[2][2];
 !- a[2][2] = [0,1,3; 4,5,6; 7,8,9]
 
-<vector_matrix>   ::= '[' <exprNumber> ']' <vector_matrix_1>
-<vector_matrix_1> ::= '[' <exprNumber> ']' <vector_matrix_2> | '=' <init_vector> <declaration_var3> | <declaration_var3>  !- Declara uma matriz ou inicializa o vetor ou finaliza a declaração. 
+<vector_matrix>   ::= '[' <expr_number> ']' <vector_matrix_1>
+<vector_matrix_1> ::= '[' <expr_number> ']' <vector_matrix_2> | '=' <init_vector> <declaration_var3> | <declaration_var3>  !- Declara uma matriz ou inicializa o vetor ou finaliza a declaração. 
 <vector_matrix_2> ::= '=' <init_matrix> <declaration_var3> | <declaration_var3>                                     !- Inicializa a matriz ou finaliza a declaração. 
 
 <init_matrix>     ::= '[' <init_matrix_1>
@@ -98,9 +98,8 @@ Comment Line  = '%'
 <varList2>     ::= ',' <varList1> | <>                                                 !- Finaliza a lista de parâmetros ou conti
 
 !- Vector and Matrix access
-<v_m_access>   ::= '[' <v_m_access1>
-<v_m_access1>  ::=  <exprNumber> ']' <v_m_access2>  !- <v_m_access2> é para verificar se irá usar uma matriz
-<v_m_access2>  ::= '[' <v_m_access1> |    
+<v_m_access>   ::= '[' <expr_number> ']' <v_m_access1>
+<v_m_access1>  ::= <v_m_access> |    
 !------------------------------------------------------------
 
 !-------------------------------------------------------------
@@ -132,33 +131,33 @@ Comment Line  = '%'
 !-------------------------------------------------------------
 ! expressões
 ! Expressões numericas( apenas uma expressão aritmética e que permite o uso de '(' ')' ): !
-<exprNumber>   ::= <exprArt> | '(' <exprNumber> ')' <exprMultiPos> <exprNumber1>
-<exprNumber1>  ::= <operatorSoma> <exprNumber> | <>
+<expr_number>   ::= <expr_art> | '(' <expr_number> ')' <expr_multi_pos> <expr_number1>
+<expr_number1>  ::= <operator_soma> <expr_number> | <>
 
 ! Expressões Aritméticas: !
-<exprValorMod> ::=  number | <operatorAuto0> <read_value> | <read_value> <operatorAuto> ! um IDE pode ter operações de incremento/decremento
-<exprMulti> ::= <operatorSoma> <exprValorMod> <exprMultiPos> | <exprValorMod> <exprMultiPos>
-<exprArt>   ::= <exprMulti> <expr1> 
-<exprMultiPos> ::= <operatorMulti> <exprMulti> | <>
-<expr1> ::= <operatorSoma> <exprNumber> | <>
-<operatorSoma> ::= '+' | '-'
-<operatorMulti> ::= '*' | '/'
-<operatorAuto0> ::= '++' | '--'
-<operatorAuto> ::= '++' | '--' | <>
+<expr_valor_mod> ::=  number | <operator_auto0> <read_value> | <read_value> <operator_auto> ! um IDE pode ter operações de incremento/decremento
+<expr_multi> ::= <operator_soma> <expr_valor_mod> <expr_multi_pos> | <expr_valor_mod> <expr_multi_pos>
+<expr_art>   ::= <expr_multi> <expr_art1> 
+<expr_multi_pos> ::= <operator_multi> <expr_multi> | <>
+<expr_art1> ::= <operator_soma> <expr_number> | <>
+<operator_soma> ::= '+' | '-'
+<operator_multi> ::= '*' | '/'
+<operator_auto0> ::= '++' | '--'
+<operator_auto> ::= '++' | '--' | <>
 
 
 ! Expressões Relacionais: !
 ! o valor da comparação relacional pode ser uma expressão aritmética o que comtempla o valor unico de id e number
-<exprRel0>   ::= <exprRel> | '(' <expressao> ')'
-<exprRel>   ::= <exprArt> <exprRel1> | boolean <exprRel1>
-<exprRel1> ::= <operatorRel> <exprRel0> | <>
-<operatorRel> ::= '==' | '>=' | '<=' | '!=' | '>' | '<'
+<expr_rel0>   ::= <expr_rel> | '(' <expressao> ')'
+<expr_rel>   ::= <expr_art> <expr_rel1> | boolean <expr_rel1>
+<expr_rel1> ::= <operator_rel> <expr_rel0> | <>
+<operator_rel> ::= '==' | '>=' | '<=' | '!=' | '>' | '<'
 
 ! Expressões Logicas: !
 ! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number e boolean
-<expressao>   ::= <exprRel> <exprLog1> | '(' <expressao> ')' <exprLog2> | '!' <expressao> 
-<exprLog1> ::=  <operatorLog> <expressao> | <>
-<exprLog2> ::= <operatorLog> <expressao> | <operatorMulti> <expressao> | <operatorRel> <expressao> | <operatorSoma> <expressao> | <>
+<expressao>   ::= <expr_rel> <expr_log1> | '(' <expressao> ')' <expr_log2> | '!' <expressao> 
+<expr_log1> ::=  <operatorLog> <expressao> | <>
+<expr_log2> ::= <operatorLog> <expressao> | <operator_multi> <expressao> | <operator_rel> <expressao> | <operator_soma> <expressao> | <>
 <operatorLog> ::= '&&' | '||'
 !-------------------------------------------------------------
 
