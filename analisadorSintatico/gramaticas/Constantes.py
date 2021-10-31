@@ -16,9 +16,9 @@ class Constantes:
         if (self.match("NRO") or self.match("CAD")):
           self.declaration_const2()
         else:
-          raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+          raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
     else:
-        raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+        raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
       
   def declaration_const2(self):
     if(self.token['lexema'] == ','):
@@ -29,15 +29,15 @@ class Constantes:
         if (self.match("NRO") or self.match("CAD")):
           self.declaration_const2()
         else:
-          raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+          raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
     elif(self.token['lexema'] == ';'):
       self.match("DEL", ";")
       self.step5()
     else:
-        raise Exception('Erro sintático', 'Esperado: , ou ;, Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+        raise Exception('Erro sintático', 'Esperado: , ou ;, Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
   
   def step5(self):
     if(self.token['lexema'] == '}'):
         self.match("DEL", "}")
     else:
-        raise Exception('Erro sintático', 'Encontrados: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+        raise Exception('Erro sintático', 'Encontrados: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")

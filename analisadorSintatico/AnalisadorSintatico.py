@@ -62,7 +62,7 @@ class AnalisadorSintatico (Registro):
                 return True
         #se essas condições não são atendidas um erro é lançado, para uma recuperação posterior
         
-        raise Exception('Erro sintático', erro + ', Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+        raise Exception('Erro sintático', erro + ', Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
       
     def _match(self, tipo, lexema = None):
         

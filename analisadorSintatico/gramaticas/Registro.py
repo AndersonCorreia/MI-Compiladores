@@ -32,7 +32,7 @@ class Registro:
             else:
                 erro = 'Esperado: type'
                 self.registrarErro(erro)
-                raise Exception('Erro sintático', erro + 'Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+                raise Exception('Erro sintático', erro + '; Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
         except Exception as e:
             if primeiro("declaracao_reg1", self.token):
                 return self.declaracao_reg1()
@@ -52,9 +52,9 @@ class Registro:
                 self.match("DEL", ";")
                 self.declaracao_reg3()
             else:
-                erro = 'Esperado: , ou ;'
+                erro = "Esperado: ',' ou ';'"
                 self.registrarErro(erro)
-                raise Exception('Erro sintático', 'Esperado: , ou ;, Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+                raise Exception('Erro sintático', erro + '; Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
         except Exception as e:
             if primeiro("declaracao_reg2", self.token):
                 return self.declaracao_reg2()
@@ -72,9 +72,9 @@ class Registro:
             elif( primeiro("declaracao_reg1", self.token) ):
                 self.declaracao_reg1()
             else:
-                erro = 'Esperado: } ou declaracao_reg1'
+                erro = "Esperado: '}' ou declaracao_reg1"
                 self.registrarErro(erro)
-                raise Exception('Erro sintático', erro +', encontrados: ' + self.token['tipo'] + ' ' + self.token['lexema'])
+                raise Exception('Erro sintático', erro +'; encontrados: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
             
         except Exception as e:
             if primeiro("declaracao_reg3", self.token):

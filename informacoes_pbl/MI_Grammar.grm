@@ -99,7 +99,7 @@ Comment Line  = '%'
 
 !- Vector and Matrix access
 <v_m_access>   ::= '[' <expr_number> ']' <v_m_access1>
-<v_m_access1>  ::= <v_m_access> |    
+<v_m_access1>  ::= '[' <expr_number> ']' |    
 !------------------------------------------------------------
 
 !-------------------------------------------------------------

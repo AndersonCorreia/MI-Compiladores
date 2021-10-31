@@ -5,10 +5,14 @@ primeiros = {
     "primitive_type": { 'PRE': ['inteiro', 'real', 'booleano', 'char', 'cadeia', 'vazio']},
     "type": { 'IDE': []},
     "declaracao_reg": { 'PRE': ['registro'], '&': []},
+    "declaracao_reg2": { 'DEL': [',', ';']},
+    "declaracao_reg3": { 'DEL': ['}']},
     "declaration_const": { 'PRE': ['constantes']},
+    "v_m_access": { 'DEL' : ['[']},
+    "v_m_access1": { 'DEL' : ['['], '&': []},
 }
 
-def primeiro(NT, token):
+def primeiro(NT, token, considerar_vazio=True):
     # exemplos de como estruturar os ifs:
     # if NT == "declaracao_reg1":
     #     #se o primeiro do NT for o primeiro de outro NT
@@ -20,6 +24,8 @@ def primeiro(NT, token):
     
     if NT == "declaracao_reg1":
         return primeiro("type", token)
+    if NT == "declaracao_reg3":
+        return primeiro("declaracao_reg1", token)
     elif NT == "declaracao_reg4":
         return primeiro("v_m_access", token)
     elif NT == "type":
@@ -30,7 +36,7 @@ def primeiro(NT, token):
         if token['tipo'] in primeiros[NT]:
             if primeiros[NT][token['tipo']] == [] or token['lexema'] in primeiros[NT][token['tipo']]:
                 return True
-        if '&' in primeiros[NT]:
+        if '&' in primeiros[NT] and considerar_vazio:
             return True
         
     return False
@@ -40,17 +46,28 @@ def primeiro(NT, token):
 sequintes = {
     "primitive_type": { 'IDE': []},
     "type": { 'IDE': []},
+    "v_m_access": { 'DEL' : ['[']},
 }
    
 def sequinte(NT, token):
+    considerar_vazio = False
     if NT == "primitive_type": 
         if sequinte("type", token):
+            return True
+    elif NT == "v_m_access": 
+        if sequinte("declaracao_reg4", token) or primeiro("nested_elem_registro1", token, considerar_vazio) or sequinte("nested_elem_registro", token) or sequinte("read_value0", token):
+            return True
+    elif NT == "v_m_access1": 
+        if sequinte("v_m_access", token):
             return True
     elif NT == "type": 
         if primeiro("function_declaration1", token):
             return True
     elif NT == "declaracao_reg": 
         if primeiro("declaration_const", token):
+            return True
+    elif NT == "declaracao_reg4": 
+        if primeiro("declaracao_reg2", token):
             return True
     
     if NT in sequintes:
