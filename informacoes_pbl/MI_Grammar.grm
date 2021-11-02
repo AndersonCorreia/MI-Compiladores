@@ -183,10 +183,10 @@ Comment Line  = '%'
 !-------------------------------------------------------------
 
 ! Leia e escreva
-<write_cmd>   ::= escreva '(' <value_with_expressao> <write_value_list> ')' ';'
+<write_cmd>   ::= 'escreva' '(' <value_with_expressao> <write_value_list> ')' ';'
 <write_value_list> ::= ',' <value_with_expressao> <write_value_list> | <>
 
-<read_cmd> ::= leia '(' <read_value> <read_value_list> ')' ';'
+<read_cmd> ::= 'leia' '(' <read_value> <read_value_list> ')' ';'
 <read_value_list> ::= ',' <read_value> <read_value_list> |
 <read_value> ::= id <read_value0>
 <read_value0> ::= <v_m_access> | <elem_registro> | <>
