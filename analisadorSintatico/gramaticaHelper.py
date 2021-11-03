@@ -22,6 +22,8 @@ primeiros = {
     "expr_rel": { "PRE": ["verdadeiro", "falso"]},
     "expressao": { "DEL": ["(",], "LOG": ["!"]},
     "read_value": { 'IDE': []},
+    "se": { 'PRE': ['se']},
+    "senao": { 'PRE': ['senao']},
 }
 
 NT_contem_palavra_vazia = [ 
@@ -150,11 +152,17 @@ def sequinte(NT, token):
             #sequinte de outros terminais são ')' e ';' que já estão na lista de sequinte
             # mantendo o value_with_expressao por segurança já que o mais usado
             return True
+    elif NT == "se":
+        if primeiro_sem_palavra_vazia("function_body2", token) or primeiro_sem_palavra_vazia("com_body", token):
+            return True
     elif NT == "var_atr":
         if primeiro_sem_palavra_vazia("function_body2", token) or primeiro_sem_palavra_vazia("com_body", token) or sequinte("init"):
             return True
     elif NT == "init":
         if primeiro_sem_palavra_vazia("stop", token):
+            return True
+    elif NT in ["senao", "se_senao", "se_body"]:
+        if sequinte("se", token):
             return True
     
     if NT in sequintes:

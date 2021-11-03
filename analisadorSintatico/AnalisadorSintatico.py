@@ -185,7 +185,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes):
             if( self.token['lexema'] == ';' ):
                 self.match("DEL", ";")
             elif( self.token['lexema'] == ',' ):
-                self.match("DEL", ",")
+                self.match("DEL", ",", proximoNT="var_atr")
                 self.var_atr()
             else:
                 erro = 'Esperado: atr_1 ou atr_2'
