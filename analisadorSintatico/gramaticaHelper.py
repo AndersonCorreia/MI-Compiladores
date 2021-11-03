@@ -24,11 +24,15 @@ primeiros = {
     "read_value": { 'IDE': []},
     "se": { 'PRE': ['se']},
     "senao": { 'PRE': ['senao']},
+    "com_retornar": { 'PRE': ['retorno']},
+    "com_enquanto": { 'PRE': ['enquanto']},
+    "com_para": { 'PRE': ['para']},
 }
 
 NT_contem_palavra_vazia = [ 
     "declaracao_reg", "declaracao_reg4", "nested_elem_registro", "v_m_access1",
-    "expr_multi_pos", "expr_art1", "operator_auto",
+    "expr_multi_pos", "expr_art1", "operator_auto", "com_body", "com_retornar", 
+    "com_retornar1"
 ]
 
 def primeiro(NT, token, considerar_palavra_vazia=True):
@@ -86,6 +90,9 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     elif NT == "stop":
         if primeiro("expressao", token):
             return True
+    elif NT == "com_body":
+        if primeiro("com_enquanto", token) or primeiro("com_para", token) or primeiro("se", token) or primeiro("com_retornar", token) or primeiro("write_cmd", token) or primeiro("read_cmd", token) or primeiro("functionCall", token) or primeiro("var_atr", token):
+            return True
     
     if NT in primeiros:
         if token['tipo'] in primeiros[NT]:
@@ -104,7 +111,10 @@ sequintes = {
     "type": { 'IDE': []},
     "v_m_access": { 'DEL' : ['[']},
     "expressao": { "DEL": [")", ";", ","]},
-    "stop": {"DEL": [';']}
+    "stop": {"DEL": [';']},
+    "com_body": { "DEL": ['}']},
+    "com_retornar1": { "DEL": [';']},
+    "args": { "DEL": [')']},
 }
 
 def sequinte(NT, token):
@@ -152,7 +162,7 @@ def sequinte(NT, token):
             #sequinte de outros terminais são ')' e ';' que já estão na lista de sequinte
             # mantendo o value_with_expressao por segurança já que o mais usado
             return True
-    elif NT == "se":
+    elif NT in ["se", "com_enquanto", "com_para", "write_cmd", "read_cmd"]:
         if primeiro_sem_palavra_vazia("function_body2", token) or primeiro_sem_palavra_vazia("com_body", token):
             return True
     elif NT == "var_atr":
@@ -163,6 +173,9 @@ def sequinte(NT, token):
             return True
     elif NT in ["senao", "se_senao", "se_body"]:
         if sequinte("se", token):
+            return True
+    elif NT == "com_retornar":
+        if sequinte("com_body", token):
             return True
     
     if NT in sequintes:

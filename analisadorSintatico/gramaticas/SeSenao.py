@@ -1,6 +1,3 @@
-from analisadorSintatico.gramaticaHelper import primeiro, sequinte
-
-
 class SeSenao:
     
     def se(self):

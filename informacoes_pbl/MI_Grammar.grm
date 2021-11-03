@@ -110,22 +110,22 @@ Comment Line  = '%'
 !-------------------------------------------------------------
 
 <com_body>        ::= <com_enquanto> <com_body> | <com_para> <com_body> | <se> <com_body> | <write_cmd> <com_body> | <read_cmd> <com_body> | <functionCall> <com_body> | <var_atr> <com_body> | <com_retornar>                       
-<com_retornar> ::= retorno <com_retornar1> ';' | <>
+<com_retornar> ::= 'retorno' <com_retornar1> ';' | <>
 <com_retornar1> ::= <value_with_expressao> | <>
 
 
 !-------------------------------------------------------------
 ! Comand enquanto
 <com_enquanto> ::= enquanto '(' <args> ')' '{' <com_body> '}'
-<args> ::= <expressao> |
+<args> ::= <expressao> | <>
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
 !Comand para
 <com_para> ::= para '(' <init> <stop> ';' <step> ')' '{' <com_body> '}'
 <init> ::= <var_atr> | ';'
-<stop> ::= <expressao> |
-<step> ::= <expressao> |
+<stop> ::= <expressao> | <>
+<step> ::= <var_atr> | <expr_number> | <>
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
