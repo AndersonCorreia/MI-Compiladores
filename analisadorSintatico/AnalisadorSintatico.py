@@ -133,15 +133,68 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes):
             elif self.token['lexema'] == 'vazio':
                 self.match("PRE", "vazio")
             else:
-                raise Exception('Erro sintático')
+                erro = 'Esperado: inteiro, real, char, booleano, cadeia, vazio'
+                self.registrarErro(erro)
                 
             return
         except Exception as e:
-            erro = 'Esperado: inteiro, real, char, booleano, cadeia, vazio, Encontrado: ' + self.token['tipo'] + ' ' + self.token['lexema']
-            self.registrarErro(erro)
             if primeiro("primitive_type", self.token):
                 return self.primitive_type()
             elif sequinte("primitive_type", self.token):
                 return
             
             raise Exception('Erro sintático', erro)
+    
+    def var_atr(self):
+        try:
+            if( primeiro("read_value", self.token)):
+                self.read_value()
+                self.match("REL", "=", proximoNT="atr_value")
+                self.atr_value()
+                self.atr_1()
+            else:
+                erro = 'Esperado: read_value'
+                self.registrarErro(erro)
+        except Exception as e:
+            if primeiro("var_atr", self.token):
+                return self.var_atr()
+            elif sequinte("var_atr", self.token):
+                return
+            else:
+                raise e
+            
+    def atr_value(self):
+        try:
+            if( primeiro("value_with_expressao", self.token)):
+                self.value_with_expressao()
+            elif( primeiro("functionCall", self.token)):
+                self.functionCall()
+            else:
+                erro = 'Esperado: value_with_expressao ou functionCall'
+                self.registrarErro(erro)
+        except Exception as e:
+            if primeiro("atr_value", self.token):
+                return self.atr_value()
+            elif sequinte("atr_value", self.token):
+                return
+            else:
+                raise e
+            
+    def atr_1(self):
+        try:
+            if( self.token['lexema'] == ';' ):
+                self.match("DEL", ";")
+            elif( self.token['lexema'] == ',' ):
+                self.match("DEL", ",")
+                self.var_atr()
+            else:
+                erro = 'Esperado: atr_1 ou atr_2'
+                self.registrarErro(erro)
+        except Exception as e:
+            if primeiro("atr_1", self.token):
+                return self.atr_1()
+            elif sequinte("atr_1", self.token):
+                return
+            else:
+                raise e
+            

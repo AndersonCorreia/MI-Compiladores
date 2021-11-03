@@ -21,6 +21,7 @@ primeiros = {
     "expr_number": { 'IDE': ['(']},
     "expr_rel": { "PRE": ["verdadeiro", "falso"]},
     "expressao": { "DEL": ["(",], "LOG": ["!"]},
+    "read_value": { 'IDE': []},
 }
 
 NT_contem_palavra_vazia = [ 
@@ -77,6 +78,12 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     elif NT == "expressao":
         if primeiro("expr_rel", token):
             return True
+    elif NT == "var_atr":
+        if primeiro("read_value", token):
+            return True
+    elif NT == "stop":
+        if primeiro("expressao", token):
+            return True
     
     if NT in primeiros:
         if token['tipo'] in primeiros[NT]:
@@ -95,6 +102,7 @@ sequintes = {
     "type": { 'IDE': []},
     "v_m_access": { 'DEL' : ['[']},
     "expressao": { "DEL": [")", ";", ","]},
+    "stop": {"DEL": [';']}
 }
 
 def sequinte(NT, token):
@@ -141,6 +149,12 @@ def sequinte(NT, token):
         if sequinte("value_with_expressao"):
             #sequinte de outros terminais são ')' e ';' que já estão na lista de sequinte
             # mantendo o value_with_expressao por segurança já que o mais usado
+            return True
+    elif NT == "var_atr":
+        if primeiro_sem_palavra_vazia("function_body2", token) or primeiro_sem_palavra_vazia("com_body", token) or sequinte("init"):
+            return True
+    elif NT == "init":
+        if primeiro_sem_palavra_vazia("stop", token):
             return True
     
     if NT in sequintes:
