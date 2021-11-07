@@ -122,7 +122,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 !Comand para
-<com_para> ::= para '(' <init> <stop> ';' <step> ')' '{' <com_body> '}'
+<com_para> ::= 'para' '(' <init> <stop> ';' <step> ')' '{' <com_body> '}'
 <init> ::= <var_atr> | ';'
 <stop> ::= <expressao> | <>
 <step> ::= <var_atr> | <expr_number> | <>
