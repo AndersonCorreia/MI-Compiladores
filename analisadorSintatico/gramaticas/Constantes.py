@@ -2,42 +2,60 @@ from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Constantes:
   
   def declaration_const(self):
-    if(self.token['lexema'] == 'constantes'):
-      self.match("PRE", "constantes")
-      self.match("IDE")
-      self.match("DEL", "{")
-      self.declaration_const1()
-      
-  def declaration_const1(self):
-    if(primeiro("primitive_type", self.token)):
-        self.primitive_type()
-        self.match("IDE")
-        self.match("REL", "=")
-        if (self.match("NRO") or self.match("CAD")):
-          self.declaration_const2()
+    try:
+      if(self.token['lexema'] == 'constantes'):
+        self.match("PRE", "constantes", proximoToken={"tipo": "DEL", "lexema": "{"})
+        self.match("DEL", "{", proximoNT="declaration_const1")
+        self.declaration_const1()
+      else:
+        return
+    except Exception as e:
+      while self.token['tipo'] != 'EOF':
+        if primeiro("declaration_const", self.token):
+            return self.declaration_const()
+        elif sequinte("declaration_const", self.token):
+            return
         else:
-          raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
-    else:
-        raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
+            self.proximoToken()
+      raise e
+
+  def declaration_const1(self):
+    try:
+      if(primeiro("type", self.token)):
+        self.type()
+        self.match("IDE", proximoToken={"tipo": "REL", "lexema": "="})
+        self.match("REL", "=", proximoNT="value")
+        self.match("IDE", proximoNT="declaration_const2")
+        self.declaration_const2()
+      else:
+        erro = 'Esperado: type'
+        self.registrarErro(erro)
+    except Exception as e:
+      if primeiro("declaracao_const1", self.token):
+        return self.declaration_const1()
+      elif sequinte("declaracao_const1", self.token):
+          return
+      else:
+          raise e
       
   def declaration_const2(self):
-    if(self.token['lexema'] == ','):
-      self.match("DEL", ",")
-      self.match("IDE")
-      if(self.token['lexema'] == '='):
-        self.match("REL")
-        if (self.match("NRO") or self.match("CAD")):
+    try:
+      if(self.token['lexema'] == ',' ):
+          self.match("DEL", ",", proximoToken={"tipo": "IDE"})
+          self.match("IDE", proximoNT="declaration_const2")
           self.declaration_const2()
-        else:
-          raise Exception('Erro sintático', 'Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
-    elif(self.token['lexema'] == ';'):
-      self.match("DEL", ";")
-      self.step5()
-    else:
-        raise Exception('Erro sintático', 'Esperado: , ou ;, Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
-  
-  def step5(self):
-    if(self.token['lexema'] == '}'):
-        self.match("DEL", "}")
-    else:
-        raise Exception('Erro sintático', 'Encontrados: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'")
+      elif(self.token['lexema'] == ';' ):
+          self.match("DEL", ";", proximoNT="declaration_const1")
+          self.declaration_const1()
+      elif(self.token['lexema'] == '}' ):
+          self.match("DEL", "}")
+      else:
+          erro = "Esperado: ',' ou ';'"
+          self.registrarErro(erro)
+    except Exception as e:
+      if primeiro("declaration_const2", self.token):
+          return self.declaration_const2()
+      elif sequinte("declaration_const2", self.token):
+          return
+      else:
+          raise e

@@ -7,6 +7,10 @@ primeiros = {
     "declaracao_reg2": { 'DEL': [',', ';']},
     "declaracao_reg3": { 'DEL': ['}']},
     "declaration_const": { 'PRE': ['constantes']},
+    "declaration_const2": { 'DEL': [',', ';', '}']},
+    "declaration_var": { 'PRE': ['variaveis']},
+    "declaration_var2": { 'DEL': [';'], 'REL': ['=']},
+    "declaration_var3": { 'DEL': [',', ';']},
     "elem_registro": { "DEL": ['.'] },
     "nested_elem_registro": { "DEL": ['.'] },
     "v_m_access": { 'DEL' : ['[']},
@@ -27,7 +31,7 @@ primeiros = {
     "com_retornar": { 'PRE': ['retorno']},
     "com_enquanto": { 'PRE': ['enquanto']},
     "com_para": { 'PRE': ['para']},
-    "read_value": { 'IDE': []},
+    "value": { 'NRO': [], 'PRE': ["verdadeiro", "falso"], 'CAD': [], 'CHAR': [] }
 }
 
 NT_contem_palavra_vazia = [ 
@@ -46,6 +50,12 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     #         #se o primeiro do NT for o primeiro de outro NT ou algum Terminal que é verificado no final
     #         return True
     
+    if NT == "declaration_const1":
+        if primeiro("type", token, considerar_palavra_vazia):
+            return True
+    if NT == "declaration_var1":
+        if primeiro("type", token, considerar_palavra_vazia):
+            return True
     if NT == "declaracao_reg1":
         if primeiro("type", token, considerar_palavra_vazia):
             return True
