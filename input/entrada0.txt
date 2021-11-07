@@ -1,6 +1,11 @@
-registro teste errado
-registro iden {
-    inteiro a,b,c;
-    real d,e,f;
-    char letra;
+se( (a[1] >= 2) || ((2 + 3 * 4) / 2 <= a[1][0]) && Pessoa.hasCar != falso ) {
+           
+}
+senao {
+    se( Pessoa.a[1][1] == verdadeiro ) {
+    }senao {
+        se( (teste && teste) || (teste || teste) ){
+            retorno;
+        }
+    }    
 }

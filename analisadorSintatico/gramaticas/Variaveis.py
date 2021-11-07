@@ -1,4 +1,4 @@
-
+from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Variaveis:
 
   def __init__(self):

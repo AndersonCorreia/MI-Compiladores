@@ -27,6 +27,7 @@ primeiros = {
     "com_retornar": { 'PRE': ['retorno']},
     "com_enquanto": { 'PRE': ['enquanto']},
     "com_para": { 'PRE': ['para']},
+    "read_value": { 'IDE': []},
 }
 
 NT_contem_palavra_vazia = [ 
@@ -46,52 +47,52 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     #         return True
     
     if NT == "declaracao_reg1":
-        if primeiro("type", token):
+        if primeiro("type", token, considerar_palavra_vazia):
             return True
     if NT == "declaracao_reg3":
-        if primeiro("declaracao_reg1", token):
+        if primeiro("declaracao_reg1", token, considerar_palavra_vazia):
             return True
     elif NT == "declaracao_reg4":
-        if primeiro("v_m_access", token):
+        if primeiro("v_m_access", token, considerar_palavra_vazia):
             return True
     elif NT == "type":
-        if primeiro("primitive_type", token):
+        if primeiro("primitive_type", token, considerar_palavra_vazia):
             return True
     elif NT == "nested_elem_registro":
-        if primeiro("v_m_access", token):
+        if primeiro("v_m_access", token, considerar_palavra_vazia):
             return True
     elif NT == "expr_valor_mod":
-        if primeiro("operator_auto0", token) or primeiro("read_value", token):
+        if primeiro("operator_auto0", token, considerar_palavra_vazia) or primeiro("read_value", token, considerar_palavra_vazia):
             return True
     elif NT == "expr_multi":
-        if primeiro("operator_soma", token) or primeiro("expr_valor_mod", token):
+        if primeiro("operator_soma", token, considerar_palavra_vazia) or primeiro("expr_valor_mod", token, considerar_palavra_vazia):
             return True
     elif NT == "expr_art":
-        if primeiro("expr_multi", token):
+        if primeiro("expr_multi", token, considerar_palavra_vazia):
             return True
     elif NT == "expr_multi_pos":
-        if primeiro("operator_multi", token):
+        if primeiro("operator_multi", token, considerar_palavra_vazia):
             return True
     elif NT == "expr_art1":
-        if primeiro("operator_soma", token):
+        if primeiro("operator_soma", token, considerar_palavra_vazia):
             return True
     elif NT == "expr_number":
-        if primeiro("expr_art", token):
+        if primeiro("expr_art", token, considerar_palavra_vazia):
             return True
     elif NT == "expr_rel":
-        if primeiro("expr_art", token):
+        if primeiro("expr_art", token, considerar_palavra_vazia):
             return True
     elif NT == "expressao":
-        if primeiro("expr_rel", token):
+        if primeiro("expr_rel", token, considerar_palavra_vazia):
             return True
     elif NT == "var_atr":
-        if primeiro("read_value", token):
+        if primeiro("read_value", token, considerar_palavra_vazia):
             return True
     elif NT == "stop":
-        if primeiro("expressao", token):
+        if primeiro("expressao", token, considerar_palavra_vazia):
             return True
     elif NT == "com_body":
-        if primeiro("com_enquanto", token) or primeiro("com_para", token) or primeiro("se", token) or primeiro("com_retornar", token) or primeiro("write_cmd", token) or primeiro("read_cmd", token) or primeiro("functionCall", token) or primeiro("var_atr", token):
+        if primeiro("com_enquanto", token, considerar_palavra_vazia) or primeiro("com_para", token, considerar_palavra_vazia) or primeiro("se", token, considerar_palavra_vazia) or primeiro("com_retornar", token, considerar_palavra_vazia) or primeiro("write_cmd", token, considerar_palavra_vazia) or primeiro("read_cmd", token, considerar_palavra_vazia) or primeiro("functionCall", token, considerar_palavra_vazia) or primeiro("var_atr", token, considerar_palavra_vazia):
             return True
     
     if NT in primeiros:
@@ -143,13 +144,13 @@ def sequinte(NT, token):
         if primeiro_sem_palavra_vazia("declaracao_reg2", token):
             return True
     elif NT == "expr_art": 
-        if primeiro_sem_palavra_vazia("expr_rel1", token) or sequinte('expr_rel'):
+        if primeiro_sem_palavra_vazia("expr_rel1", token) or sequinte('expr_rel', token):
             return True
     elif NT == "expr_number": 
         if sequinte("expr_art", token):
             return True
     elif NT == "expr_rel": 
-        if primeiro_sem_palavra_vazia("expr_log1", token) or sequinte("expressao"):
+        if primeiro_sem_palavra_vazia("expr_log1", token) or sequinte("expressao", token):
             return True
     elif NT in ["expr_rel1", "expr_rel0"]: 
         if sequinte("expr_rel", token):
@@ -158,7 +159,7 @@ def sequinte(NT, token):
         if sequinte("expressao", token):
             return True
     elif NT == "expressao": 
-        if sequinte("value_with_expressao"):
+        if sequinte("value_with_expressao", token):
             #sequinte de outros terminais são ')' e ';' que já estão na lista de sequinte
             # mantendo o value_with_expressao por segurança já que o mais usado
             return True
@@ -166,7 +167,7 @@ def sequinte(NT, token):
         if primeiro_sem_palavra_vazia("function_body2", token) or primeiro_sem_palavra_vazia("com_body", token):
             return True
     elif NT == "var_atr":
-        if primeiro_sem_palavra_vazia("function_body2", token) or primeiro_sem_palavra_vazia("com_body", token) or sequinte("init"):
+        if primeiro_sem_palavra_vazia("function_body2", token) or primeiro_sem_palavra_vazia("com_body", token) or sequinte("init", token):
             return True
     elif NT == "init":
         if primeiro_sem_palavra_vazia("stop", token):

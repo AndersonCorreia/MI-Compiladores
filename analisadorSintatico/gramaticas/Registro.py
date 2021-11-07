@@ -1,4 +1,4 @@
-
+from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Registro:
     
     def declaracao_reg(self):
@@ -101,8 +101,7 @@ class Registro:
         
         try:
             if( self.token['lexema'] == '.' ):
-                self.match("DEL", ".", proximoToken={"tipo": "IDE"})
-                self.match("IDE", ".", proximoNT="nested_elem_registro")
+                self.match("DEL", ".", proximoNT="nested_elem_registro")
                 self.nested_elem_registro()
             else:
                 erro = "Esperado: '.'"
@@ -120,8 +119,7 @@ class Registro:
         
         try:
             if( self.token['lexema'] == '.' ):
-                self.match("DEL", ".", proximoToken={"tipo": "IDE"})
-                self.match("IDE", ".", proximoNT="nested_elem_registro1")
+                self.match("DEL", ".", proximoNT="nested_elem_registro1")
                 self.nested_elem_registro1()
             elif( primeiro("v_m_access") ):
                 self.v_m_access()

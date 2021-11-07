@@ -1,4 +1,4 @@
-
+from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Constantes:
   
   def declaration_const(self):

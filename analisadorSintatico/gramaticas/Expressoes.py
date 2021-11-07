@@ -1,8 +1,9 @@
+from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Expressoes:
     
     def expressao(self):
         try:
-            if( primeiro("expr_rel") ):
+            if( primeiro("expr_rel", self.token) ):
                 self.expr_rel()
                 self.expr_log1()
             elif( self.token['lexema'] == '('):
@@ -29,7 +30,7 @@ class Expressoes:
     
     def expr_art(self):
         try:
-            if ( primeiro("expr_multi") ):
+            if ( primeiro("expr_multi", self.token) ):
                 self.expr_multi()
                 self.expr_art1()
             else:
@@ -45,7 +46,7 @@ class Expressoes:
             
     def expr_art1(self):
         try:
-            if ( primeiro("operator_soma") ):
+            if ( primeiro("operator_soma", self.token) ):
                 self.operator_soma()
                 self.expr_number()
             else:
@@ -133,12 +134,12 @@ class Expressoes:
         try:
             if ( self.token['tipo'] == "NRO"):
                 self.match("NRO")
-            elif ( primeiro("operator_auto0") ):
+            elif ( primeiro("operator_auto0", self.token) ):
                 self.operator_auto0()
                 self.read_value()
-            elif ( primeiro("read_value") ):
+            elif ( primeiro("read_value", self.token) ):
                 self.read_value()
-                self.operator_auto0()
+                self.operator_auto()
             else:
                 erro = "Esperado: NRO, operator_auto0 ou read_value"
                 self.registrarErro(erro)
@@ -153,11 +154,11 @@ class Expressoes:
     
     def expr_multi(self):
         try:
-            if ( primeiro("operator_soma") ):
+            if ( primeiro("operator_soma", self.token) ):
                 self.operator_soma()
                 self.expr_valor_mod()
                 self.expr_multi_pos()
-            elif ( primeiro("expr_valor_mod") ):
+            elif ( primeiro("expr_valor_mod", self.token) ):
                 self.expr_valor_mod()
                 self.expr_multi_pos()
             else:
@@ -173,7 +174,7 @@ class Expressoes:
             
     def expr_multi_pos(self):
         try:
-            if ( primeiro("operator_multi") ):
+            if ( primeiro("operator_multi", self.token) ):
                 self.operator_multi()
                 self.expr_multi()
             else:
@@ -188,7 +189,7 @@ class Expressoes:
             
     def expr_number(self):
         try:
-            if( primeiro("expr_art") ):
+            if( primeiro("expr_art", self.token) ):
                 self.expr_art()
             elif( self.token['lexema'] == '('):
                 self.match('DEL', '(', proximoNT="expr_number")
@@ -210,7 +211,7 @@ class Expressoes:
     
     def expr_number1(self):
         try:
-            if( primeiro("operator_soma") ):
+            if( primeiro("operator_soma", self.token) ):
                 self.operator_soma()
                 self.expr_number()
             else:
@@ -226,13 +227,13 @@ class Expressoes:
     
     def expr_rel(self):
         try:
-            if( primeiro("expr_art") ):
+            if( primeiro("expr_art", self.token) ):
                 self.expr_art()
                 self.expr_rel1()
-            elif( self.token['PRE'] == 'verdadeiro'):
+            elif( self.token['lexema'] == 'verdadeiro'):
                 self.match('PRE', 'verdadeiro', proximoNT="expr_rel1")
                 self.expr_rel1()
-            elif( self.token['PRE'] == 'falso'):
+            elif( self.token['lexema'] == 'falso'):
                 self.match('PRE', 'falso', proximoNT="expr_rel1")
                 self.expr_rel1()
             else:
@@ -249,7 +250,7 @@ class Expressoes:
     
     def expr_rel0(self):
         try:
-            if( primeiro("expr_rel") ):
+            if( primeiro("expr_rel", self.token) ):
                 self.expr_rel()
             elif( self.token['lexema'] == '('):
                 self.match('DEL', '(', proximoNT="expressao")
@@ -269,7 +270,7 @@ class Expressoes:
     
     def expr_rel1(self):
         try:
-            if( primeiro("operator_rel") ):
+            if( primeiro("operator_rel", self.token) ):
                 self.operator_rel()
                 self.expr_rel0()
             else:
@@ -311,8 +312,8 @@ class Expressoes:
     
     def expr_log1(self):
         try:
-            if( primeiro("operatorLog") ):
-                self.operatorLog()
+            if( primeiro("operator_log", self.token) ):
+                self.operator_log()
                 self.expressao()
             else:
                 return # declaracao vazia
@@ -326,16 +327,16 @@ class Expressoes:
 
     def expr_log2(self):
         try:
-            if( primeiro("operatorLog") ):
-                self.operatorLog()
+            if( primeiro("operator_log", self.token) ):
+                self.operator_log()
                 self.expressao()
-            elif( primeiro("operator_multi") ):
+            elif( primeiro("operator_multi", self.token) ):
                 self.operator_multi()
                 self.expressao()
-            elif( primeiro("operator_rel") ):
+            elif( primeiro("operator_rel", self.token) ):
                 self.operator_rel()
                 self.expressao()
-            elif( primeiro("operator_soma") ):
+            elif( primeiro("operator_soma", self.token) ):
                 self.operator_soma()
                 self.expressao()
             else:

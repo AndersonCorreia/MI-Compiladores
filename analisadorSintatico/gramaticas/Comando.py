@@ -1,3 +1,4 @@
+from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Comando:
     
     def com_body(self):
@@ -24,10 +25,11 @@ class Comando:
                 self.var_atr()
                 self.com_body()
             elif( primeiro("com_retornar", self.token) ):
-                self.var_atr()
+                self.com_retornar()
             else:
                 erro = 'Esperado: enquanto, para, se, write_cmd, read_cmd, functionCall, var_atr, retorno'
                 self.registrarErro(erro)
+                
         except Exception as e:
             if primeiro("com_body", self.token):
                 return self.com_body()
@@ -38,7 +40,7 @@ class Comando:
             
     def com_retornar(self):
         try:
-            if( primeiro("retorno", self.token) ):
+            if( self.token['lexema'] == "retorno" ):
                 self.match("PRE","retorno", proximoNT="com_retornar1")
                 self.com_retornar1()
                 self.match("DEL",";")
@@ -97,6 +99,38 @@ class Comando:
             if primeiro("args", self.token):
                 return self.args()
             elif sequinte("args", self.token):
+                return
+            else:
+                raise e
+    
+    def read_value(self):
+        try:
+            if( self.token['tipo'] == "IDE"):
+                self.match("IDE")
+                self.read_value0()
+            else:
+                erro = 'Esperado: IDE'
+                self.registrarErro(erro)
+        except Exception as e:
+            if primeiro("read_value", self.token):
+                return self.read_value()
+            elif sequinte("read_value", self.token):
+                return
+            else:
+                raise e
+    
+    def read_value0(self):
+        try:
+            if( primeiro("v_m_access", self.token) ):
+                self.v_m_access()
+            elif( primeiro("elem_registro", self.token) ):
+                self.elem_registro()
+            else:
+                return # declaração vazia
+        except Exception as e:
+            if primeiro("read_value0", self.token):
+                return self.read_value0()
+            elif sequinte("read_value0", self.token):
                 return
             else:
                 raise e

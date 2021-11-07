@@ -156,9 +156,9 @@ Comment Line  = '%'
 ! Expressões Logicas: !
 ! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number e boolean
 <expressao>   ::= <expr_rel> <expr_log1> | '(' <expressao> ')' <expr_log2> | '!' <expressao> 
-<expr_log1> ::=  <operatorLog> <expressao> | <>
-<expr_log2> ::= <operatorLog> <expressao> | <operator_multi> <expressao> | <operator_rel> <expressao> | <operator_soma> <expressao> | <>
-<operatorLog> ::= '&&' | '||'
+<expr_log1> ::=  <operator_log> <expressao> | <>
+<expr_log2> ::= <operator_log> <expressao> | <operator_multi> <expressao> | <operator_rel> <expressao> | <operator_soma> <expressao> | <>
+<operator_log> ::= '&&' | '||'
 !-------------------------------------------------------------
 
 ! Declaração de Registro !

@@ -1,3 +1,4 @@
+from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class SeSenao:
     
     def se(self):
@@ -64,7 +65,7 @@ class SeSenao:
                 erro = 'Esperado: se ou {'
                 self.registrarErro(erro)
         except Exception as e:
-            if[primeiro("se_senao", self.token)]:
+            if primeiro("se_senao", self.token):
                 return self.se_senao()
             elif sequinte("se_senao", self.token):
                 return

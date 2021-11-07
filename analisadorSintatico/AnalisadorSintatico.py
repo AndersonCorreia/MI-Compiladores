@@ -2,14 +2,18 @@ from analisadorSintatico.gramaticas.Expressoes import Expressoes
 from analisadorSintatico.gramaticas.Registro import Registro
 from analisadorSintatico.gramaticas.Constantes import Constantes
 from analisadorSintatico.gramaticas.Variaveis import Variaveis
+from analisadorSintatico.gramaticas.SeSenao import SeSenao
+from analisadorSintatico.gramaticas.VetoresMatrizes import VetoresMatrizes
+from analisadorSintatico.gramaticas.Comando import Comando
 from gramaticaHelper import *
 
-class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes):
+class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao, VetoresMatrizes, Comando):
     
     def __init__(self, tokens):
         self.tokens = tokens
         self.token = None
         self.erros = []
+        self.tokensIgnorados = []
         
     def proximoToken(self, removerToken = True):
         
@@ -30,6 +34,8 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes):
         print(self.tokens)
         print("\nerros:")
         print(self.erros)
+        print("\nQtd de tokens ignorados:")
+        print(len(self.tokensIgnorados))
         
     def match(self, tipo, lexema = None, proximoToken = None, proximoNT = None):
         """
@@ -83,15 +89,18 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes):
     def Program(self):
         
         try:
-            # self.type()#teste reconhecendo se no arquivo existe apenas um token do tipo type
-            self.declaracao_reg()
-            self.contantes()
-            self.variaveis()
+            self.se()
+            # self.declaracao_reg()
+            # self.contantes()
+            # self.variaveis()
         except Exception as e:
+            print("Erro na função principal: ")
+            print(e)
             while self.token['tipo'] != 'EOF':
                 if primeiro("Program", self.token):
                     return self.Program()
                 else:
+                    self.tokensIgnorados.append(self.token)
                     self.proximoToken()
                   
     def contantes(self):
