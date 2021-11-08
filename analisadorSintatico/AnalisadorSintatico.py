@@ -6,9 +6,10 @@ from analisadorSintatico.gramaticas.SeSenao import SeSenao
 from analisadorSintatico.gramaticas.VetoresMatrizes import VetoresMatrizes
 from analisadorSintatico.gramaticas.Comando import Comando
 from analisadorSintatico.gramaticas.Para import Para
+from analisadorSintatico.gramaticas.Funcao import Funcao
 from gramaticaHelper import *
 
-class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao, VetoresMatrizes, Comando, Para):
+class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao, VetoresMatrizes, Comando, Para, Funcao):
     
     def __init__(self, tokens):
         self.tokens = tokens

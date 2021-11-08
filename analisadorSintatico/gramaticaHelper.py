@@ -33,7 +33,8 @@ primeiros = {
     "com_para": { 'PRE': ['para']},
     "value": { 'NRO': [], 'PRE': ["verdadeiro", "falso"], 'CAD': [], 'CAR': [] },
     "write_value_list": { 'DEL': [','] },
-    "value_with_expressao": { 'CAD': [], 'CAR': [] }
+    "value_with_expressao": { 'CAD': [], 'CAR': [] },
+    "functionCall": { 'IDE': []},
 }
 
 NT_contem_palavra_vazia = [ 
@@ -103,7 +104,7 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     elif NT == "var_atr":
         if primeiro("read_value", token, considerar_palavra_vazia):
             return True
-    elif NT == "stop":
+    elif NT in ["stop", "value_with_expressao"]:
         if primeiro("expressao", token, considerar_palavra_vazia):
             return True
     elif NT == "com_body":
@@ -131,6 +132,7 @@ sequintes = {
     "com_body": { "DEL": ['}']},
     "com_retornar1": { "DEL": [';']},
     "args": { "DEL": [')']},
+    "functionCall": { "DEL": [';',',']},
 }
 
 def sequinte(NT, token):
@@ -178,7 +180,7 @@ def sequinte(NT, token):
             #sequinte de outros terminais são ')' e ';' que já estão na lista de sequinte
             # mantendo o value_with_expressao por segurança já que o mais usado
             return True
-    elif NT in ["se", "com_enquanto", "com_para", "write_cmd", "read_cmd"]:
+    elif NT in ["se", "com_enquanto", "com_para", "write_cmd", "read_cmd", "functionCall"]:
         if primeiro_sem_palavra_vazia("function_body2", token) or primeiro_sem_palavra_vazia("com_body", token):
             return True
     elif NT == "var_atr":
