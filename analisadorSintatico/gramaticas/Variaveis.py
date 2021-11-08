@@ -8,7 +8,8 @@ class Variaveis:
         self.match("DEL", "{", proximoNT="declaration_var1")
         self.declaration_var1()
       else:
-        return
+        erro = 'Esperado: variaveis'
+        self.registrarErro(erro)
     except Exception as e:
       while self.token['tipo'] != 'EOF':
         if primeiro("declaration_var", self.token):
@@ -16,7 +17,8 @@ class Variaveis:
         elif sequinte("declaration_var", self.token):
             return
         else:
-            self.proximoToken()
+          self.tokensIgnorados.append(self.token)
+          self.proximoToken()
       raise e
 
   def declaration_var1(self):
@@ -25,9 +27,10 @@ class Variaveis:
         self.type()
         self.match("IDE", proximoNT="declaration_var2")
         self.declaration_var2()
+      elif( self.token['lexema'] == '}' ):
         self.match("DEL", "}")
       else:
-        erro = 'Esperado: type'
+        erro = 'Esperado: type ou }'
         self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaration_var1", self.token):
@@ -42,13 +45,13 @@ class Variaveis:
       if(self.token['lexema'] == '=' ):
           self.match("REL", "=", proximoNT="value")
           self.value()
-          self.match("IDE", proximoNT="declaration_var3")
           self.declaration_var3()
-      elif(self.token['lexema'] == ';' ):
-          self.match("DEL", ";", proximoNT="declaration_var1")
-          self.declaration_var1()
+      elif( primeiro("vector_matrix", self.token) ):
+          self.vector_matrix()
+      elif( primeiro("declaration_var3", self.token) ):
+          self.declaration_var3()
       else:
-          erro = "Esperado: ',' ou ';'"
+          erro = "Esperado: =, vector_matrix ou declaration_var3"
           self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaration_const2", self.token):
@@ -62,8 +65,8 @@ class Variaveis:
     try:
       if(self.token['lexema'] == ',' ):
           self.match("DEL", ",", proximoToken={"tipo": "IDE"})
-          self.match("IDE", proximoNT="declaration_var3")
-          self.declaration_var3()
+          self.match("IDE", proximoNT="declaration_var2")
+          self.declaration_var2()
       elif(self.token['lexema'] == ';' ):
           self.match("DEL", ";", proximoNT="declaration_var1")
           self.declaration_var1()

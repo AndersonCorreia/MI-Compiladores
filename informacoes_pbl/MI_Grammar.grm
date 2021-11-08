@@ -30,7 +30,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Variables Block
-<declaration_var>  ::= variaveis '{' <declaration_var1>
+<declaration_var>  ::= 'variaveis' '{' <declaration_var1>
 <declaration_var1> ::= <type> id <declaration_var2> | '}'
 <declaration_var2> ::= '=' <value> <declaration_var3> | <vector_matrix> | <declaration_var3>
 <declaration_var3> ::= ',' id <declaration_var2>  | ';' <declaration_var1>                               

@@ -16,20 +16,22 @@ class Constantes:
         elif sequinte("declaration_const", self.token):
             return
         else:
-            self.proximoToken()
+          self.tokensIgnorados.append(self.token)
+          self.proximoToken()
       raise e
 
   def declaration_const1(self):
     try:
-      if(primeiro("type", self.token)):
+      if(primeiro("primitive_type", self.token)):
         self.type()
         self.match("IDE", proximoToken={"tipo": "REL", "lexema": "="})
         self.match("REL", "=", proximoNT="value")
         self.value()
-        self.match("IDE", proximoNT="declaration_const2")
         self.declaration_const2()
+      elif(self.token['lexema'] == '}' ):
+        self.match("DEL", "}")
       else:
-        erro = 'Esperado: type'
+        erro = 'Esperado: primitive_type ou }'
         self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaracao_const1", self.token):
@@ -43,13 +45,12 @@ class Constantes:
     try:
       if(self.token['lexema'] == ',' ):
           self.match("DEL", ",", proximoToken={"tipo": "IDE"})
-          self.match("IDE", proximoNT="declaration_const2")
+          self.match("IDE", proximoNT="value")
+          self.value()
           self.declaration_const2()
       elif(self.token['lexema'] == ';' ):
           self.match("DEL", ";", proximoNT="declaration_const1")
           self.declaration_const1()
-      elif(self.token['lexema'] == '}' ):
-          self.match("DEL", "}")
       else:
           erro = "Esperado: ',' ou ';'"
           self.registrarErro(erro)

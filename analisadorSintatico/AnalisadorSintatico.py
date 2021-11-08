@@ -16,6 +16,22 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         self.erros = []
         self.tokensIgnorados = []
         
+    def Program(self):
+        
+        try:
+            self.declaracao_reg()
+            self.declaration_const()
+            self.declaration_var()
+        except Exception as e:
+            print("Erro na função principal: ")
+            print(e)
+            while self.token['tipo'] != 'EOF':
+                if primeiro("Program", self.token):
+                    return self.Program()
+                else:
+                    self.tokensIgnorados.append(self.token)
+                    self.proximoToken()
+    
     def proximoToken(self, removerToken = True):
         
         if removerToken:
@@ -87,31 +103,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         if raiseException:
             raise Exception('Erro sintático', erroMsg)
                 
-    def Program(self):
-        
-        try:
-            self.se()
-            # self.declaracao_reg()
-            # self.contantes()
-            # self.variaveis()
-        except Exception as e:
-            print("Erro na função principal: ")
-            print(e)
-            while self.token['tipo'] != 'EOF':
-                if primeiro("Program", self.token):
-                    return self.Program()
-                else:
-                    self.tokensIgnorados.append(self.token)
-                    self.proximoToken()
                   
-    def contantes(self):
-        consts = Constantes()
-        consts.start()
-
-    def variaveis(self):
-        vars = Variaveis()
-        vars.start()
-        
     def type(self):
         
         try:

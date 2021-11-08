@@ -18,6 +18,7 @@ class Registro:
                 elif sequinte("declaracao_reg", self.token):
                     return
                 else:
+                    self.tokensIgnorados.append(self.token)
                     self.proximoToken()
             raise e
         
