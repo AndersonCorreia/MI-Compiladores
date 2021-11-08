@@ -17,11 +17,6 @@ Comment Line  = '%'
 <Program> ::= <declaracao_reg> <declaration_const> <declaration_var> <function_declaration> !| <expressao>
 !-------------------------------------------------------------
 
-!------------------------------------------------------------ 
-!- algoritimo function          
-<main_function> ::= <function_parameters> '{' <function_body> '}'
-!-------------------------------------------------------------
-
 !-------------------------------------------------------------
 ! Primitive Types or New Types
 <primitive_type> ::= 'inteiro' | 'real' | 'booleano' | 'char' | 'cadeia' | 'vazio'
@@ -66,9 +61,14 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Declaration of Function Blocks
-<function_declaration>  ::= funcao <type> <function_declaration1>
-<function_declaration1> ::= algoritmo <main_function> | <function_declaration2>                       !- Verifica se é a função algoritmo ou outra qualquer.
+<function_declaration>  ::= 'funcao' <type> <function_declaration1>
+<function_declaration1> ::= 'algoritmo' <main_function> | <function_declaration2>                       !- Verifica se é a função algoritmo ou outra qualquer.
 <function_declaration2> ::= id <function_parameters> '{' <function_body> '}' <function_declaration>   !- Permite declarar n funções até encontrar a função algortimo.
+!-------------------------------------------------------------
+
+!------------------------------------------------------------ 
+!- algoritimo function          
+<main_function> ::= <function_parameters> '{' <function_body> '}'
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------

@@ -35,6 +35,9 @@ primeiros = {
     "write_value_list": { 'DEL': [','] },
     "value_with_expressao": { 'CAD': [], 'CAR': [] },
     "functionCall": { 'IDE': []},
+    "function_declaration": { 'PRE': ['funcao']},
+    "function_declaration1": { 'PRE': ['algoritmo']},
+    "function_declaration2": { 'IDE': []},
 }
 
 NT_contem_palavra_vazia = [ 
