@@ -15,9 +15,12 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
     def __init__(self, tokens):
         self.tokens = tokens
         self.token = None
-        self.erros = []
+        self.errors = []
         self.tokensIgnorados = []
         
+    def getListaErrors(self):
+        return self.errors
+    
     def Program(self):
         
         try:
@@ -52,7 +55,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         print("pilha:")
         print(self.tokens)
         print("\nerros:")
-        print(self.erros)
+        print(self.errors)
         print("\nQtd de tokens ignorados:")
         print(len(self.tokensIgnorados))
         
@@ -99,7 +102,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
     
     def registrarErro(self, erro, raiseException = True):
         self.token['erro_sintatico'] = erro
-        self.erros.append(self.token)
+        self.errors.append(self.token)
         erroMsg = erro + '; Encontrado: ' + self.token['tipo'] + " '" + self.token['lexema'] + "'"
         self.proximoToken()
         if raiseException:

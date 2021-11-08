@@ -10,7 +10,7 @@ class VetoresMatrizes:
                 self.match( "DEL", ']', proximoNT="v_m_access1" )
                 self.v_m_access1()
             else:
-                erro = "Esperado: lexema '['"
+                erro = "Tokens ou Não-Terminais Esperados: lexema '['"
                 self.registrarErro(erro)
             
         except Exception as e:

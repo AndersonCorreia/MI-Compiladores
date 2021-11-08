@@ -105,7 +105,7 @@ class Funcao:
                 self.type()
                 self.function_declaration1()
             else:
-                erro = "Esperado: 'funcao'"
+                erro = "Tokens ou Não-Terminais Esperados: 'funcao'"
                 self.registrarErro(erro)
         except Exception as e:
             while self.token['tipo'] != 'EOF':
@@ -126,7 +126,7 @@ class Funcao:
             elif( primeiro("function_declaration2", self.token) ):
                 self.function_declaration2()
             else:
-                erro = "Esperado: 'algoritmo' ou function_declaration2"
+                erro = "Tokens ou Não-Terminais Esperados: 'algoritmo' ou function_declaration2"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_declaration1", self.token):
@@ -146,7 +146,7 @@ class Funcao:
                 self.match("DEL", "}", proximoNT="function_declaration")
                 self.function_declaration()
             else:
-                erro = "Esperado: IDE"
+                erro = "Tokens ou Não-Terminais Esperados: IDE"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_declaration2", self.token):
@@ -201,7 +201,7 @@ class Funcao:
                 self.read_value()
                 self.varList2
             else:
-                erro = "Esperado: value ou read_value"
+                erro = "Tokens ou Não-Terminais Esperados: value ou read_value"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("varList1", self.token):

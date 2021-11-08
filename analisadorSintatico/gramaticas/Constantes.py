@@ -52,7 +52,7 @@ class Constantes:
           self.match("DEL", ";", proximoNT="declaration_const1")
           self.declaration_const1()
       else:
-          erro = "Esperado: ',' ou ';'"
+          erro = "Tokens ou Não-Terminais Esperados: ',' ou ';'"
           self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaration_const2", self.token):

@@ -51,7 +51,7 @@ class Variaveis:
       elif( primeiro("declaration_var3", self.token) ):
           self.declaration_var3()
       else:
-          erro = "Esperado: =, vector_matrix ou declaration_var3"
+          erro = "Tokens ou Não-Terminais Esperados: =, vector_matrix ou declaration_var3"
           self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaration_const2", self.token):
@@ -71,7 +71,7 @@ class Variaveis:
           self.match("DEL", ";", proximoNT="declaration_var1")
           self.declaration_var1()
       else:
-          erro = "Esperado: ',' ou ';'"
+          erro = "Tokens ou Não-Terminais Esperados: ',' ou ';'"
           self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaration_var3", self.token):

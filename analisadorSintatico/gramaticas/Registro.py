@@ -52,7 +52,7 @@ class Registro:
                 self.match("DEL", ";", proximoNT="declaracao_reg3")
                 self.declaracao_reg3()
             else:
-                erro = "Esperado: ',' ou ';'"
+                erro = "Tokens ou Não-Terminais Esperados: ',' ou ';'"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("declaracao_reg2", self.token):
@@ -71,7 +71,7 @@ class Registro:
             elif( primeiro("declaracao_reg1", self.token) ):
                 self.declaracao_reg1()
             else:
-                erro = "Esperado: '}' ou declaracao_reg1"
+                erro = "Tokens ou Não-Terminais Esperados: '}' ou declaracao_reg1"
                 self.registrarErro(erro)
             
         except Exception as e:
@@ -105,7 +105,7 @@ class Registro:
                 self.match("DEL", ".", proximoNT="nested_elem_registro")
                 self.nested_elem_registro()
             else:
-                erro = "Esperado: '.'"
+                erro = "Tokens ou Não-Terminais Esperados: '.'"
                 self.registrarErro(erro)
             
         except Exception as e:
