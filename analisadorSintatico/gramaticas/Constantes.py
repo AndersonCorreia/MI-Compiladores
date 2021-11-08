@@ -25,6 +25,7 @@ class Constantes:
         self.type()
         self.match("IDE", proximoToken={"tipo": "REL", "lexema": "="})
         self.match("REL", "=", proximoNT="value")
+        self.value()
         self.match("IDE", proximoNT="declaration_const2")
         self.declaration_const2()
       else:

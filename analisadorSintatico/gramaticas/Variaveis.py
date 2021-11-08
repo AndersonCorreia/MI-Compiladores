@@ -12,7 +12,7 @@ class Variaveis:
     except Exception as e:
       while self.token['tipo'] != 'EOF':
         if primeiro("declaration_var", self.token):
-            return self.declaration_const()
+            return self.declaration_var()
         elif sequinte("declaration_var", self.token):
             return
         else:
@@ -41,6 +41,7 @@ class Variaveis:
     try:
       if(self.token['lexema'] == '=' ):
           self.match("REL", "=", proximoNT="value")
+          self.value()
           self.match("IDE", proximoNT="declaration_var3")
           self.declaration_var3()
       elif(self.token['lexema'] == ';' ):

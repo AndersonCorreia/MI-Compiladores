@@ -31,7 +31,9 @@ primeiros = {
     "com_retornar": { 'PRE': ['retorno']},
     "com_enquanto": { 'PRE': ['enquanto']},
     "com_para": { 'PRE': ['para']},
-    "value": { 'NRO': [], 'PRE': ["verdadeiro", "falso"], 'CAD': [], 'CHAR': [] }
+    "value": { 'NRO': [], 'PRE': ["verdadeiro", "falso"], 'CAD': [], 'CAR': [] },
+    "write_value_list": { 'DEL': [','] },
+    "value_with_expressao": { 'CAD': [], 'CAR': [] }
 }
 
 NT_contem_palavra_vazia = [ 
@@ -50,6 +52,9 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     #         #se o primeiro do NT for o primeiro de outro NT ou algum Terminal que é verificado no final
     #         return True
     
+    if NT == "value":
+        if primeiro("value", token, considerar_palavra_vazia):
+            return True
     if NT == "declaration_const1":
         if primeiro("type", token, considerar_palavra_vazia):
             return True
