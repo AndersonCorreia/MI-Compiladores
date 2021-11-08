@@ -1,6 +1,103 @@
 from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Funcao:
-    
+
+    def main_function(self):
+        pass
+
+    def function_body(self):
+        pass
+
+    def function_parameters(self):
+        try:
+            if(self.token['lexema'] == '('):
+                self.match("DEL", "(", proximoNT="type")
+                self.type()
+                self.function_parameters1()
+            else:
+                erro = "Esperado: '('"
+                self.registrarErro(erro)
+        except Exception as e:
+            while self.token['tipo'] != 'EOF':
+                if primeiro("function_parameters", self.token):
+                    return self.function_parameters()
+                elif sequinte("function_parameters", self.token):
+                    return
+                else:
+                    self.tokensIgnorados.append(self.token)
+                    self.proximoToken()
+            raise e
+
+    def function_parameters1(self):
+        try:
+            if primeiro("type", self.token):
+                self.type()
+                self.match("IDE", proximoNT="type")
+                self.function_parameters2()
+                self.match("DEL", ")")
+            else:
+                erro = "Esperado: tipo primitivo ou identificador"
+                self.registrarErro(erro)
+        except Exception as e:
+            if primeiro("function_parameters1", self.token):
+                return self.function_parameters1()
+            elif sequinte("function_parameters1", self.token):
+                return
+            else:
+                raise e
+
+    def function_parameters2(self):
+        try:
+            if(self.token['lexema'] == '[' ):
+                self.match( "DEL", '[')
+                self.match( "DEL", ']', proximoNT="function_parameters3")
+                self.function_parameters3()
+            elif primeiro("function_parameters4", self.token):
+                self.function_parameters4()
+            else:
+                return
+        except Exception as e:
+            if primeiro("function_parameters2", self.token):
+                return self.function_parameters2()
+            elif sequinte("function_parameters2", self.token):
+                return
+            else:
+                raise e
+
+    def function_parameters3(self):
+        try:
+            if(self.token['lexema'] == '[' ):
+                self.match( "DEL", '[',)
+                self.match( "DEL", ']')
+                self.function_parameters4()
+            elif primeiro("function_parameters4", self.token):
+                self.function_parameters4()
+            else:
+                erro = "Esperado: lexema ']'"
+                self.registrarErro(erro)
+        except Exception as e:
+            if primeiro("function_parameters3", self.token):
+                return self.function_parameters3()
+            elif sequinte("function_parameters3", self.token):
+                return
+            else:
+                raise e
+
+    def function_parameters4(self):
+        try:
+            if(self.token['lexema'] == ',' ):
+                self.match("DEL", ",", proximoNT={"function_parameters1"})
+                self.function_parameters1()
+            else:
+                erro = "Esperado: lexema ']'"
+                self.registrarErro(erro)
+        except Exception as e:
+            if primeiro("function_parameters4", self.token):
+                return self.function_parameters4()
+            elif sequinte("function_parameters4", self.token):
+                return
+            else:
+                raise e
+
     def function_declaration(self):
         try:
             if(self.token['lexema'] == 'funcao'):
