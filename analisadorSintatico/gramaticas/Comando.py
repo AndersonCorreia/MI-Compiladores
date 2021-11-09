@@ -27,7 +27,7 @@ class Comando:
             elif( primeiro("com_retornar", self.token) ):
                 self.com_retornar()
             else:
-                erro = 'Esperado: enquanto, para, se, write_cmd, read_cmd, functionCall, var_atr, retorno'
+                erro = 'Tokens e Não-Terminais Esperados: enquanto, para, se, write_cmd, read_cmd, functionCall, var_atr, retorno'
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -79,7 +79,7 @@ class Comando:
                 self.com_body()
                 self.match("DEL","}")
             else:
-                erro = 'Esperado: enquanto'
+                erro = 'Tokens e Não-Terminais Esperados: enquanto'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("com_enquanto", self.token):
@@ -109,7 +109,7 @@ class Comando:
                 self.match("IDE")
                 self.read_value0()
             else:
-                erro = 'Esperado: IDE'
+                erro = 'Tokens e Não-Terminais Esperados: IDE'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("read_value", self.token):

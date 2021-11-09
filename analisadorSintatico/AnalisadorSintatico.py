@@ -28,8 +28,10 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
             self.declaration_const()
             self.declaration_var()
         except Exception as e:
-            print("Erro na função principal: ")
-            print(e)
+            erro = "Erro inesperado ao analisar a gramatica"
+            print(erro)
+            self.token['erro_sintatico'] = erro
+            self.errors.append(self.token)
             while self.token['tipo'] != 'EOF':
                 if primeiro("Program", self.token):
                     return self.Program()
@@ -45,7 +47,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         if len(self.tokens) > 0:
             self.token = self.tokens[0]
         else:
-            self.token = {'tipo': 'EOF', 'lexema': ''} #fim dos tokens
+            self.token = {'tipo': 'EOF', 'lexema': '', 'linha': 0} #fim dos tokens
     
     def analisarSintaxe(self):
         
@@ -76,7 +78,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         if self._match(tipo, lexema):
             return True
         
-        erro = 'Esperado: ' + tipo
+        erro = 'Tokens e Não-Terminais Esperados: ' + tipo
         if lexema != None:
             erro += ' ' + lexema
         self.registrarErro(erro)
@@ -140,7 +142,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
             elif self.token['lexema'] == 'vazio':
                 self.match("PRE", "vazio")
             else:
-                erro = 'Esperado: inteiro, real, char, booleano, cadeia, vazio'
+                erro = 'Tokens e Não-Terminais Esperados: inteiro, real, char, booleano, cadeia, vazio'
                 self.registrarErro(erro)
                 
             return
@@ -160,7 +162,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
                 self.atr_value()
                 self.atr_1()
             else:
-                erro = 'Esperado: read_value'
+                erro = 'Tokens e Não-Terminais Esperados: read_value'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("var_atr", self.token):
@@ -177,7 +179,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
             elif( primeiro("functionCall", self.token)):
                 self.functionCall()
             else:
-                erro = 'Esperado: value_with_expressao ou functionCall'
+                erro = 'Tokens e Não-Terminais Esperados: value_with_expressao ou functionCall'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("atr_value", self.token):
@@ -195,7 +197,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
                 self.match("DEL", ",", proximoNT="var_atr")
                 self.var_atr()
             else:
-                erro = 'Esperado: atr_1 ou atr_2'
+                erro = 'Tokens e Não-Terminais Esperados: atr_1 ou atr_2'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("atr_1", self.token):

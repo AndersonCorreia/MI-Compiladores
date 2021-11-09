@@ -31,7 +31,7 @@ class Registro:
                 self.declaracao_reg4()
                 self.declaracao_reg2()
             else:
-                erro = 'Esperado: type'
+                erro = 'Tokens e Não-Terminais Esperados: type'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("declaracao_reg1", self.token):

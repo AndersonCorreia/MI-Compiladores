@@ -8,7 +8,7 @@ class Variaveis:
         self.match("DEL", "{", proximoNT="declaration_var1")
         self.declaration_var1()
       else:
-        erro = 'Esperado: variaveis'
+        erro = 'Tokens e Não-Terminais Esperados: variaveis'
         self.registrarErro(erro)
     except Exception as e:
       while self.token['tipo'] != 'EOF':
@@ -30,7 +30,7 @@ class Variaveis:
       elif( self.token['lexema'] == '}' ):
         self.match("DEL", "}")
       else:
-        erro = 'Esperado: type ou }'
+        erro = 'Tokens e Não-Terminais Esperados: type ou }'
         self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaration_var1", self.token):

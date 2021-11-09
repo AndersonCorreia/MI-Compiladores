@@ -164,7 +164,7 @@ class Funcao:
                 self.varList0()
                 self.match("DEL", ")", proximoToken={"tipo": "DEL", "lexema": ";"})
             else:
-                erro = 'Esperado: IDE'
+                erro = 'Tokens e Não-Terminais Esperados: IDE'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("functionCall", self.token):

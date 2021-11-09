@@ -18,7 +18,7 @@ def getCaminhoAbsoluto(arquivo, path = "./input_teste"):
     return os.path.abspath(path + arquivo)
 
 def gerarArquivosDeSaida(dirOutput, fileNumber, tokens, errors):
-    with open(join(dirOutput, f'saida{fileNumber}.txt'), 'w+') as file:
+    with open(join(dirOutput, f'saida{fileNumber}.txt'), 'w+', encoding="utf-8") as file:
         for token in tokens:
             linha = token['linha']
             tipoToken = token['tipo']
@@ -35,9 +35,9 @@ def gerarArquivosDeSaida(dirOutput, fileNumber, tokens, errors):
                 file.write("" + str(numeroLinha) + " " + str(tipoErro) + " " + str(erroLexema) + "\n")
                 
 def gerarArquivosDeSaidaSintatico(dirOutput, fileNumber, errors):
-    with open(join(dirOutput, f'saida{fileNumber}.txt'), 'w+') as file:
+    with open(join(dirOutput, f'saida{fileNumber}.txt'), 'w+', encoding="utf-8") as file:
         if len(errors) > 0:
-            file.write('Analise concluidada\n Erros encontrados:\n')
+            file.write('Analise concluida\nErros encontrados:\n\n')
             for error in errors:
                 linha = error['linha']
                 tipoErro = error['erro_sintatico']
@@ -45,4 +45,5 @@ def gerarArquivosDeSaidaSintatico(dirOutput, fileNumber, errors):
                 numeroLinha = f'0{linha}' if linha <= 9 else linha
                 file.write("linha " + str(numeroLinha) + ": [ erro sintático: token lido \"" + str(erroLexema) + "\" ], " + str(tipoErro) + "\n")
         else:
-            file.write('Analise concluidada com sucesso!\n Nenhum erro sintatico encontrado')
+            file.write('Analise concluida com sucesso!\nNenhum erro sintático encontrado')
+           
