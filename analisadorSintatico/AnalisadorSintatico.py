@@ -27,6 +27,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
             self.declaracao_reg()
             self.declaration_const()
             self.declaration_var()
+            self.function_declaration()
         except Exception as e:
             erro = "Erro inesperado ao analisar a gramatica"
             print(erro)

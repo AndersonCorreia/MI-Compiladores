@@ -9,7 +9,7 @@ class VetoresMatrizes:
                 self.match( "DEL", ']', proximoNT="v_m_access1" )
                 self.vector_matrix_1()
             else:
-                erro = "Tokens ou Não-Terminais Esperados: lexema '[' ou ']'"
+                erro = "Tokens ou Não-Terminais Esperados: '['"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("vector_matrix", self.token):
@@ -33,7 +33,7 @@ class VetoresMatrizes:
             elif primeiro("declaration_var3", self.token):
                 self.declaration_var3()
             else:
-                erro = "Tokens ou Não-Terminais Esperados: lexema '[' ou '='"
+                erro = "Tokens ou Não-Terminais Esperados: '[', '=' ou declaration_var3"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("vector_matrix_1", self.token):
@@ -68,7 +68,7 @@ class VetoresMatrizes:
                 self.match( "DEL", '[', proximoNT="init_matrix_1" )
                 self.init_matrix_1()
             else:
-                erro = "Tokens ou Não-Terminais Esperados: lexema '['"
+                erro = "Tokens ou Não-Terminais Esperados: '[' ou init_matrix_1"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("init_matrix", self.token):

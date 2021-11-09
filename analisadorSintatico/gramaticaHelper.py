@@ -43,7 +43,9 @@ primeiros = {
     "function_parameters3": { 'DEL' : ['['] },
     "function_parameters4": { 'DEL': [','] },
     "function_body": { 'PRE': [] },
-    "com_retornar1": { 'CAD': [], 'CAR': [], "DEL": ["(",], "LOG": ["!"] }
+    "com_retornar1": { 'CAD': [], 'CAR': [], "DEL": ["(",], "LOG": ["!"] },
+    "vector_matrix": { 'DEL': ['['] },
+    "value_with_IDE": { 'IDE': [] },
 }
 
 NT_contem_palavra_vazia = [ 
@@ -62,7 +64,7 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     #         #se o primeiro do NT for o primeiro de outro NT ou algum Terminal que é verificado no final
     #         return True
 
-    if NT == "value":
+    if NT == "value_with_IDE":
         if primeiro("value", token, considerar_palavra_vazia):
             return True
     if NT == "declaration_const1":

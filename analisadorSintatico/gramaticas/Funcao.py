@@ -10,7 +10,7 @@ class Funcao:
                 self.function_body()
                 self.match("DEL", "}")
             else:
-                erro = "Esperado: function_parameters"
+                erro = "Tokens ou Não-Terminais Esperados function_parameters"
                 self.registrarErro(erro)
         except Exception as e:
             while self.token['tipo'] != 'EOF':
@@ -30,7 +30,7 @@ class Funcao:
             elif primeiro("function_body1", self.token):
                 self.function_body1()
             else:
-                erro = "Esperado: declaration_const ou function_body1"
+                erro = "Tokens ou Não-Terminais Esperados declaration_const ou function_body1"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_body", self.token):
@@ -48,7 +48,7 @@ class Funcao:
             elif primeiro("function_body2", self.token):
                 self.function_body2()
             else:
-                erro = "Esperado: declaration_var ou function_body2"
+                erro = "Tokens ou Não-Terminais Esperados declaration_var ou function_body2"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_body1", self.token):
@@ -84,7 +84,7 @@ class Funcao:
             elif primeiro("retornar", self.token):
                 self.retornar()
             else:
-                erro = "Esperado: com_enquanto, com_para, se, write_cmd, read_cmd, functionCall, var_atr ou retornar"
+                erro = "Tokens ou Não-Terminais Esperados com_enquanto, com_para, se, write_cmd, read_cmd, functionCall, var_atr ou retornar"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_body2", self.token):
@@ -101,7 +101,7 @@ class Funcao:
                 self.retornar1()
                 self.match("DEL", ";")
             else:
-                erro = "Esperado: 'retorno'"
+                erro = "Tokens ou Não-Terminais Esperados 'retorno'"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("retornar", self.token):
@@ -131,7 +131,7 @@ class Funcao:
                 self.match("DEL", "(", proximoNT="function_parameters1")
                 self.function_parameters1()
             else:
-                erro = "Esperado: '('"
+                erro = "Tokens ou Não-Terminais Esperados '('"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters", self.token):
@@ -150,7 +150,7 @@ class Funcao:
             elif self.token['lexema'] == ')':
                 self.match("DEL", ")")
             else:
-                erro = "Esperado: type ou ')'"
+                erro = "Tokens ou Não-Terminais Esperados type ou ')'"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters1", self.token):
@@ -169,7 +169,7 @@ class Funcao:
             elif primeiro("function_parameters4", self.token):
                 self.function_parameters4()
             else:
-                erro = "Esperado: '[' ou function_parameters4"
+                erro = "Tokens ou Não-Terminais Esperados '[' ou function_parameters4"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters2", self.token):
@@ -188,7 +188,7 @@ class Funcao:
             elif primeiro("function_parameters4", self.token):
                 self.function_parameters4()
             else:
-                erro = "Esperado: ']' ou function_parameters4"
+                erro = "Tokens ou Não-Terminais Esperados ']' ou function_parameters4"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters3", self.token):
@@ -206,7 +206,7 @@ class Funcao:
             elif self.token['lexema'] == ')':
                 self.match("DEL", ")")
             else:
-                erro = "Esperado: ')' ou function_parameters1"
+                erro = "Tokens ou Não-Terminais Esperados ')' ou function_parameters1"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters4", self.token):

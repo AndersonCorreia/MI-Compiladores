@@ -22,4 +22,3 @@ for arquivo in arquivos:
     errors = analisadorSintatico.getListaErrors()
     fileNumber = getNumeracaoByNameFile(arquivo)
     gerarArquivosDeSaidaSintatico(dirOutput, fileNumber, errors)
-    exit(0)

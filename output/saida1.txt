@@ -1,0 +1,6 @@
+Analise concluida
+Erros encontrados:
+
+linha 39: [ erro sintático: token lido "retorno" ], Tokens ou Não-Terminais Esperados declaration_const ou function_body1
+linha 55: [ erro sintático: token lido "escreva" ], Tokens e Não-Terminais Esperados: DEL }
+linha 69: [ erro sintático: token lido "(" ], Tokens ou Não-Terminais Esperados function_parameters
