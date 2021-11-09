@@ -34,18 +34,18 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
             erro = "Erro inesperado ao analisar a gramatica"
             print(erro)
             print(e)
-            self.token['erro_sintatico'] = erro
-            self.errors.append(self.token)
             while self.token['tipo'] != 'EOF':
                 if primeiro("Program", self.token):
                     return self.Program()
                 else:
                     self.tokensIgnorados.append(self.token)
                     self.proximoToken()
+            # self.token['erro_sintatico'] = erro
+            # self.errors.append(self.token)
     
     def proximoToken(self, removerToken = True):
         
-        if removerToken:
+        if removerToken and len(self.tokens) > 0:
             self.tokens.pop(0)
             
         if len(self.tokens) > 0:
