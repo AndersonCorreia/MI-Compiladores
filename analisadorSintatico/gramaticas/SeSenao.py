@@ -13,7 +13,7 @@ class SeSenao:
                 self.match('DEL', '}', proximoNT='se_body')
                 self.se_body()
             else:
-                erro = 'Esperado: se'
+                erro = 'Tokens e Não-Terminais Esperados: se'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("se", self.token):
@@ -43,7 +43,7 @@ class SeSenao:
                 self.match('PRE', 'senao', proximoNT="se_senao")
                 self.se_senao()
             else:
-                erro = 'Esperado: senao'
+                erro = 'Tokens e Não-Terminais Esperados: senao'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("senao", self.token):
@@ -62,7 +62,7 @@ class SeSenao:
                 self.com_body()
                 self.match('DEL', '}')
             else:
-                erro = 'Esperado: se ou {'
+                erro = 'Tokens e Não-Terminais Esperados: se ou {'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("se_senao", self.token):

@@ -11,7 +11,7 @@ class Escreva:
         self.match("DEL", ")", proximoToken={"tipo": "DEL", "lexema": ";"})
         self.match("DEL", ";")
       else:
-        erro = "Esperado: escreva"
+        erro = "Tokens ou Não-Terminais Esperados: escreva"
         self.registrarErro(erro)
     except Exception as e:
       while self.token['tipo'] != 'EOF':

@@ -31,7 +31,7 @@ class Constantes:
       elif(self.token['lexema'] == '}' ):
         self.match("DEL", "}")
       else:
-        erro = 'Esperado: primitive_type ou }'
+        erro = 'Tokens e Não-Terminais Esperados: primitive_type ou }'
         self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaracao_const1", self.token):
@@ -45,14 +45,15 @@ class Constantes:
     try:
       if(self.token['lexema'] == ',' ):
           self.match("DEL", ",", proximoToken={"tipo": "IDE"})
-          self.match("IDE", proximoNT="value")
+          self.match("IDE",  proximoToken={"tipo": "REL", "lexema": "="})
+          self.match("REL", "=", proximoNT="value")
           self.value()
           self.declaration_const2()
       elif(self.token['lexema'] == ';' ):
           self.match("DEL", ";", proximoNT="declaration_const1")
           self.declaration_const1()
       else:
-          erro = "Esperado: ',' ou ';'"
+          erro = "Tokens ou Não-Terminais Esperados: ',' ou ';'"
           self.registrarErro(erro)
     except Exception as e:
       if primeiro("declaration_const2", self.token):

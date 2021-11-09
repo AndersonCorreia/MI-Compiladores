@@ -14,7 +14,7 @@ class Para:
                 self.match('DEL', '{', proximoNT="com_body")
                 self.match('DEL', '}')
             else:
-                erro = "Esperado: para"
+                erro = "Tokens ou Não-Terminais Esperados: para"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -34,7 +34,7 @@ class Para:
             elif( self.token['lexema'] == ';' ):
                 self.match('DEL', ';')
             else:
-                erro = "Esperado: var_atr, ;"
+                erro = "Tokens ou Não-Terminais Esperados: var_atr, ;"
                 self.registrarErro(erro)
                 
         except Exception as e:

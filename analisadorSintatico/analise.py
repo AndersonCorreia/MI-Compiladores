@@ -19,4 +19,7 @@ for arquivo in arquivos:
     tokens = automato.getListaTokens()
     analisadorSintatico = AnalisadorSintatico(tokens)
     analisadorSintatico.analisarSintaxe()
+    errors = analisadorSintatico.getListaErrors()
+    fileNumber = getNumeracaoByNameFile(arquivo)
+    gerarArquivosDeSaidaSintatico(dirOutput, fileNumber, errors)
     exit(0)

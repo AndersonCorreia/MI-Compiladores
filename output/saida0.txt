@@ -1,0 +1,5 @@
+Analise concluida
+Erros encontrados:
+
+linha 26: [ erro sintático: token lido "[" ], Tokens ou Não-Terminais Esperados: =, vector_matrix ou declaration_var3
+linha 00: [ erro sintático: token lido "" ], Erro inesperado ao analisar a gramatica

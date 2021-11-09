@@ -15,7 +15,7 @@ class Expressoes:
                 self.match('DEL', '!', proximoNT="expressao")
                 self.expressao()
             else:
-                erro = "Esperado: expr_rel ou '(' ou '!'"
+                erro = "Tokens ou Não-Terminais Esperados: expr_rel ou '(' ou '!'"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -34,7 +34,7 @@ class Expressoes:
                 self.expr_multi()
                 self.expr_art1()
             else:
-                erro = "Esperado: expr_multi"
+                erro = "Tokens ou Não-Terminais Esperados: expr_multi"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("expr_art", self.token):
@@ -66,7 +66,7 @@ class Expressoes:
             elif ( self.token['lexema'] == '-'):
                 self.match('ART', '-')
             else:
-                erro = "Esperado: + ou -"
+                erro = "Tokens ou Não-Terminais Esperados: + ou -"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -84,7 +84,7 @@ class Expressoes:
             elif ( self.token['lexema'] == '/'):
                 self.match('ART', '/')
             else:
-                erro = "Esperado: * ou /"
+                erro = "Tokens ou Não-Terminais Esperados: * ou /"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -102,7 +102,7 @@ class Expressoes:
             elif ( self.token['lexema'] == '--'):
                 self.match('ART', '--')
             else:
-                erro = "Esperado: ++ ou --"
+                erro = "Tokens ou Não-Terminais Esperados: ++ ou --"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -141,7 +141,7 @@ class Expressoes:
                 self.read_value()
                 self.operator_auto()
             else:
-                erro = "Esperado: NRO, operator_auto0 ou read_value"
+                erro = "Tokens ou Não-Terminais Esperados: NRO, operator_auto0 ou read_value"
                 self.registrarErro(erro)
             
         except Exception as e:
@@ -162,7 +162,7 @@ class Expressoes:
                 self.expr_valor_mod()
                 self.expr_multi_pos()
             else:
-                erro = "Esperado: operator_soma, expr_valor_mod"
+                erro = "Tokens ou Não-Terminais Esperados: operator_soma, expr_valor_mod"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("expr_multi", self.token):
@@ -198,7 +198,7 @@ class Expressoes:
                 self.expr_multi_pos()
                 self.expr_number1()
             else:
-                erro = "Esperado: expr_art ou '('"
+                erro = "Tokens ou Não-Terminais Esperados: expr_art ou '('"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -237,7 +237,7 @@ class Expressoes:
                 self.match('PRE', 'falso', proximoNT="expr_rel1")
                 self.expr_rel1()
             else:
-                erro = "Esperado: expr_art ou 'verdadeiro' ou 'falso'"
+                erro = "Tokens ou Não-Terminais Esperados: expr_art ou 'verdadeiro' ou 'falso'"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -257,7 +257,7 @@ class Expressoes:
                 self.expressao()
                 self.match('DEL', ')')
             else:
-                erro = "Esperado: expr_rel ou '('"
+                erro = "Tokens ou Não-Terminais Esperados: expr_rel ou '('"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -299,7 +299,7 @@ class Expressoes:
             elif ( self.token['lexema'] == '<'):
                 self.match('REL', '!=')
             else:
-                erro = "Esperado: '==', '>=', '<=', '!=', '>' ou '<'"
+                erro = "Tokens ou Não-Terminais Esperados: '==', '>=', '<=', '!=', '>' ou '<'"
                 self.registrarErro(erro)
                 
         except Exception as e:
@@ -356,7 +356,7 @@ class Expressoes:
             elif ( self.token['lexema'] == '||'):
                 self.match('LOG', '||')
             else:
-                erro = "Esperado: && ou ||"
+                erro = "Tokens ou Não-Terminais Esperados: && ou ||"
                 self.registrarErro(erro)
                 
         except Exception as e:
