@@ -8,9 +8,11 @@ from analisadorSintatico.gramaticas.Comando import Comando
 from analisadorSintatico.gramaticas.Para import Para
 from analisadorSintatico.gramaticas.Funcao import Funcao
 from analisadorSintatico.gramaticas.Valor import Valor
+from analisadorSintatico.gramaticas.Leia import Leia
+from analisadorSintatico.gramaticas.Escreva import Escreva
 from gramaticaHelper import *
 
-class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao, VetoresMatrizes, Comando, Para, Funcao, Valor):
+class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao, VetoresMatrizes, Comando, Para, Funcao, Valor, Leia, Escreva):
     
     def __init__(self, tokens):
         self.tokens = tokens
@@ -31,6 +33,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         except Exception as e:
             erro = "Erro inesperado ao analisar a gramatica"
             print(erro)
+            print(e)
             self.token['erro_sintatico'] = erro
             self.errors.append(self.token)
             while self.token['tipo'] != 'EOF':
@@ -198,7 +201,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
                 self.match("DEL", ",", proximoNT="var_atr")
                 self.var_atr()
             else:
-                erro = 'Tokens e Não-Terminais Esperados: atr_1 ou atr_2'
+                erro = 'Tokens e Não-Terminais Esperados: , ou ;'
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("atr_1", self.token):

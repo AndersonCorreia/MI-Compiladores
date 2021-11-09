@@ -14,19 +14,17 @@ class Escreva:
         erro = "Tokens ou Não-Terminais Esperados: escreva"
         self.registrarErro(erro)
     except Exception as e:
-      while self.token['tipo'] != 'EOF':
         if primeiro("write_cmd", self.token):
             return self.write_cmd()
         elif sequinte("write_cmd", self.token):
             return
         else:
-            self.proximoToken()
-      raise e
+            raise e
 
   def write_value_list(self):
     try:
       if(self.token['lexema'] == ',' ):
-          self.match("IDE", ",", proximoNT="value_with_expressao")
+          self.match("DEL", ",", proximoNT="value_with_expressao")
           self.value_with_expressao()
           self.write_value_list()
       else:

@@ -75,11 +75,11 @@ class Funcao:
             elif primeiro("read_cmd", self.token):
                 self.read_cmd()
                 self.function_body2()
-            elif primeiro("functionCall", self.token):
-                self.functionCall()
-                self.function_body2()
             elif primeiro("var_atr", self.token):
                 self.var_atr()
+                self.function_body2()
+            elif primeiro("functionCall", self.token):
+                self.functionCall()
                 self.function_body2()
             elif primeiro("retornar", self.token):
                 self.retornar()
@@ -238,6 +238,7 @@ class Funcao:
     
     def function_declaration1(self):
         try:
+            
             if(self.token['lexema'] == 'algoritmo'):
                 self.match("PRE", "algoritmo", proximoNT="main_function")
                 self.main_function()

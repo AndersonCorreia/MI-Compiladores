@@ -12,6 +12,7 @@ class Para:
                 self.step()
                 self.match('DEL', ')', proximoToken={'tipo':'DEL', 'lexema': '{'})
                 self.match('DEL', '{', proximoNT="com_body")
+                self.com_body()
                 self.match('DEL', '}')
             else:
                 erro = "Tokens ou Não-Terminais Esperados: para"
@@ -66,10 +67,10 @@ class Para:
         
     def step(self):
         try:
-            if( primeiro("var_atr", self.token) ):
-                self.var_atr()
-            elif( primeiro('expr_number', self.token) ):
+            if( primeiro('expr_number', self.token) ):
                 self.expr_number()
+            elif( primeiro("var_atr", self.token) ):
+                self.var_atr()
             else:
                 return # declaração vazia
                 

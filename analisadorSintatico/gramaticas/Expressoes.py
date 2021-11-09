@@ -297,7 +297,7 @@ class Expressoes:
             elif ( self.token['lexema'] == '>'):
                 self.match('REL', '>')
             elif ( self.token['lexema'] == '<'):
-                self.match('REL', '!=')
+                self.match('REL', '<')
             else:
                 erro = "Tokens ou Não-Terminais Esperados: '==', '>=', '<=', '!=', '>' ou '<'"
                 self.registrarErro(erro)

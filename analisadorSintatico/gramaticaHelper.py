@@ -29,6 +29,7 @@ primeiros = {
     "se": { 'PRE': ['se']},
     "senao": { 'PRE': ['senao']},
     "com_retornar": { 'PRE': ['retorno']},
+    "retornar": { 'PRE': ['retorno']},
     "com_enquanto": { 'PRE': ['enquanto']},
     "com_para": { 'PRE': ['para']},
     "value": { 'NRO': [], 'PRE': ["verdadeiro", "falso"], 'CAD': [], 'CAR': [] },
@@ -38,20 +39,23 @@ primeiros = {
     "function_declaration": { 'PRE': ['funcao']},
     "function_declaration1": { 'PRE': ['algoritmo']},
     "function_declaration2": { 'IDE': []},
-    "function_parameters1": { 'PRE': [] },
+    "function_parameters": { 'DEL': ['('] },
+    "function_parameters1": { 'DEL': [')'] },
     "function_parameters2": { 'DEL' : ['['] },
     "function_parameters3": { 'DEL' : ['['] },
-    "function_parameters4": { 'DEL': [','] },
-    "function_body": { 'PRE': [] },
+    "function_parameters4": { 'DEL': [',', ')'] },
     "com_retornar1": { 'CAD': [], 'CAR': [], "DEL": ["(",], "LOG": ["!"] },
     "vector_matrix": { 'DEL': ['['] },
     "value_with_IDE": { 'IDE': [] },
+    "read_cmd": { 'PRE': ['leia']},
+    "write_cmd": { 'PRE': ['escreva']},
 }
 
 NT_contem_palavra_vazia = [ 
     "declaracao_reg", "declaracao_reg4", "nested_elem_registro", "v_m_access1",
     "expr_multi_pos", "expr_art1", "operator_auto", "com_body", "com_retornar", 
-    "com_retornar1"
+    "com_retornar1", "retornar1", "write_value_list", "read_value0", "se_body"
+    "varList0", "varList2", "args"
 ]
 
 def primeiro(NT, token, considerar_palavra_vazia=True):
@@ -67,16 +71,19 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     if NT == "value_with_IDE":
         if primeiro("value", token, considerar_palavra_vazia):
             return True
-    if NT == "declaration_const1":
+    elif NT == "declaration_const1":
         if primeiro("type", token, considerar_palavra_vazia):
             return True
-    if NT == "declaration_var1":
+    elif NT == "declaration_var1":
         if primeiro("type", token, considerar_palavra_vazia):
             return True
-    if NT == "declaracao_reg1":
+    elif NT == "function_parameters":
         if primeiro("type", token, considerar_palavra_vazia):
             return True
-    if NT == "declaracao_reg3":
+    elif NT == "declaracao_reg1":
+        if primeiro("type", token, considerar_palavra_vazia):
+            return True
+    elif NT == "declaracao_reg3":
         if primeiro("declaracao_reg1", token, considerar_palavra_vazia):
             return True
     elif NT == "declaracao_reg4":
@@ -121,7 +128,22 @@ def primeiro(NT, token, considerar_palavra_vazia=True):
     elif NT == "com_body":
         if primeiro("com_enquanto", token, considerar_palavra_vazia) or primeiro("com_para", token, considerar_palavra_vazia) or primeiro("se", token, considerar_palavra_vazia) or primeiro("com_retornar", token, considerar_palavra_vazia) or primeiro("write_cmd", token, considerar_palavra_vazia) or primeiro("read_cmd", token, considerar_palavra_vazia) or primeiro("functionCall", token, considerar_palavra_vazia) or primeiro("var_atr", token, considerar_palavra_vazia):
             return True
-    
+    elif NT == "function_body":
+        if primeiro("declaration_const", token, considerar_palavra_vazia) or primeiro("function_body1", token, considerar_palavra_vazia):
+            return True
+    elif NT == "function_body1":
+        if primeiro("declaration_var", token, considerar_palavra_vazia) or primeiro("function_body2", token, considerar_palavra_vazia):
+            return True
+    elif NT == "function_body2":
+        if primeiro("com_enquanto", token, considerar_palavra_vazia) or primeiro("com_para", token, considerar_palavra_vazia) or primeiro("se", token, considerar_palavra_vazia) or primeiro("retornar", token, considerar_palavra_vazia) or primeiro("write_cmd", token, considerar_palavra_vazia) or primeiro("read_cmd", token, considerar_palavra_vazia) or primeiro("functionCall", token, considerar_palavra_vazia) or primeiro("var_atr", token, considerar_palavra_vazia):
+            return True
+    elif NT in ["com_retornar1", "retornar1"]:
+        if primeiro("value_with_expressao", token, considerar_palavra_vazia):
+            return True
+    elif NT == "main_function":
+        if primeiro("function_parameters", token, considerar_palavra_vazia):
+            return True
+        
     if NT in primeiros:
         if token['tipo'] in primeiros[NT]:
             if primeiros[NT][token['tipo']] == [] or token['lexema'] in primeiros[NT][token['tipo']]:
@@ -144,6 +166,7 @@ sequintes = {
     "com_retornar1": { "DEL": [';']},
     "args": { "DEL": [')']},
     "functionCall": { "DEL": [';',',']},
+    "function_parameters": { "DEL": ['}']},
 }
 
 def sequinte(NT, token):

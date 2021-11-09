@@ -102,7 +102,8 @@ class Registro:
         
         try:
             if( self.token['lexema'] == '.' ):
-                self.match("DEL", ".", proximoNT="nested_elem_registro")
+                self.match("DEL", ".")
+                self.match("IDE", proximoNT="nested_elem_registro")
                 self.nested_elem_registro()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: '.'"
@@ -120,9 +121,10 @@ class Registro:
         
         try:
             if( self.token['lexema'] == '.' ):
-                self.match("DEL", ".", proximoNT="nested_elem_registro1")
+                self.match("DEL", ".")
+                self.match("IDE", proximoNT="nested_elem_registro1")
                 self.nested_elem_registro1()
-            elif( primeiro("v_m_access") ):
+            elif( primeiro("v_m_access", self.token) ):
                 self.v_m_access()
                 self.nested_elem_registro1()
             else:
@@ -139,7 +141,7 @@ class Registro:
     def nested_elem_registro1(self):
         
         try:
-            if( primeiro("elem_registro") ):
+            if( primeiro("elem_registro", self.token) ):
                 self.elem_registro()
             else:
                 return # declaração vazia

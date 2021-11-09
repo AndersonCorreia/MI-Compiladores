@@ -54,8 +54,8 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
     se ( a == b ) {
         escreva( local_c, 45, local_a );
     }
-    se senao ( verdadeiro ) {
-        leia( local_d, local_teste );
+    senao se( verdadeiro ) {
+        leia( local_d , local_teste );
     }
     senao {
         escreva( local_c, 45, local_a );
@@ -86,7 +86,6 @@ funcao vazio algoritmo () {
            b[2] = '\'';
            b[2][2] = "Cadeia\"_de_cadeia";
           
-           funcao_teste_1();
            
            para( i = 2; i < ((teste + 2) / 3)  ; i ++ ){
                 se( (a + 2) != 3 ){

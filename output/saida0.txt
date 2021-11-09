@@ -1,5 +1,0 @@
-Analise concluida
-Erros encontrados:
-
-linha 00: [ erro sintático: token lido "" ], Erro inesperado ao analisar a gramatica
-linha 00: [ erro sintático: token lido "" ], Erro inesperado ao analisar a gramatica
