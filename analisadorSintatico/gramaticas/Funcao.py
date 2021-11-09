@@ -1,3 +1,4 @@
+from os import error
 from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Funcao:
 
@@ -9,7 +10,7 @@ class Funcao:
                 self.function_body()
                 self.match("DEL", "}")
             else:
-                erro = "Esperado: parametros da função"
+                erro = "Esperado: function_parameters"
                 self.registrarErro(erro)
         except Exception as e:
             while self.token['tipo'] != 'EOF':
@@ -18,39 +19,44 @@ class Funcao:
                 elif sequinte("main_function", self.token):
                     return
                 else:
-                    raise e    
+                    self.tokensIgnorados.append(self.token)
+                    self.proximoToken()   
 
     def function_body(self):
         try:
             if primeiro("declaration_const", self.token):
                 self.declaration_const()
                 self.function_body1()
-            else:
+            elif primeiro("function_body1", self.token):
                 self.function_body1()
+            else:
+                erro = "Esperado: declaration_const ou function_body1"
+                self.registrarErro(erro)
         except Exception as e:
-            while self.token['tipo'] != 'EOF':
-                if primeiro("function_body", self.token):
-                    return self.function_body()
-                elif sequinte("function_body", self.token):
-                    return
-                else:
-                    raise e
+            if primeiro("function_body", self.token):
+                return self.function_body()
+            elif sequinte("function_body", self.token):
+                return
+            else:
+                raise e
 
     def function_body1(self):
         try:
             if primeiro("declaration_var", self.token):
                 self.declaration_var()
                 self.function_body2()
-            else:
+            elif primeiro("function_body2", self.token):
                 self.function_body2()
+            else:
+                erro = "Esperado: declaration_var ou function_body2"
+                self.registrarErro(erro)
         except Exception as e:
-            while self.token['tipo'] != 'EOF':
-                if primeiro("function_body1", self.token):
-                    return self.function_body1()
-                elif sequinte("function_body1", self.token):
-                    return
-                else:
-                    raise e
+            if primeiro("function_body1", self.token):
+                return self.function_body1()
+            elif sequinte("function_body1", self.token):
+                return
+            else:
+                raise e
 
     def function_body2(self):
         try:
@@ -75,16 +81,18 @@ class Funcao:
             elif primeiro("var_atr", self.token):
                 self.var_atr()
                 self.function_body2()
-            else:
+            elif primeiro("retornar", self.token):
                 self.retornar()
+            else:
+                erro = "Esperado: com_enquanto, com_para, se, write_cmd, read_cmd, functionCall, var_atr ou retornar"
+                self.registrarErro(erro)
         except Exception as e:
-            while self.token['tipo'] != 'EOF':
-                if primeiro("function_body2", self.token):
-                    return self.function_body2()
-                elif sequinte("function_body2", self.token):
-                    return
-                else:
-                    raise e
+            if primeiro("function_body2", self.token):
+                return self.function_body2()
+            elif sequinte("function_body2", self.token):
+                return
+            else:
+                raise e
 
     def retornar(self):
         try:
@@ -93,62 +101,56 @@ class Funcao:
                 self.retornar1()
                 self.match("DEL", ";")
             else:
-                erro = "Esperado: '('"
+                erro = "Esperado: 'retorno'"
                 self.registrarErro(erro)
         except Exception as e:
-            while self.token['tipo'] != 'EOF':
-                if primeiro("retornar", self.token):
-                    return self.retornar()
-                elif sequinte("retornar", self.token):
-                    return
-                else:
-                    raise e
+            if primeiro("retornar", self.token):
+                return self.retornar()
+            elif sequinte("retornar", self.token):
+                return
+            else:
+                raise e
 
     def retornar1(self):
         try:
-            if primeiro("com_retornar1", self.token):
-                self.com_retornar1()
+            if primeiro("value_with_expressao", self.token):
+                self.value_with_expressao()
             else:
-                erro = "Esperado: cadeia, char ou expressão"
-                self.registrarErro(erro)
+                return # declaração vazia
         except Exception as e:
-            while self.token['tipo'] != 'EOF':
-                if primeiro("retornar1", self.token):
-                    return self.retornar1()
-                elif sequinte("retornar1", self.token):
-                    return
-                else:
-                    raise e
+            if primeiro("retornar1", self.token):
+                return self.retornar1()
+            elif sequinte("retornar1", self.token):
+                return
+            else:
+                raise e
 
     def function_parameters(self):
         try:
             if(self.token['lexema'] == '('):
-                self.match("DEL", "(", proximoNT="type")
-                self.type()
+                self.match("DEL", "(", proximoNT="function_parameters1")
                 self.function_parameters1()
             else:
                 erro = "Esperado: '('"
                 self.registrarErro(erro)
         except Exception as e:
-            while self.token['tipo'] != 'EOF':
-                if primeiro("function_parameters", self.token):
-                    return self.function_parameters()
-                elif sequinte("function_parameters", self.token):
-                    return
-                else:
-                    self.tokensIgnorados.append(self.token)
-                    self.proximoToken()
-            raise e
+            if primeiro("function_parameters", self.token):
+                return self.function_parameters()
+            elif sequinte("function_parameters", self.token):
+                return
+            else:
+                raise e
 
     def function_parameters1(self):
         try:
             if primeiro("type", self.token):
                 self.type()
-                self.match("IDE", proximoNT="type")
+                self.match("IDE", proximoNT="function_parameters2")
                 self.function_parameters2()
+            elif self.token['lexema'] == ')':
                 self.match("DEL", ")")
             else:
-                erro = "Esperado: tipo primitivo ou identificador"
+                erro = "Esperado: type ou ')'"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters1", self.token):
@@ -167,7 +169,8 @@ class Funcao:
             elif primeiro("function_parameters4", self.token):
                 self.function_parameters4()
             else:
-                return
+                erro = "Esperado: '[' ou function_parameters4"
+                self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters2", self.token):
                 return self.function_parameters2()
@@ -179,13 +182,13 @@ class Funcao:
     def function_parameters3(self):
         try:
             if(self.token['lexema'] == '[' ):
-                self.match( "DEL", '[',)
-                self.match( "DEL", ']')
+                self.match( "DEL", '[')
+                self.match( "DEL", ']', proximoNT="function_parameters4")
                 self.function_parameters4()
             elif primeiro("function_parameters4", self.token):
                 self.function_parameters4()
             else:
-                erro = "Esperado: lexema ']'"
+                erro = "Esperado: ']' ou function_parameters4"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters3", self.token):
@@ -198,10 +201,12 @@ class Funcao:
     def function_parameters4(self):
         try:
             if(self.token['lexema'] == ',' ):
-                self.match("DEL", ",", proximoNT={"function_parameters1"})
+                self.match("DEL", ",", proximoNT="function_parameters1")
                 self.function_parameters1()
+            elif self.token['lexema'] == ')':
+                self.match("DEL", ")")
             else:
-                erro = "Esperado: lexema ']'"
+                erro = "Esperado: ')' ou function_parameters1"
                 self.registrarErro(erro)
         except Exception as e:
             if primeiro("function_parameters4", self.token):

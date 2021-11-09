@@ -87,7 +87,7 @@ Comment Line  = '%'
 <function_body2>        ::= <com_enquanto> <function_body2> | <com_para> <function_body2> | <se> <function_body2>
                          | <write_cmd> <function_body2> | <read_cmd> <function_body2> | <functionCall> <function_body2> | <var_atr> <function_body2> | <retornar>
 <retornar> ::= retorno <retornar1> ';'
-<retornar1> ::= cad | char | <expressao> | <>
+<retornar1> ::= <value_with_expressao> | <>
 !-------------------------------------------------------------
              
 !-------------------------------------------------------------
