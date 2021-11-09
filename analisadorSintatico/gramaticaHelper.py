@@ -41,7 +41,9 @@ primeiros = {
     "function_parameters1": { 'PRE': [] },
     "function_parameters2": { 'DEL' : ['['] },
     "function_parameters3": { 'DEL' : ['['] },
-    "function_parameters4": { 'DEL': [','] }
+    "function_parameters4": { 'DEL': [','] },
+    "function_body": { 'PRE': [] },
+    "com_retornar1": { 'CAD': [], 'CAR': [], "DEL": ["(",], "LOG": ["!"] }
 }
 
 NT_contem_palavra_vazia = [ 

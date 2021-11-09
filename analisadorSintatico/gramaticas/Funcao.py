@@ -2,10 +2,123 @@ from analisadorSintatico.gramaticaHelper import primeiro, sequinte
 class Funcao:
 
     def main_function(self):
-        pass
+        try:
+            if primeiro("function_parameters", self.token):
+                self.function_parameters()
+                self.match("DEL", "{", proximoNT="function_body")
+                self.function_body()
+                self.match("DEL", "}")
+            else:
+                erro = "Esperado: parametros da função"
+                self.registrarErro(erro)
+        except Exception as e:
+            while self.token['tipo'] != 'EOF':
+                if primeiro("main_function", self.token):
+                    return self.main_function()
+                elif sequinte("main_function", self.token):
+                    return
+                else:
+                    raise e    
 
     def function_body(self):
-        pass
+        try:
+            if primeiro("declaration_const", self.token):
+                self.declaration_const()
+                self.function_body1()
+            else:
+                self.function_body1()
+        except Exception as e:
+            while self.token['tipo'] != 'EOF':
+                if primeiro("function_body", self.token):
+                    return self.function_body()
+                elif sequinte("function_body", self.token):
+                    return
+                else:
+                    raise e
+
+    def function_body1(self):
+        try:
+            if primeiro("declaration_var", self.token):
+                self.declaration_var()
+                self.function_body2()
+            else:
+                self.function_body2()
+        except Exception as e:
+            while self.token['tipo'] != 'EOF':
+                if primeiro("function_body1", self.token):
+                    return self.function_body1()
+                elif sequinte("function_body1", self.token):
+                    return
+                else:
+                    raise e
+
+    def function_body2(self):
+        try:
+            if primeiro("com_enquanto", self.token):
+                self.com_enquanto()
+                self.function_body2()
+            elif primeiro("com_para", self.token):
+                self.com_para()
+                self.function_body2()
+            elif primeiro("se", self.token):
+                self.se()
+                self.function_body2()
+            elif primeiro("write_cmd", self.token):
+                self.write_cmd()
+                self.function_body2()
+            elif primeiro("read_cmd", self.token):
+                self.read_cmd()
+                self.function_body2()
+            elif primeiro("functionCall", self.token):
+                self.functionCall()
+                self.function_body2()
+            elif primeiro("var_atr", self.token):
+                self.var_atr()
+                self.function_body2()
+            else:
+                self.retornar()
+        except Exception as e:
+            while self.token['tipo'] != 'EOF':
+                if primeiro("function_body2", self.token):
+                    return self.function_body2()
+                elif sequinte("function_body2", self.token):
+                    return
+                else:
+                    raise e
+
+    def retornar(self):
+        try:
+            if(self.token['lexema'] == 'retorno'):
+                self.match("PRE", "retorno", proximoNT="retornar1")
+                self.retornar1()
+                self.match("DEL", ";")
+            else:
+                erro = "Esperado: '('"
+                self.registrarErro(erro)
+        except Exception as e:
+            while self.token['tipo'] != 'EOF':
+                if primeiro("retornar", self.token):
+                    return self.retornar()
+                elif sequinte("retornar", self.token):
+                    return
+                else:
+                    raise e
+
+    def retornar1(self):
+        try:
+            if primeiro("com_retornar1", self.token):
+                self.com_retornar1()
+            else:
+                erro = "Esperado: cadeia, char ou expressão"
+                self.registrarErro(erro)
+        except Exception as e:
+            while self.token['tipo'] != 'EOF':
+                if primeiro("retornar1", self.token):
+                    return self.retornar1()
+                elif sequinte("retornar1", self.token):
+                    return
+                else:
+                    raise e
 
     def function_parameters(self):
         try:
