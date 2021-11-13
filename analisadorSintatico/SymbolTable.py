@@ -31,7 +31,13 @@ class SymbolTable:
             "parametros": functionParameters
         }
         
+        
     def _getFunctionKey(self, functionName, functionParameters = []):
-        parametrosStr = reduce(lambda x, y: str(x) + str(y), functionParameters)
-        return functionName +  len(functionParameters) + parametrosStr
+        qtdParameters = len(functionParameters)
+        if qtdParameters > 0:
+            parametrosStr = reduce(lambda x, y: str(x) + str(y), functionParameters)
+        else:
+            parametrosStr = ""
+        key = functionName + str(qtdParameters) + parametrosStr
+        return key
         

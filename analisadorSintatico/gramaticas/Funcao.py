@@ -9,6 +9,9 @@ class Funcao:
                 self.match("DEL", "{", proximoNT="function_body")
                 self.function_body()
                 self.match("DEL", "}")
+                if not self.tabelaDeSimbolos.addFunction(self.semanticoHeler['functionName'], self.semanticoHeler['functionparameters'], self.semanticoHeler['functionReturn']):
+                    erro = "Função " + self.semanticoHeler['functionName'] + " já declarada"
+                    self.registrarErroSemantico(erro)
             else:
                 erro = "Tokens ou Não-Terminais Esperados function_parameters"
                 self.registrarErro(erro)
@@ -144,7 +147,10 @@ class Funcao:
     def function_parameters1(self):
         try:
             if primeiro("type", self.token):
+                self.salvarTokenTemp = True
                 self.type()
+                self.semanticoHeler['functionparameters'].append(self.tokenTemp['lexema'])
+                self.salvarTokenTemp = False
                 self.match("IDE", proximoNT="function_parameters2")
                 self.function_parameters2()
             elif self.token['lexema'] == ')':
@@ -218,9 +224,14 @@ class Funcao:
 
     def function_declaration(self):
         try:
+            self.semanticoHeler['functionReturn'] = None
+            self.semanticoHeler['functionparameters'] = []
             if(self.token['lexema'] == 'funcao'):
                 self.match("PRE", "funcao", proximoNT="type")
+                self.salvarTokenTemp = True
                 self.type()
+                self.semanticoHeler['functionReturn'] = self.tokenTemp['lexema']
+                self.salvarTokenTemp = False
                 self.function_declaration1()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: 'funcao'"
@@ -238,9 +249,11 @@ class Funcao:
     
     def function_declaration1(self):
         try:
-            
+            self.semanticoHeler['functionName'] = None
             if(self.token['lexema'] == 'algoritmo'):
+                self.semanticoHeler['tokenEmAnalise'] = self.token
                 self.match("PRE", "algoritmo", proximoNT="main_function")
+                self.semanticoHeler['functionName'] = 'algoritimo'
                 self.main_function()
             elif( primeiro("function_declaration2", self.token) ):
                 self.function_declaration2()
@@ -258,11 +271,18 @@ class Funcao:
     def function_declaration2(self):
         try:
             if(self.token['tipo'] == 'IDE'):
+                self.salvarTokenTemp = True
                 self.match("IDE", proximoNT="function_parameters")
+                self.semanticoHeler['functionName'] = self.tokenTemp['lexema']
+                self.semanticoHeler['tokenEmAnalise'] = self.tokenTemp
+                self.salvarTokenTemp = False
                 self.function_parameters()
                 self.match("DEL", "{", proximoNT="function_body")
                 self.function_body()
                 self.match("DEL", "}", proximoNT="function_declaration")
+                if not self.tabelaDeSimbolos.addFunction(self.semanticoHeler['functionName'], self.semanticoHeler['functionparameters'], self.semanticoHeler['functionReturn']):
+                    erro = "Função " + self.semanticoHeler['functionName'] + " já declarada"
+                    self.registrarErroSemantico(erro)
                 self.function_declaration()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: IDE"

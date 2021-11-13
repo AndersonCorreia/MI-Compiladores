@@ -151,7 +151,6 @@ class TokenAutomato:
                 'linha': self.linhaAtual, 
                 'tipo': self.estado.getSigla(),
                 'erro_sintatico': None,
-                'erro_lexico': None,
                 'metadados': self.estado.getMetadados() 
                 }
         return token

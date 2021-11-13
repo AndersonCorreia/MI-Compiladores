@@ -10,6 +10,7 @@ from analisadorSintatico.gramaticas.Funcao import Funcao
 from analisadorSintatico.gramaticas.Valor import Valor
 from analisadorSintatico.gramaticas.Leia import Leia
 from analisadorSintatico.gramaticas.Escreva import Escreva
+from analisadorSintatico.SymbolTable import SymbolTable
 from gramaticaHelper import *
 
 class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao, VetoresMatrizes, Comando, Para, Funcao, Valor, Leia, Escreva):
@@ -17,8 +18,14 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
     def __init__(self, tokens):
         self.tokens = tokens
         self.token = None
+        self.salvarTokenTemp = False
+        self.tokenTemp = None
         self.errors = []
+        self.errorsSemanticos = []
         self.tokensIgnorados = []
+        self.tabelaDeSimbolos = SymbolTable()
+        # para colocar qualquer informação necessaria
+        self.semanticoHeler = { "tokenEmAnalise": None}
         
     def getListaErrors(self):
         return self.errors
@@ -58,12 +65,16 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         self.proximoToken(removerToken=False)
         self.Program()
         
-        print("pilha:")
-        print(self.tokens)
-        print("\nerros:")
-        print(self.errors)
-        print("\nQtd de tokens ignorados:")
-        print(len(self.tokensIgnorados))
+        # print("pilha:")
+        # print(self.tokens)
+        # print("\nerros:")
+        # print(self.errors)
+        # print("\nQtd de tokens ignorados:")
+        # print(len(self.tokensIgnorados))
+        print("\nErros semanticos:\n")
+        print(self.errorsSemanticos)
+        print("\nTabela de simbolos\n\nFunções:\n")
+        print(self.tabelaDeSimbolos.functionsTable)
         
     def match(self, tipo, lexema = None, proximoToken = None, proximoNT = None):
         """
@@ -103,6 +114,8 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         
         if self.token['tipo'] == tipo:
             if lexema == None or self.token['lexema'] == lexema:
+                if self.salvarTokenTemp:
+                    self.tokenTemp = self.token
                 self.proximoToken()
                 return True
     
@@ -114,6 +127,10 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         if raiseException:
             raise Exception('Erro sintático', erroMsg)
                 
+    def registrarErroSemantico(self, erro):
+        self.semanticoHeler['tokenEmAnalise']['erro_semantico'] = erro
+        self.errorsSemanticos.append(self.semanticoHeler['tokenEmAnalise'])
+        self.semanticoHeler['tokenEmAnalise'] = None
                   
     def type(self):
         
