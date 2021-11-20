@@ -76,12 +76,12 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         print("\nErros semanticos:\n")
         for erro in self.errorsSemanticos:
             print(erro)
-        print("\nTabela de simbolos\n\nRegistros:\n")
+        print("\nTabela de simbolos\n\nRegistros:")
         for key in self.tabelaDeSimbolos.structsTable:
             print("["+ key + "]")
             print(self.tabelaDeSimbolos.structsTable[key])
             print(" ")
-        print("\nFunções:\n")
+        print("Funções:")
         for key in self.tabelaDeSimbolos.functionsTable:
             print("["+ key + "]")
             print(self.tabelaDeSimbolos.functionsTable[key])

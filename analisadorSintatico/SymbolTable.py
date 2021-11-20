@@ -66,13 +66,18 @@ class SymbolTable:
         return True
         
     def _insertStruct(self, key, structFields = []):
-        fields = []
+        fields = {}
         for field in structFields:
-            fields.append({
-                "nome": field['nomeToken']['lexema'],
-                "tipo": field['tipo'],
-                "categoria": field['categoria']
-            })
+            name = field['nomeToken']['lexema']
+            if name in fields:
+                erro = { 'token': field['nomeToken'], 'erro': 'O campo \'' + name + '\' já foi declarado neste registro ('+key+').' }
+                self.erros.append(erro)
+            else:
+                fields[name] = {
+                    "nome": name,
+                    "tipo": field['tipo'],
+                    "categoria": field['categoria']
+                }
         self.structsTable[key] = {
             "nome" : key,
             "atributos" : fields,
