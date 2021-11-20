@@ -171,6 +171,7 @@ class VetoresMatrizes:
                 self.match( "DEL", '[', proximoNT="expr_number" )
                 self.expr_number()
                 self.match( "DEL", ']', proximoNT="v_m_access1" )
+                self.semanticoHelper['v_m_access']['tipo'] = 'array'
                 self.v_m_access1()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: lexema '['"
@@ -190,6 +191,7 @@ class VetoresMatrizes:
                 self.match( "DEL", '[', proximoNT="expr_number" )
                 self.expr_number()
                 self.match( "DEL", ']')
+                self.semanticoHelper['v_m_access']['tipo'] = 'matriz'
             else:
                 return  # declaração vazia
             

@@ -4,9 +4,14 @@ class Registro:
     def declaracao_reg(self):
         
         try:
+            self.semanticoHelper['structNomeToken'] = None
+            self.semanticoHelper['structFields'] = []
             if( self.token['lexema'] == 'registro' ):
                 self.match("PRE", "registro", proximoToken={"tipo": "IDE"})
+                self.salvarTokenTemp = True
                 self.match("IDE", proximoToken={"tipo": "DEL", "lexema": "{"})
+                self.semanticoHelper['structNomeToken'] = self.tokenTemp
+                self.salvarTokenTemp = False
                 self.match("DEL", "{", proximoNT="declaracao_reg1")
                 self.declaracao_reg1()
             else:
@@ -25,10 +30,16 @@ class Registro:
     def declaracao_reg1(self):
         
         try:
+            self.semanticoHelper['structFieldTemp'] = {}
             if( primeiro("type", self.token) ):
+                self.salvarTokenTemp = True
                 self.type()
-                self.match("IDE", proximoNT="declaracao_reg2")
+                self.semanticoHelper['structFieldTemp']['tipo'] = self.tokenTemp['lexema']
+                self.match("IDE", proximoNT="declaracao_reg4")
+                self.semanticoHelper['structFieldTemp']['nomeToken'] = self.tokenTemp
+                self.salvarTokenTemp = False
                 self.declaracao_reg4()
+                self.semanticoHelper['structFields'].append(self.semanticoHelper['structFieldTemp'])
                 self.declaracao_reg2()
             else:
                 erro = 'Tokens e Não-Terminais Esperados: type'
@@ -46,7 +57,12 @@ class Registro:
         try:
             if( self.token['lexema'] == ',' ):
                 self.match("DEL", ",", proximoToken={"tipo": "IDE"})
-                self.match("IDE", proximoNT="declaracao_reg2")
+                self.salvarTokenTemp = True
+                self.match("IDE", proximoNT="declaracao_reg4")
+                self.semanticoHelper['structFieldTemp']['nome'] = self.tokenTemp['lexema']
+                self.salvarTokenTemp = False
+                self.declaracao_reg4()
+                self.semanticoHelper['structFields'].append(self.semanticoHelper['structFieldTemp'])
                 self.declaracao_reg2()
             elif( self.token['lexema'] == ';' ):
                 self.match("DEL", ";", proximoNT="declaracao_reg3")
@@ -67,6 +83,8 @@ class Registro:
         try:
             if( self.token['lexema'] == '}' ):
                 self.match("DEL", "}", proximoNT="declaracao_reg")
+                if not self.tabelaDeSimbolos.addStruct(self.semanticoHelper['structNomeToken'], self.semanticoHelper['structFields']):
+                    self.registrarErrosSemanticos()
                 self.declaracao_reg()
             elif( primeiro("declaracao_reg1", self.token) ):
                 self.declaracao_reg1()
@@ -85,9 +103,12 @@ class Registro:
     def declaracao_reg4(self):
         
         try:
+            self.semanticoHelper['structFieldTemp']['categoria'] = None
             if( primeiro("v_m_access", self.token) ):
                 self.v_m_access()
+                self.semanticoHelper['structFieldTemp']['categoria'] = self.semanticoHelper['v_m_access']['tipo']
             else:
+                self.semanticoHelper['structFieldTemp']['categoria'] = 'variavel'
                 return # declaração vazia
             
         except Exception as e:

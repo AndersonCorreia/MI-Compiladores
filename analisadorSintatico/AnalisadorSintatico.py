@@ -25,7 +25,9 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         self.tokensIgnorados = []
         self.tabelaDeSimbolos = SymbolTable()
         # para colocar qualquer informação necessaria
-        self.semanticoHeler = { "tokenEmAnalise": None}
+        self.semanticoHelper = { "tokenEmAnalise": None}
+        # campos uteis
+        # semanticoHelper['v_m_access']['tipo'] informa se foi feito um acesso a array ou matriz na funcao v_m_access
         
     def getListaErrors(self):
         return self.errors
@@ -74,7 +76,10 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         print("\nErros semanticos:\n")
         print(self.errorsSemanticos)
         print("\nTabela de simbolos\n\nFunções:\n")
-        print(self.tabelaDeSimbolos.functionsTable)
+        for key in self.tabelaDeSimbolos.functionsTable:
+            print("["+ key + "]")
+            print(self.tabelaDeSimbolos.functionsTable[key])
+            print(" ")
         
     def match(self, tipo, lexema = None, proximoToken = None, proximoNT = None):
         """
@@ -127,10 +132,14 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         if raiseException:
             raise Exception('Erro sintático', erroMsg)
                 
-    def registrarErroSemantico(self, erro):
-        self.semanticoHeler['tokenEmAnalise']['erro_semantico'] = erro
-        self.errorsSemanticos.append(self.semanticoHeler['tokenEmAnalise'])
-        self.semanticoHeler['tokenEmAnalise'] = None
+    def registrarErrosSemanticos(self):
+        erros = self.tabelaDeSimbolos.getErros()
+        for erro in erros:
+            self._registrarErroSemantico(erro['erro'], erro['token'])
+        
+    def _registrarErroSemantico(self, erro, token):
+        token['erro_semantico'] = erro
+        self.errorsSemanticos.append(token)
                   
     def type(self):
         
