@@ -74,8 +74,14 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         # print("\nQtd de tokens ignorados:")
         # print(len(self.tokensIgnorados))
         print("\nErros semanticos:\n")
-        print(self.errorsSemanticos)
-        print("\nTabela de simbolos\n\nFunções:\n")
+        for erro in self.errorsSemanticos:
+            print(erro)
+        print("\nTabela de simbolos\n\nRegistros:\n")
+        for key in self.tabelaDeSimbolos.structsTable:
+            print("["+ key + "]")
+            print(self.tabelaDeSimbolos.structsTable[key])
+            print(" ")
+        print("\nFunções:\n")
         for key in self.tabelaDeSimbolos.functionsTable:
             print("["+ key + "]")
             print(self.tabelaDeSimbolos.functionsTable[key])

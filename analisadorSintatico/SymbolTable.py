@@ -51,8 +51,7 @@ class SymbolTable:
         key = functionNameToken['lexema'] + str(qtdParameters) + parametrosStr
         return key
     
-    def structExists(self, structsNameToken, returnIfExists = False):
-        key = structsNameToken['lexema']
+    def structExists(self, key, returnIfExists = False):
         if key in self.structsTable:
             return self.structsTable[key] if returnIfExists else True
         return False
@@ -67,9 +66,16 @@ class SymbolTable:
         return True
         
     def _insertStruct(self, key, structFields = []):
+        fields = []
+        for field in structFields:
+            fields.append({
+                "nome": field['nomeToken']['lexema'],
+                "tipo": field['tipo'],
+                "categoria": field['categoria']
+            })
         self.structsTable[key] = {
             "nome" : key,
-            "atributos" : structFields,
+            "atributos" : fields,
         }
     
         

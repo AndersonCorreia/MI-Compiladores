@@ -2,12 +2,12 @@ registro teste_registro {
     inteiro a;
     inteiro d[a];
     inteiro d[2][2];
-    Pessoa  teste[1][1];
-    Pessoa  teste_1[2];
+    cadeia  teste[1][1];
+    cadeia  teste_1[2];
     real    b;
     cadeia  c;
 }
-registro teste_registro_1 {
+registro teste_registro {
     inteiro a,d,e,f;
     real    b;
     cadeia  c;

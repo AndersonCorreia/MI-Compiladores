@@ -9,9 +9,8 @@ class Funcao:
                 self.match("DEL", "{", proximoNT="function_body")
                 self.function_body()
                 self.match("DEL", "}")
-                if not self.tabelaDeSimbolos.addFunction(self.semanticoHelper['functionName'], self.semanticoHelper['functionparameters'], self.semanticoHelper['functionReturn']):
-                    erro = "Função " + self.semanticoHelper['functionName'] + " já declarada"
-                    self.registrarErroSemantico(erro)
+                if not self.tabelaDeSimbolos.addFunction(self.semanticoHelper['functionNameToken'], self.semanticoHelper['functionparameters'], self.semanticoHelper['functionReturn']):
+                    self.registrarErrosSemanticos()
             else:
                 erro = "Tokens ou Não-Terminais Esperados function_parameters"
                 self.registrarErro(erro)
@@ -273,14 +272,13 @@ class Funcao:
             if(self.token['tipo'] == 'IDE'):
                 self.salvarTokenTemp = True
                 self.match("IDE", proximoNT="function_parameters")
-                self.semanticoHelper['functionName'] = self.tokenTemp['lexema']
-                self.semanticoHelper['tokenEmAnalise'] = self.tokenTemp
+                self.semanticoHelper['functionNameToken'] = self.tokenTemp
                 self.salvarTokenTemp = False
                 self.function_parameters()
                 self.match("DEL", "{", proximoNT="function_body")
                 self.function_body()
                 self.match("DEL", "}", proximoNT="function_declaration")
-                if not self.tabelaDeSimbolos.addFunction(self.semanticoHelper['functionName'], self.semanticoHelper['functionparameters'], self.semanticoHelper['functionReturn']):
+                if not self.tabelaDeSimbolos.addFunction(self.semanticoHelper['functionNameToken'], self.semanticoHelper['functionparameters'], self.semanticoHelper['functionReturn']):
                     self.registrarErrosSemanticos()
                 self.function_declaration()
             else:

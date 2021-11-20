@@ -57,9 +57,12 @@ class Registro:
         try:
             if( self.token['lexema'] == ',' ):
                 self.match("DEL", ",", proximoToken={"tipo": "IDE"})
+                tipo = self.semanticoHelper['structFieldTemp']['tipo']
+                self.semanticoHelper['structFieldTemp'] = {}
+                self.semanticoHelper['structFieldTemp']['tipo'] = tipo
                 self.salvarTokenTemp = True
                 self.match("IDE", proximoNT="declaracao_reg4")
-                self.semanticoHelper['structFieldTemp']['nome'] = self.tokenTemp['lexema']
+                self.semanticoHelper['structFieldTemp']['nomeToken'] = self.tokenTemp
                 self.salvarTokenTemp = False
                 self.declaracao_reg4()
                 self.semanticoHelper['structFields'].append(self.semanticoHelper['structFieldTemp'])
