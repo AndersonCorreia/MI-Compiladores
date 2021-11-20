@@ -250,7 +250,6 @@ class Funcao:
         try:
             self.semanticoHelper['functionName'] = None
             if(self.token['lexema'] == 'algoritmo'):
-                self.semanticoHelper['tokenEmAnalise'] = self.token
                 self.match("PRE", "algoritmo", proximoNT="main_function")
                 self.semanticoHelper['functionName'] = 'algoritimo'
                 self.main_function()

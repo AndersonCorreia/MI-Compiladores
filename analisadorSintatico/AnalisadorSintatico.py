@@ -25,7 +25,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         self.tokensIgnorados = []
         self.tabelaDeSimbolos = SymbolTable()
         # para colocar qualquer informação necessaria
-        self.semanticoHelper = { "tokenEmAnalise": None}
+        self.semanticoHelper = {}
         # campos uteis
         # semanticoHelper['v_m_access']['tipo'] informa se foi feito um acesso a array ou matriz na funcao v_m_access
         
