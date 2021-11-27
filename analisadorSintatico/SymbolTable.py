@@ -12,6 +12,10 @@ class SymbolTable:
         erros = self.erros
         self.erros = []
         return erros
+    
+    def addErro(self, token, msg):
+        erro = {'token': token, 'erro': msg }
+        self.erros.append(erro)
 
     def functionExists(self, functionNameToken, functionParameters = [], returnIfExists = False):
         key = self._getFunctionKey(functionNameToken, functionParameters)

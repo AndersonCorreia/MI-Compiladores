@@ -5,7 +5,11 @@ class VetoresMatrizes:
         try:
             if( self.token['lexema'] == '[' ):
                 self.match( "DEL", '[', proximoNT="expr_number" )
+                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
+                if(self.semanticoHelper['ExpressaotypeReturn'] != 'inteiro'):
+                    self.tabelaDeSimbolos.addErro( self.semanticoHelper['tokenIDE'], "Acesso a vetor ou matriz deve ser inteiro")
+                    self.registrarErrosSemanticos()
                 self.match( "DEL", ']', proximoNT="v_m_access1" )
                 self.vector_matrix_1()
             else:
@@ -23,6 +27,7 @@ class VetoresMatrizes:
         try:
             if(self.token['lexema'] == '[' ):
                 self.match( "DEL", '[', proximoNT="expr_number" )
+                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
                 self.match( "DEL", ']', proximoNT="vector_matrix_2" )
                 self.vector_matrix_2()
@@ -169,7 +174,11 @@ class VetoresMatrizes:
         try:
             if( self.token['lexema'] == '[' ):
                 self.match( "DEL", '[', proximoNT="expr_number" )
+                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
+                if(self.semanticoHelper['ExpressaotypeReturn'] != 'inteiro'):
+                    self.tabelaDeSimbolos.addErro( self.semanticoHelper['tokenIDE'], "Acesso a deve ser inteiro")
+                    self.registrarErrosSemanticos()
                 self.match( "DEL", ']', proximoNT="v_m_access1" )
                 self.semanticoHelper['v_m_access']['tipo'] = 'array'
                 self.v_m_access1()
@@ -189,6 +198,7 @@ class VetoresMatrizes:
         try:
             if( self.token['lexema'] == '[' ):
                 self.match( "DEL", '[', proximoNT="expr_number" )
+                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
                 self.match( "DEL", ']')
                 self.semanticoHelper['v_m_access']['tipo'] = 'matriz'

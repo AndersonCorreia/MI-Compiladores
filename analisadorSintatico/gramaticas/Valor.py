@@ -44,6 +44,7 @@ class Valor:
     def value_with_expressao(self):
         try:
             if primeiro("expressao", self.token):
+                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expressao()
             elif self.token['tipo'] == 'CAD':
                 self.match("CAD")
@@ -53,7 +54,6 @@ class Valor:
                 erro = "Tokens e Não-Terminais Esperados: expressao, CAD, CAR"
                 self.registrarErro(erro)
         except Exception as e:
-            print(self.token)
             if primeiro("value_with_expressao", self.token):
                 return self.value_with_expressao()
             elif sequinte("value_with_expressao", self.token):

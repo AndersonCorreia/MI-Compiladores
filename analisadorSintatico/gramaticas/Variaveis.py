@@ -25,7 +25,10 @@ class Variaveis:
     try:
       if(primeiro("type", self.token)):
         self.type()
+        self.salvarTokenTemp = True
         self.match("IDE", proximoNT="declaration_var2")
+        self.semanticoHelper['tokenIDE'] = self.tokenTemp
+        self.salvarTokenTemp = False
         self.declaration_var2()
       elif( self.token['lexema'] == '}' ):
         self.match("DEL", "}")

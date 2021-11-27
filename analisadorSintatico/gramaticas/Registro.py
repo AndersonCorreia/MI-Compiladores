@@ -127,7 +127,10 @@ class Registro:
         try:
             if( self.token['lexema'] == '.' ):
                 self.match("DEL", ".")
+                self.salvarTokenTemp = True
                 self.match("IDE", proximoNT="nested_elem_registro")
+                self.semanticoHelper['tokenIDE'] = self.tokenTemp
+                self.salvarTokenTemp = False
                 self.nested_elem_registro()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: '.'"

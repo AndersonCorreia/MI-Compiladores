@@ -322,11 +322,12 @@ class Funcao:
             if( primeiro("value", self.token) ):
                 self.salvarTokenTemp = True
                 self.value()
+                self.salvarTokenTemp = False
                 tipo = self.tabelaDeSimbolos.getTipoByToken(self.tokenTemp)
                 self.semanticoHelper['functionCallParameters'].append(tipo)
                 self.varList2
             elif( primeiro("read_value", self.token) ):
-                self.read_value()
+                self.read_value()  # falta verificar o tipo do identificador
                 self.varList2
             else:
                 return # declaração vazia
@@ -341,10 +342,14 @@ class Funcao:
     def varList1(self):
         try:
             if( primeiro("value", self.token) ):
+                self.salvarTokenTemp = True
                 self.value()
+                self.salvarTokenTemp = False
+                tipo = self.tabelaDeSimbolos.getTipoByToken(self.tokenTemp)
+                self.semanticoHelper['functionCallParameters'].append(tipo)
                 self.varList2
             elif( primeiro("read_value", self.token) ):
-                self.read_value()
+                self.read_value()  # falta verificar o tipo do identificador
                 self.varList2
             else:
                 erro = "Tokens ou Não-Terminais Esperados: value ou read_value"

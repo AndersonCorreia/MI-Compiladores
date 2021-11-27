@@ -92,7 +92,11 @@ class Comando:
     def args(self):
         try:
             if( primeiro("expressao", self.token) ):
+                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expressao()
+                if(self.semanticoHelper['ExpressaotypeReturn'] != 'booleano'):
+                    self.tabelaDeSimbolos.addErro( self.tokenTemp, "Condição deve ser um valor do tipo booleano")
+                    self.registrarErrosSemanticos()
             else:
                 return # declaração vazia
         except Exception as e:
@@ -106,7 +110,10 @@ class Comando:
     def read_value(self):
         try:
             if( self.token['tipo'] == "IDE"):
+                self.salvarTokenTemp = True
                 self.match("IDE")
+                self.semanticoHelper['tokenIDE'] = self.tokenTemp
+                self.salvarTokenTemp = False
                 self.read_value0()
             else:
                 erro = 'Tokens e Não-Terminais Esperados: IDE'
