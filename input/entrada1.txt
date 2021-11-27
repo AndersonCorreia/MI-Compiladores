@@ -35,11 +35,38 @@ variaveis {
     real    d[2][2] = [0.1, 0.2, 0.3; 1.1, 1.2, 1.3; 2.1, 2.2, 2.3];
 }
 
-funcao inteiro funcao_teste_1 ( ){
+funcao inteiro funcao_teste_1 ( inteiro a ){
     retorno;
 }
 
 funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_2, cadeia a[], inteiro b[][]){
+    constantes {
+        inteiro local_a = 2;
+        real    local_b = 2.23,c = 23.40;
+    }
+
+    variaveis {
+        inteiro  local_teste   = 2;
+        real     locao_teste_2 = 2.23,c = 23.40;
+        cadeia   local_c;
+        booleano local_d      = verdadeiro; 
+    }
+    se ( a == b ) {
+        escreva( local_c, 45, local_a );
+    }
+    senao se( verdadeiro ) {
+        leia( local_d , local_teste );
+    }
+    senao {
+        escreva( local_c, 45, local_a );
+    }
+    
+    escreva( local_c, 45, local_a );
+    leia( local_d, local_teste );
+    retorno;
+}
+
+funcao inteiro funcao_teste_2 (inteiro local_1, real local_2, cadeia a[], inteiro b[][]){
     constantes {
         inteiro local_a = 2;
         real    local_b = 2.23,c = 23.40;
@@ -94,14 +121,16 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
 }
 funcao vazio algoritmo (inteiro argc, cadeia argv[]) {
     variaveis {
-        inteiro local = 1;
+        inteiro local = 1, a;
         char    teste;    
     }
     a = 2;
     a = Pessoa.idade;
     a[2] = "Cadeia_de_cadeia";
     b[2][2] = "Cadeia_de_cadeia";
-    
+    funcao_teste_1( 10.5 );
+    funcao_teste_2();
+
     se( (a[1] >= 2) || ((2 + 3 * 4) / 2 <= a[1][0]) && Pessoa.hasCar != falso ) {
            
     }

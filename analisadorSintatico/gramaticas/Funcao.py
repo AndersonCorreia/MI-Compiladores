@@ -9,7 +9,7 @@ class Funcao:
                 self.match("DEL", "{", proximoNT="function_body")
                 self.function_body()
                 self.match("DEL", "}")
-                if not self.tabelaDeSimbolos.addFunction(self.semanticoHelper['functionNameToken'], self.semanticoHelper['functionparameters'], self.semanticoHelper['functionReturn']):
+                if not self.tabelaDeSimbolos.addFunction(self.semanticoHelper['functionNameToken'], self.semanticoHelper['functionParameters'], self.semanticoHelper['functionReturn']):
                     self.registrarErrosSemanticos()
             else:
                 erro = "Tokens ou Não-Terminais Esperados function_parameters"
@@ -77,11 +77,11 @@ class Funcao:
             elif primeiro("read_cmd", self.token):
                 self.read_cmd()
                 self.function_body2()
+            elif primeiro("functionCall", self.token) and self.tokens[1]['lexema'] == '(':
+                self.functionCall()
+                self.function_body2()
             elif primeiro("var_atr", self.token):
                 self.var_atr()
-                self.function_body2()
-            elif primeiro("functionCall", self.token):
-                self.functionCall()
                 self.function_body2()
             elif primeiro("retornar", self.token):
                 self.retornar()
@@ -148,7 +148,7 @@ class Funcao:
             if primeiro("type", self.token):
                 self.salvarTokenTemp = True
                 self.type()
-                self.semanticoHelper['functionparameters'].append(self.tokenTemp['lexema'])
+                self.semanticoHelper['functionParameters'].append(self.tokenTemp['lexema'])
                 self.salvarTokenTemp = False
                 self.match("IDE", proximoNT="function_parameters2")
                 self.function_parameters2()
@@ -224,7 +224,7 @@ class Funcao:
     def function_declaration(self):
         try:
             self.semanticoHelper['functionReturn'] = None
-            self.semanticoHelper['functionparameters'] = []
+            self.semanticoHelper['functionParameters'] = []
             if(self.token['lexema'] == 'funcao'):
                 self.match("PRE", "funcao", proximoNT="type")
                 self.salvarTokenTemp = True
@@ -248,10 +248,12 @@ class Funcao:
     
     def function_declaration1(self):
         try:
-            self.semanticoHelper['functionName'] = None
+            self.semanticoHelper['functionNameToken'] = None
             if(self.token['lexema'] == 'algoritmo'):
+                self.salvarTokenTemp = True
                 self.match("PRE", "algoritmo", proximoNT="main_function")
-                self.semanticoHelper['functionName'] = 'algoritimo'
+                self.semanticoHelper['functionNameToken'] = self.tokenTemp
+                self.salvarTokenTemp = False
                 self.main_function()
             elif( primeiro("function_declaration2", self.token) ):
                 self.function_declaration2()
@@ -277,7 +279,7 @@ class Funcao:
                 self.match("DEL", "{", proximoNT="function_body")
                 self.function_body()
                 self.match("DEL", "}", proximoNT="function_declaration")
-                if not self.tabelaDeSimbolos.addFunction(self.semanticoHelper['functionNameToken'], self.semanticoHelper['functionparameters'], self.semanticoHelper['functionReturn']):
+                if not self.tabelaDeSimbolos.addFunction(self.semanticoHelper['functionNameToken'], self.semanticoHelper['functionParameters'], self.semanticoHelper['functionReturn']):
                     self.registrarErrosSemanticos()
                 self.function_declaration()
             else:
@@ -294,10 +296,15 @@ class Funcao:
     def functionCall(self):
         try:
             if(self.token['tipo'] == 'IDE'):
+                self.salvarTokenTemp = True
                 self.match("IDE", proximoToken={"tipo": "DEL", "lexema": "("})
+                self.semanticoHelper['functionCallNameToken'] = self.tokenTemp
+                self.salvarTokenTemp = False
                 self.match("DEL", "(", proximoNT="varList0")
                 self.varList0()
                 self.match("DEL", ")", proximoToken={"tipo": "DEL", "lexema": ";"})
+                if not self.tabelaDeSimbolos.callFunction(self.semanticoHelper['functionCallNameToken'], self.semanticoHelper['functionCallParameters']):
+                    self.registrarErrosSemanticos()
             else:
                 erro = 'Tokens e Não-Terminais Esperados: IDE'
                 self.registrarErro(erro)
@@ -311,8 +318,12 @@ class Funcao:
 
     def varList0(self):
         try:
+            self.semanticoHelper['functionCallParameters'] = []
             if( primeiro("value", self.token) ):
+                self.salvarTokenTemp = True
                 self.value()
+                tipo = self.tabelaDeSimbolos.getTipoByToken(self.tokenTemp)
+                self.semanticoHelper['functionCallParameters'].append(tipo)
                 self.varList2
             elif( primeiro("read_value", self.token) ):
                 self.read_value()

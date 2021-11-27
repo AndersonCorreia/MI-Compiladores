@@ -73,9 +73,6 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         # print(self.errors)
         # print("\nQtd de tokens ignorados:")
         # print(len(self.tokensIgnorados))
-        print("\nErros semanticos:\n")
-        for erro in self.errorsSemanticos:
-            print(erro)
         print("\nTabela de simbolos\n\nRegistros:")
         for key in self.tabelaDeSimbolos.structsTable:
             print("["+ key + "]")
@@ -86,6 +83,9 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
             print("["+ key + "]")
             print(self.tabelaDeSimbolos.functionsTable[key])
             print(" ")
+        print("\nErros semanticos:\n")
+        for erro in self.errorsSemanticos:
+            print(erro)
         
     def match(self, tipo, lexema = None, proximoToken = None, proximoNT = None):
         """
@@ -194,6 +194,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         try:
             if( primeiro("read_value", self.token)):
                 self.read_value()
+                
                 self.match("REL", "=", proximoNT="atr_value")
                 self.atr_value()
                 self.atr_1()

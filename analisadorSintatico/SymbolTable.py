@@ -27,6 +27,20 @@ class SymbolTable:
         self._insertFunction(functionNameToken, returnType, functionParameters)
         return True
     
+    def callFunction(self, functionNameToken, functionParameters = []):
+        if not self.functionExists(functionNameToken, functionParameters):
+            functionsSameName = self.getFunctionsByName(functionNameToken['lexema'])
+            if( len(functionsSameName) == 0):
+                erroMsg = 'Não existe nenhuma função com o nome \'' + functionNameToken['lexema'] + '\''
+            else:
+                erroMsg = 'Não existe uma função \'' + functionNameToken['lexema'] + '\' com esta lista de parametros.\n As funções existentes:\n'
+                for func in functionsSameName:
+                    erroMsg += '\t' + func['nome'] + '(' + ','.join(map(lambda x: x, func['parametros'])) + ')\n'
+            erro = {'token': functionNameToken, 'erro': erroMsg }
+            self.erros.append(erro)
+            return False
+        return True
+    
     def getFunctionsByName(self, functionName):
         return list(
             filter(lambda x: x["nome"] == functionName, self.functionsTable.values())
@@ -83,4 +97,17 @@ class SymbolTable:
             "atributos" : fields,
         }
     
+    def getTipoByToken(self, token):
+        if token['tipo'] == 'NRO':
+            if float(token['lexema']) % 1 == 0:
+                return 'inteiro'
+            return 'real'
+        if token['tipo'] == 'CAD':
+            return 'cadeia'
+        if token['tipo'] == 'CAR':
+            return 'char'
+        if token['tipo'] == 'PRE':
+            if token['lexema'] == 'verdadeiro' or token['lexema'] == 'falso':
+                return 'booleano'
+        return token['tipo']
         

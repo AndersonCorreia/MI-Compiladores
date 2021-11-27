@@ -1,2 +1,5 @@
-Analise concluida com sucesso!
-Nenhum erro sintático encontrado
+Analise concluida
+Erros encontrados:
+
+linha 131: [ erro sintático: token lido ";" ], Tokens ou Não-Terminais Esperados com_enquanto, com_para, se, write_cmd, read_cmd, functionCall, var_atr ou retornar
+linha 132: [ erro sintático: token lido ";" ], Tokens ou Não-Terminais Esperados com_enquanto, com_para, se, write_cmd, read_cmd, functionCall, var_atr ou retornar
