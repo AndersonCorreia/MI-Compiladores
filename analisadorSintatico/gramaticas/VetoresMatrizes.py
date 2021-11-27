@@ -3,10 +3,11 @@ class VetoresMatrizes:
     
     def vector_matrix(self):
         try:
-            if( self.token['lexema'] == '[' ):
-                self.match( "DEL", '[', proximoNT="expr_number" )
+            if(self.token['lexema'] == '[' ):
+                self.match("DEL", '[', proximoNT="expr_number")
                 self.expr_number()
-                self.match( "DEL", ']', proximoNT="v_m_access1" )
+                self.match("DEL", ']', proximoNT="v_m_access1")
+                self.semanticoHelper['vector_matrix']['tipo'] = 'array'
                 self.vector_matrix_1()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: '['"
@@ -22,12 +23,13 @@ class VetoresMatrizes:
     def vector_matrix_1(self):
         try:
             if(self.token['lexema'] == '[' ):
-                self.match( "DEL", '[', proximoNT="expr_number" )
+                self.match( "DEL", '[', proximoNT="expr_number")
                 self.expr_number()
-                self.match( "DEL", ']', proximoNT="vector_matrix_2" )
+                self.match( "DEL", ']', proximoNT="vector_matrix_2")
+                self.semanticoHelper['vector_matrix']['tipo'] = 'matriz'
                 self.vector_matrix_2()
             elif(self.token['lexema'] == '=' ):
-                self.match( "REL", '=', proximoNT="init_vector" )
+                self.match( "REL", '=', proximoNT="init_vector")
                 self.init_vector()
                 self.declaration_var3()
             elif primeiro("declaration_var3", self.token):
