@@ -27,9 +27,9 @@ class SymbolTable:
         self._insertFunction(functionNameToken, returnType, functionParameters)
         return True
     
-    def getFunctionsByName(self, functionNameToken):
+    def getFunctionsByName(self, functionName):
         return list(
-            filter(lambda x: x["nome"] == functionNameToken, self.functionsTable.values())
+            filter(lambda x: x["nome"] == functionName, self.functionsTable.values())
         )
         
     def _insertFunction(self, functionNameToken, functionReturn, functionParameters = []):
