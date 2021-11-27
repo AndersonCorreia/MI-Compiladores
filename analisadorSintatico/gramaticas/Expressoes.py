@@ -5,7 +5,6 @@ class Expressoes:
         try:
             if ( self.semanticoHelper['ExpressaotypeReturn']  == ''):
                     self.semanticoHelper['ExpressaotypeReturn'] = 'inteiro' 
-            self.semanticoHelper['ExpressaotypeReturn'] = 'inteiro'
             if( primeiro("expr_rel", self.token) ):
                 self.expr_rel()
                 self.expr_log1()
