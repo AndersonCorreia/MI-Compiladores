@@ -5,6 +5,7 @@ class SymbolTable:
     def __init__(self):
         self.functionsTable = {}
         self.structsTable = {}
+        self.varConstTable = {}
         self.erros = []
         
     # retornar todos os erros e limpa o array de erros, chamar apenas no momento de gravar os erros semanticos no analisador
@@ -115,3 +116,69 @@ class SymbolTable:
                 return 'booleano'
         return token['tipo']
         
+
+    def checkValue(self, value, type):
+        if not (type == 'inteiro' and type(value) == int):
+            erro = { 'token': value, 'erro': 'Tipo inteiro inválido.' }
+            self.erros.append(erro)
+
+        if not (type == 'real' and type(value) == float):
+            erro = { 'token': value, 'erro': 'Tipo real inválido.' }
+            self.erros.append(erro)
+
+        if not (type == 'booleano' and type(value) == bool):
+            erro = { 'token': value, 'erro': 'Tipo booleano inválido.' }
+            self.erros.append(erro) 
+
+        if not (type == 'char' and type(value) == str and len(value) == 1):
+            erro = { 'token': value, 'erro': 'Tipo char inválido.' }
+            self.erros.append(erro) 
+
+        if not (type == 'cadeia' and type(value) == str and len(value) > 1):
+            erro = { 'token': value, 'erro': 'Tipo cadeia inválido.' }
+            self.erros.append(erro) 
+
+    def varOrConstExists(self, key, returnIfExists = False):
+        if key in self.varConstTable:
+            return self.varConstTable[key] if returnIfExists else True
+        return False
+
+    def addVariables(self, variablesNameToken, variablesBlock = []):
+        key = variablesNameToken['lexema']
+        fields = {}
+        for field in variablesBlock:
+            name = field['nomeToken']['lexema']
+            if name in fields:
+                erro = { 'token': field['nomeToken'], 'erro': 'A variável \'' + name + '\' já foi declarada.' }
+                self.erros.append(erro)
+            else:
+                fields[name] = {
+                    "nome": name,
+                    "tipo": field['tipo'],
+                    "categoria": field['categoria'],
+                    "escopo": field['escopo'],
+                    "dimensao": field['dimensao'],
+                    "init": field['init']
+                }
+        self.varConstTable[key] = { "nome": key, "atributos": fields }
+        return True
+
+    def addConstants(self, constantsNameToken, constantsBlock = []):
+        key = constantsNameToken['lexema']
+        fields = {}
+        for field in constantsBlock:
+            name = field['nomeToken']['lexema']
+            if name in fields:
+                erro = { 'token': field['nomeToken'], 'erro': 'A constante \'' + name + '\' já foi declarada.' }
+                self.erros.append(erro)
+            else:
+                fields[name] = {
+                    "nome": name,
+                    "tipo": field['tipo'],
+                    "categoria": field['categoria'],
+                    "escopo": field['escopo'],
+                    "dimensao": field['dimensao'],
+                    "init": field['init']
+                }
+        self.varConstTable[key] = { "nome": key, "atributos": fields }
+        return True    
