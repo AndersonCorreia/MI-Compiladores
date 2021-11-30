@@ -42,7 +42,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         except Exception as e:
             erro = "Erro inesperado ao analisar a gramatica"
             print(erro)
-            print(e)
+            raise e
             while self.token['tipo'] != 'EOF':
                 if primeiro("Program", self.token):
                     return self.Program()
