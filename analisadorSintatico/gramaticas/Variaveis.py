@@ -37,15 +37,14 @@ class Variaveis:
         self.match("IDE", proximoNT="declaration_var2")
         self.semanticoHelper['tokenIDE'] = self.tokenTemp
         self.semanticoHelper['variableTemp']['tipo'] = self.tokenTemp['lexema']
-        self.match("IDE", proximoNT="declaration_var2")
         self.semanticoHelper['variableTemp']['nomeToken'] = self.tokenTemp
         self.salvarTokenTemp = False
         self.declaration_var2()
         self.semanticoHelper['blockVariables'].append(self.semanticoHelper['variableTemp'])
       elif( self.token['lexema'] == '}' ):
         self.match("DEL", "}")
-        if not self.tabelaDeSimbolos.addVariables(self.semanticoHelper['variableNomeToken'], self.semanticoHelper['blockVariables']):
-          self.registrarErrosSemanticos()
+        # if not self.tabelaDeSimbolos.addVariables(self.semanticoHelper['variableNomeToken'], self.semanticoHelper['blockVariables']):
+        #   self.registrarErrosSemanticos()
       else:
         erro = 'Tokens e Não-Terminais Esperados: type ou }'
         self.registrarErro(erro)

@@ -92,9 +92,9 @@ class Comando:
     def args(self):
         try:
             if( primeiro("expressao", self.token) ):
-                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
+                self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expressao()
-                if(self.semanticoHelper['ExpressaotypeReturn'] != 'booleano'):
+                if(self.semanticoHelper['expressaoTypeReturn'] != 'booleano'):
                     self.tabelaDeSimbolos.addErro( self.tokenTemp, "Condição deve ser um valor do tipo booleano")
                     self.registrarErrosSemanticos()
             else:

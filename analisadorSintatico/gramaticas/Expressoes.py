@@ -3,23 +3,27 @@ class Expressoes:
     
     def expressao(self):
         try:
-            if ( self.semanticoHelper['ExpressaotypeReturn']  == ''):
-                    self.semanticoHelper['ExpressaotypeReturn'] = 'inteiro' 
+            if ( self.semanticoHelper['expressaoTypeReturn']  == ''):
+                    self.semanticoHelper['expressaoTypeReturn'] = 'inteiro'
+            self.semanticoHelper['expressaoParcialType'] = 'aritmetica'
+            self.semanticoHelper['expressaoParentesesType'] = 'aritmetica'
             if( primeiro("expr_rel", self.token) ):
                 self.expr_rel()
                 self.expr_log1()
             elif( self.token['lexema'] == '('):
                 self.match('DEL', '(', proximoNT="expressao")
+                self.semanticoHelper['expressaoParentesesType'] = 'aritmetica'
                 self.expressao()
+                self.semanticoHelper['expressaoParcialType'] = self.semanticoHelper['expressaoParentesesType']
                 self.match('DEL', ')')
                 self.expr_log2()
             elif( self.token['lexema'] == '!'):
                 self.match('DEL', '!', proximoNT="expressao")
                 self.expressao()
-                if(self.semanticoHelper['ExpressaotypeReturn'] != 'booleano'):
+                if(self.semanticoHelper['expressaoTypeReturn'] != 'booleano'):
                     self.tabelaDeSimbolos.addErro( self.tokenTemp, "Negação só pode ser usada em um booleano")
                     self.registrarErrosSemanticos()
-                self.semanticoHelper['ExpressaotypeReturn'] = 'booleano'
+                self.semanticoHelper['expressaoTypeReturn'] = 'booleano'
             else:
                 erro = "Tokens ou Não-Terminais Esperados: expr_rel ou '(' ou '!'"
                 self.registrarErro(erro)
@@ -68,8 +72,14 @@ class Expressoes:
     def operator_soma(self):
         try:
             if ( self.token['lexema'] == '+'):
+                if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
+                    self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
+                    self.registrarErrosSemanticos()
                 self.match('ART', '+')
             elif ( self.token['lexema'] == '-'):
+                if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
+                    self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
+                    self.registrarErrosSemanticos()
                 self.match('ART', '-')
             else:
                 erro = "Tokens ou Não-Terminais Esperados: + ou -"
@@ -86,8 +96,14 @@ class Expressoes:
     def operator_multi(self):
         try:
             if ( self.token['lexema'] == '*'):
+                if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
+                    self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
+                    self.registrarErrosSemanticos()
                 self.match('ART', '*')
             elif ( self.token['lexema'] == '/'):
+                if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
+                    self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
+                    self.registrarErrosSemanticos()
                 self.match('ART', '/')
             else:
                 erro = "Tokens ou Não-Terminais Esperados: * ou /"
@@ -122,8 +138,14 @@ class Expressoes:
     def operator_auto(self):
         try:
             if ( self.token['lexema'] == '++'):
+                if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
+                    self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
+                    self.registrarErrosSemanticos()
                 self.match('ART', '++')
             elif ( self.token['lexema'] == '--'):
+                if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
+                    self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
+                    self.registrarErrosSemanticos()
                 self.match('ART', '--')
             else:
                 return # declaracao vazia
@@ -138,18 +160,25 @@ class Expressoes:
     
     def expr_valor_mod(self):
         try:
+            self.semanticoHelper['expressaoParcialType'] = 'aritmetica'
             if ( self.token['tipo'] == "NRO"):
                 self.salvarTokenTemp = True
                 self.match("NRO")
                 tipo = self.tabelaDeSimbolos.getTipoByToken(self.tokenTemp)
-                if ( self.semanticoHelper['ExpressaotypeReturn']  == 'inteiro' and tipo == 'real'):
-                    self.semanticoHelper['ExpressaotypeReturn'] = 'real' 
+                if ( self.semanticoHelper['expressaoTypeReturn']  == 'inteiro' and tipo == 'real'):
+                    self.semanticoHelper['expressaoTypeReturn'] = 'real' 
                     # se a expressão como um todo ainda é aritimetica(sem comparações), agora ira retornar um real
             elif ( primeiro("operator_auto0", self.token) ):
                 self.operator_auto0()
                 self.read_value() # falta verificar o tipo do identificador
+                # se booleano 
+                # self.semanticoHelper['expressaoParcialType'] = 'logico_relacional'
+                # self.semanticoHelper['expressaoTypeReturn'] = 'booleano' 
             elif ( primeiro("read_value", self.token) ):
                 self.read_value() # falta verificar o tipo do identificador
+                # se booleano 
+                # self.semanticoHelper['expressaoParcialType'] = 'logico_relacional'
+                # self.semanticoHelper['expressaoTypeReturn'] = 'booleano' 
                 self.operator_auto()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: NRO, operator_auto0 ou read_value"
@@ -200,8 +229,8 @@ class Expressoes:
             
     def expr_number(self):
         try:
-            if ( self.semanticoHelper['ExpressaotypeReturn']  == ''):
-                    self.semanticoHelper['ExpressaotypeReturn'] = 'inteiro' 
+            if ( self.semanticoHelper['expressaoTypeReturn']  == ''):
+                    self.semanticoHelper['expressaoTypeReturn'] = 'inteiro' 
             if( primeiro("expr_art", self.token) ):
                 self.expr_art()
             elif( self.token['lexema'] == '('):
@@ -267,7 +296,9 @@ class Expressoes:
                 self.expr_rel()
             elif( self.token['lexema'] == '('):
                 self.match('DEL', '(', proximoNT="expressao")
+                self.semanticoHelper['expressaoParentesesType'] = 'aritmetica'
                 self.expressao()
+                self.semanticoHelper['expressaoParcialType'] = self.semanticoHelper['expressaoParentesesType']
                 self.match('DEL', ')')
             else:
                 erro = "Tokens ou Não-Terminais Esperados: expr_rel ou '('"
@@ -315,7 +346,8 @@ class Expressoes:
                 erro = "Tokens ou Não-Terminais Esperados: '==', '>=', '<=', '!=', '>' ou '<'"
                 self.registrarErro(erro)
             
-            self.semanticoHelper['ExpressaotypeReturn'] = 'booleano'
+            self.semanticoHelper['expressaoParentesesType'] = 'logico_relacional'
+            self.semanticoHelper['expressaoTypeReturn'] = 'booleano'
         except Exception as e:
             if primeiro("operator_rel", self.token):
                 return self.operator_rel()
@@ -373,7 +405,8 @@ class Expressoes:
                 erro = "Tokens ou Não-Terminais Esperados: && ou ||"
                 self.registrarErro(erro)
             
-            self.semanticoHelper['ExpressaotypeReturn'] = 'booleano'
+            self.semanticoHelper['expressaoTypeReturn'] = 'booleano'
+            self.semanticoHelper['expressaoParentesesType'] = 'logico_relacional'
         except Exception as e:
             if primeiro("operator_log", self.token):
                 return self.operator_log()

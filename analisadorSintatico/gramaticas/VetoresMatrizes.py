@@ -5,17 +5,12 @@ class VetoresMatrizes:
         try:
             if( self.token['lexema'] == '[' ):
                 self.match( "DEL", '[', proximoNT="expr_number" )
-                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
+                self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
-                if(self.semanticoHelper['ExpressaotypeReturn'] != 'inteiro'):
+                if(self.semanticoHelper['expressaoTypeReturn'] != 'inteiro'):
                     self.tabelaDeSimbolos.addErro( self.semanticoHelper['tokenIDE'], "Acesso a vetor ou matriz deve ser inteiro")
                     self.registrarErrosSemanticos()
                 self.match( "DEL", ']', proximoNT="v_m_access1" )
-            if(self.token['lexema'] == '[' ):
-                self.match("DEL", '[', proximoNT="expr_number")
-                self.expr_number()
-                self.match("DEL", ']', proximoNT="v_m_access1")
-                self.semanticoHelper['vector_matrix']['tipo'] = 'array'
                 self.vector_matrix_1()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: '['"
@@ -31,12 +26,11 @@ class VetoresMatrizes:
     def vector_matrix_1(self):
         try:
             if(self.token['lexema'] == '[' ):
-                self.match( "DEL", '[', proximoNT="expr_number" )
-                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.match( "DEL", '[', proximoNT="expr_number")
+                self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
                 self.match( "DEL", ']', proximoNT="vector_matrix_2")
-                self.semanticoHelper['vector_matrix']['tipo'] = 'matriz'
+                # self.semanticoHelper['vector_matrix']['tipo'] = 'matriz'
                 self.vector_matrix_2()
             elif(self.token['lexema'] == '=' ):
                 self.match( "REL", '=', proximoNT="init_vector")
@@ -181,9 +175,9 @@ class VetoresMatrizes:
         try:
             if( self.token['lexema'] == '[' ):
                 self.match( "DEL", '[', proximoNT="expr_number" )
-                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
+                self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
-                if(self.semanticoHelper['ExpressaotypeReturn'] != 'inteiro'):
+                if(self.semanticoHelper['expressaoTypeReturn'] != 'inteiro'):
                     self.tabelaDeSimbolos.addErro( self.semanticoHelper['tokenIDE'], "Acesso a deve ser inteiro")
                     self.registrarErrosSemanticos()
                 self.match( "DEL", ']', proximoNT="v_m_access1" )
@@ -205,7 +199,7 @@ class VetoresMatrizes:
         try:
             if( self.token['lexema'] == '[' ):
                 self.match( "DEL", '[', proximoNT="expr_number" )
-                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
+                self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
                 self.match( "DEL", ']')
                 self.semanticoHelper['v_m_access']['tipo'] = 'matriz'

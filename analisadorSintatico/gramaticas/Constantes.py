@@ -41,8 +41,8 @@ class Constantes:
         self.declaration_const2()
       elif(self.token['lexema'] == '}'):
         self.match("DEL", "}")
-        if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constantNomeToken'], self.semanticoHelper['blockConstants']):
-          self.registrarErrosSemanticos()
+        # if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constantNomeToken'], self.semanticoHelper['blockConstants']):
+        #   self.registrarErrosSemanticos()
       else:
         erro = 'Tokens e Não-Terminais Esperados: primitive_type ou }'
         self.registrarErro(erro)

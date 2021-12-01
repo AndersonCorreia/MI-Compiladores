@@ -6,9 +6,9 @@ class SeSenao:
             if( self.token['lexema'] == 'se'):
                 self.match('PRE', 'se', proximoToken={'tipo': 'PRE', 'lexema': '('})
                 self.match('DEL', '(', proximoNT="expressao")
-                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
+                self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expressao()
-                if(self.semanticoHelper['ExpressaotypeReturn'] != 'booleano'):
+                if(self.semanticoHelper['expressaoTypeReturn'] != 'booleano'):
                     self.tabelaDeSimbolos.addErro( self.tokenTemp, "Condição deve ser um valor do tipo booleano")
                     self.registrarErrosSemanticos()
                 self.match('DEL', ')', proximoToken={'tipo': 'PRE', 'lexema': '{'})

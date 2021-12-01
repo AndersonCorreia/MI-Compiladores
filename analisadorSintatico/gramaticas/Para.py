@@ -51,7 +51,7 @@ class Para:
     def stop(self):
         try:
             if( primeiro("expressao", self.token) ):
-                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
+                self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expressao()
             else:
                 return # declaração vazia
@@ -69,7 +69,7 @@ class Para:
     def step(self):
         try:
             if( primeiro('expr_number', self.token) ):
-                self.semanticoHelper['ExpressaotypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
+                self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.expr_number()
             elif( primeiro("var_atr", self.token) ):
                 self.var_atr()
