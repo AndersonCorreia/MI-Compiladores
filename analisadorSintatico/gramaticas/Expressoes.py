@@ -274,8 +274,12 @@ class Expressoes:
                 self.expr_rel1()
             elif( self.token['lexema'] == 'verdadeiro'):
                 self.match('PRE', 'verdadeiro', proximoNT="expr_rel1")
+                self.semanticoHelper['expressaoParentesesType'] = 'logico_relacional'
+                self.semanticoHelper['expressaoTypeReturn'] = 'booleano'
                 self.expr_rel1()
             elif( self.token['lexema'] == 'falso'):
+                self.semanticoHelper['expressaoParentesesType'] = 'logico_relacional'
+                self.semanticoHelper['expressaoTypeReturn'] = 'booleano'
                 self.match('PRE', 'falso', proximoNT="expr_rel1")
                 self.expr_rel1()
             else:
