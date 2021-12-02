@@ -236,14 +236,14 @@ class Funcao:
                 erro = "Tokens ou Não-Terminais Esperados: 'funcao'"
                 self.registrarErro(erro)
         except Exception as e:
-            while self.token['tipo'] != 'EOF':
-                if primeiro("function_declaration", self.token):
-                    return self.function_declaration()
-                elif sequinte("function_declaration", self.token):
-                    return
-                else:
-                    self.tokensIgnorados.append(self.token)
-                    self.proximoToken()
+            # while self.token['tipo'] != 'EOF':
+            #     if primeiro("function_declaration", self.token):
+            #         return self.function_declaration()
+            #     elif sequinte("function_declaration", self.token):
+            #         return
+            #     else:
+            #         self.tokensIgnorados.append(self.token)
+            #         self.proximoToken()
             raise e
     
     def function_declaration1(self):
@@ -303,6 +303,7 @@ class Funcao:
                 self.match("DEL", "(", proximoNT="varList0")
                 self.varList0()
                 self.match("DEL", ")", proximoToken={"tipo": "DEL", "lexema": ";"})
+                self.match("DEL", ";")
                 if not self.tabelaDeSimbolos.callFunction(self.semanticoHelper['functionCallNameToken'], self.semanticoHelper['functionCallParameters']):
                     self.registrarErrosSemanticos()
             else:

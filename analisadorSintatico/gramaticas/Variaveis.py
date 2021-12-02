@@ -9,21 +9,20 @@ class Variaveis:
         self.salvarTokenTemp = True
         self.match("PRE", "variaveis", proximoToken={"tipo": "DEL", "lexema": "{"})
         self.match("DEL", "{", proximoNT="declaration_var1")
-        self.semanticoHelper['variableNomeToken'] = self.tokenTemp
         self.salvarTokenTemp = False
         self.declaration_var1()
       else:
         erro = 'Tokens e Não-Terminais Esperados: variaveis'
         self.registrarErro(erro)
     except Exception as e:
-      while self.token['tipo'] != 'EOF':
-        if primeiro("declaration_var", self.token):
-            return self.declaration_var()
-        elif sequinte("declaration_var", self.token):
-            return
-        else:
-          self.tokensIgnorados.append(self.token)
-          self.proximoToken()
+      # while self.token['tipo'] != 'EOF':
+      #   if primeiro("declaration_var", self.token):
+      #       return self.declaration_var()
+      #   elif sequinte("declaration_var", self.token):
+      #       return
+      #   else:
+      #     self.tokensIgnorados.append(self.token)
+      #     self.proximoToken()
       raise e
 
   def declaration_var1(self):
@@ -39,12 +38,12 @@ class Variaveis:
         self.semanticoHelper['variableTemp']['tipo'] = self.tokenTemp['lexema']
         self.semanticoHelper['variableTemp']['nomeToken'] = self.tokenTemp
         self.salvarTokenTemp = False
+        # if not self.tabelaDeSimbolos.addVariables(self.semanticoHelper['variableTemp']['nomeToken'], self.semanticoHelper['blockVariables']):
+        #   self.registrarErrosSemanticos()
         self.declaration_var2()
         self.semanticoHelper['blockVariables'].append(self.semanticoHelper['variableTemp'])
       elif( self.token['lexema'] == '}' ):
         self.match("DEL", "}")
-        # if not self.tabelaDeSimbolos.addVariables(self.semanticoHelper['variableNomeToken'], self.semanticoHelper['blockVariables']):
-        #   self.registrarErrosSemanticos()
       else:
         erro = 'Tokens e Não-Terminais Esperados: type ou }'
         self.registrarErro(erro)
@@ -61,14 +60,15 @@ class Variaveis:
       self.semanticoHelper['variableTemp']['categoria'] = None
       if(self.token['lexema'] == '=' ):
           self.match("REL", "=", proximoNT="value")
+          self.salvarTokenTemp = True
           self.value()
           self.semanticoHelper['variableTemp']['init'] = True
-          self.salvarTokenTemp = True
-          value = self.tokenTemp['lexema']
           self.salvarTokenTemp = False
           type = self.semanticoHelper['variableTemp']['tipo']
-          self.tabelaDeSimbolos.checkValue(value, type)
+          self.tabelaDeSimbolos.checkValue(self.tokenTemp, type)
           self.semanticoHelper['variableTemp']['categoria'] = 'variavel'
+          if not self.tabelaDeSimbolos.addVariables(self.semanticoHelper['variableTemp']['nomeToken'], self.semanticoHelper['blockVariables']):
+            self.registrarErrosSemanticos()
           self.declaration_var3()
       elif(primeiro("vector_matrix", self.token)):
           self.vector_matrix()

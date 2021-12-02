@@ -11,14 +11,14 @@ class Constantes:
       else:
         return
     except Exception as e:
-      while self.token['tipo'] != 'EOF':
-        if primeiro("declaration_const", self.token):
-            return self.declaration_const()
-        elif sequinte("declaration_const", self.token):
-            return
-        else:
-          self.tokensIgnorados.append(self.token)
-          self.proximoToken()
+      # while self.token['tipo'] != 'EOF':
+      #   if primeiro("declaration_const", self.token):
+      #       return self.declaration_const()
+      #   elif sequinte("declaration_const", self.token):
+      #       return
+      #   else:
+      #     self.tokensIgnorados.append(self.token)
+      #     self.proximoToken()
       raise e
 
   def declaration_const1(self):
@@ -33,16 +33,15 @@ class Constantes:
         self.semanticoHelper['constantTemp']['nomeToken'] = self.tokenTemp
         self.match("REL", "=", proximoNT="value")
         self.value()
-        value = self.tokenTemp['lexema']
         self.salvarTokenTemp = False
         type = self.semanticoHelper['constantTemp']['tipo']
-        self.tabelaDeSimbolos.checkValue(value, type)
+        self.tabelaDeSimbolos.checkValue(self.tokenTemp, type)
         self.semanticoHelper['constantTemp']['categoria'] = 'constante'
+        if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constantTemp']['nomeToken'], self.semanticoHelper['blockConstants']):
+          self.registrarErrosSemanticos()
         self.declaration_const2()
       elif(self.token['lexema'] == '}'):
         self.match("DEL", "}")
-        # if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constantNomeToken'], self.semanticoHelper['blockConstants']):
-        #   self.registrarErrosSemanticos()
       else:
         erro = 'Tokens e Não-Terminais Esperados: primitive_type ou }'
         self.registrarErro(erro)
@@ -67,11 +66,12 @@ class Constantes:
           self.semanticoHelper['blockConstants'].append(self.semanticoHelper['constantTemp'])
           self.match("REL", "=", proximoNT="value")
           self.value()
-          value = self.tokenTemp['lexema']
           self.salvarTokenTemp = False
           type = self.semanticoHelper['constantTemp']['tipo']
-          self.tabelaDeSimbolos.checkValue(value, type)
+          self.tabelaDeSimbolos.checkValue(self.tokenTemp, type)
           self.semanticoHelper['constantTemp']['categoria'] = 'constante'
+          if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constantTemp']['nomeToken'], self.semanticoHelper['blockConstants']):
+            self.registrarErrosSemanticos()
           self.declaration_const2()
       elif(self.token['lexema'] == ';' ):
           self.match("DEL", ";", proximoNT="declaration_const1")

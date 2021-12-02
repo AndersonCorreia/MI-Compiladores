@@ -117,25 +117,26 @@ class SymbolTable:
         return token['tipo']
         
 
-    def checkValue(self, value, type):
-        if not (type == 'inteiro' and type(value) == int):
-            erro = { 'token': value, 'erro': 'Tipo inteiro inválido.' }
+    def checkValue(self, token, tipo):
+        value = token['lexema']
+        if (tipo == 'inteiro' and not self.is_int(value) ):
+            erro = { 'token': token, 'erro': 'Tipo inteiro inválido.' }
             self.erros.append(erro)
 
-        if not (type == 'real' and type(value) == float):
-            erro = { 'token': value, 'erro': 'Tipo real inválido.' }
+        if (tipo == 'real' and not self.is_float(value) ):
+            erro = { 'token': token, 'erro': 'Tipo real inválido.' }
             self.erros.append(erro)
 
-        if not (type == 'booleano' and type(value) == bool):
-            erro = { 'token': value, 'erro': 'Tipo booleano inválido.' }
+        if (tipo == 'booleano' and not (value == "verdadeiro" or value == "falso") ):
+            erro = { 'token': token, 'erro': 'Tipo booleano inválido.' }
             self.erros.append(erro) 
 
-        if not (type == 'char' and type(value) == str and len(value) == 1):
-            erro = { 'token': value, 'erro': 'Tipo char inválido.' }
+        if (tipo == 'char' and (not len(value) == 1) or not isinstance(value, str  )):
+            erro = { 'token': token, 'erro': 'Tipo char inválido.' }
             self.erros.append(erro) 
 
-        if not (type == 'cadeia' and type(value) == str and len(value) > 1):
-            erro = { 'token': value, 'erro': 'Tipo cadeia inválido.' }
+        if (tipo == 'cadeia' and not isinstance(value, str  )):
+            erro = { 'token': token, 'erro': 'Tipo cadeia inválido.' }
             self.erros.append(erro) 
 
     def varOrConstExists(self, key, returnIfExists = False):
@@ -182,3 +183,17 @@ class SymbolTable:
                 }
         self.varConstTable[key] = { "nome": key, "atributos": fields }
         return True    
+
+    def is_int(self, n):
+        try:
+            int(n)
+            return True
+        except ValueError:
+            return False
+        
+    def is_float(self, n):
+        try:
+            float(n)
+            return True
+        except ValueError:
+            return False

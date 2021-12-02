@@ -70,7 +70,7 @@ class Comando:
             
     def com_enquanto(self):
         try:
-            if( primeiro("enquanto", self.token) ):
+            if( self.token['lexema'] == "enquanto" ):
                 self.match("PRE","enquanto", proximoToken={'tipo':'DEL', 'lexema':'('})
                 self.match("DEL","(", proximoNT="args")
                 self.args()
