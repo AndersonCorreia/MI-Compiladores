@@ -32,6 +32,9 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
     def getListaErrors(self):
         return self.errors
     
+    def getListaErrorsSemanticos(self):
+        return self.errorsSemanticos
+    
     def Program(self):
         
         try:

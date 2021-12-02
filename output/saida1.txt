@@ -1,2 +1,33 @@
 Analise concluida com sucesso!
 Nenhum erro sintático encontrado
+
+Erros semântico encontrados:
+
+linha 04: [ erro semântico: relacionado ao token  "d" ],
+ O campo 'd' já foi declarado neste registro (teste_registro).
+
+linha 10: [ erro semântico: relacionado ao token  "teste_registro" ],
+ O registro teste_registro já foi declarado.
+
+linha 34: [ erro semântico: relacionado ao token  "c" ],
+ Acesso a vetor ou matriz deve ser inteiro
+
+linha 101: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
+ A função funcao_teste_2 já foi declarada com estes parâmetros.
+
+linha 136: [ erro semântico: relacionado ao token  "funcao_teste_1" ],
+ Não existe uma função 'funcao_teste_1' com esta lista de parametros.
+ As funções existentes:
+	funcao_teste_1(inteiro)
+
+
+linha 137: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
+ Não existe uma função 'funcao_teste_2' com esta lista de parametros.
+ As funções existentes:
+	funcao_teste_2(Pessoa,inteiro,real,cadeia,inteiro)
+	funcao_teste_2(inteiro,real,cadeia,inteiro)
+
+
+linha 151: [ erro semântico: relacionado ao token  "+" ],
+ Um operador aritmetico só pode ser usado com operandos inteiros ou reais
+

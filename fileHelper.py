@@ -37,7 +37,7 @@ def gerarArquivosDeSaida(dirOutput, fileNumber, tokens, errors):
 def gerarArquivosDeSaidaSintatico(dirOutput, fileNumber, errors):
     with open(join(dirOutput, f'saida{fileNumber}.txt'), 'w+', encoding="utf-8") as file:
         if len(errors) > 0:
-            file.write('Analise concluida\nErros encontrados:\n\n')
+            file.write('Analise concluida\nErros sintáticos encontrados:\n\n')
             for error in errors:
                 linha = error['linha']
                 tipoErro = error['erro_sintatico']
@@ -47,3 +47,15 @@ def gerarArquivosDeSaidaSintatico(dirOutput, fileNumber, errors):
         else:
             file.write('Analise concluida com sucesso!\nNenhum erro sintático encontrado')
            
+def gerarArquivosDeSaidaSemantico(dirOutput, fileNumber, errors):
+    with open(join(dirOutput, f'saida{fileNumber}.txt'), 'a+', encoding="utf-8") as file:
+        if len(errors) > 0:
+            file.write('\n\nErros semântico encontrados:\n\n')
+            for error in errors:
+                linha = error['linha']
+                tipoErro = error['erro_semantico']
+                erroLexema = error['lexema']
+                numeroLinha = f'0{linha}' if linha <= 9 else linha
+                file.write("linha " + str(numeroLinha) + ": [ erro semântico: relacionado ao token  \"" + str(erroLexema) + "\" ],\n " + str(tipoErro) + "\n\n")
+        else:
+            file.write('\nNenhum erro semântico encontrado')
