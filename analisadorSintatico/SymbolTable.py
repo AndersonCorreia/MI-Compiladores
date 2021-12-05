@@ -51,6 +51,13 @@ class SymbolTable:
             filter(lambda x: x["nome"] == functionName, self.functionsTable.values())
         )
         
+    def deleteVarsAndConstsEscopoLocal(self):
+        dicionario = self.varConstTable
+        lista = filter(lambda x: x["escopo"] == 'global', dicionario.values() )
+        self.varConstTable = {}
+        for item in lista:
+            self.varConstTable[item['nome']] = item
+        
     def _insertFunction(self, functionNameToken, functionReturn, functionParameters = []):
         key = self._getFunctionKey(functionNameToken, functionParameters)
         self.functionsTable[key] = {
@@ -120,80 +127,94 @@ class SymbolTable:
     def checkValue(self, token, tipo):
         value = token['lexema']
         if (tipo == 'inteiro' and not self.is_int(value) ):
-            erro = { 'token': token, 'erro': 'Tipo inteiro inválido.' }
-            self.erros.append(erro)
+            # erro = { 'token': token, 'erro': 'Tipo inteiro inválido.' }
+            # self.erros.append(erro)
+            return False
 
         if (tipo == 'real' and not self.is_float(value) ):
-            erro = { 'token': token, 'erro': 'Tipo real inválido.' }
-            self.erros.append(erro)
+            # erro = { 'token': token, 'erro': 'Tipo real inválido.' }
+            # self.erros.append(erro)
+            return False
 
         if (tipo == 'booleano' and not (value == "verdadeiro" or value == "falso") ):
-            erro = { 'token': token, 'erro': 'Tipo booleano inválido.' }
-            self.erros.append(erro) 
+            # erro = { 'token': token, 'erro': 'Tipo booleano inválido.' }
+            # self.erros.append(erro)
+            return False 
 
         if (tipo == 'char' and (not len(value) == 1) or not isinstance(value, str  )):
-            erro = { 'token': token, 'erro': 'Tipo char inválido.' }
-            self.erros.append(erro) 
+            # erro = { 'token': token, 'erro': 'Tipo char inválido.' }
+            # self.erros.append(erro)
+            return False 
 
         if (tipo == 'cadeia' and not isinstance(value, str  )):
-            erro = { 'token': token, 'erro': 'Tipo cadeia inválido.' }
-            self.erros.append(erro) 
-
+            # erro = { 'token': token, 'erro': 'Tipo cadeia inválido.' }
+            # self.erros.append(erro)
+            return False 
+        return True
+    
     def varOrConstExists(self, key, returnIfExists = False):
         if key in self.varConstTable:
             return self.varConstTable[key] if returnIfExists else True
         return False
 
-    def addVariables(self, variablesNameToken, variablesBlock = []):
-        key = variablesNameToken['lexema']
-        fields = {}
-        for field in variablesBlock:
-            name = field['nomeToken']['lexema']
-            if name in fields:
-                erro = { 'token': field['nomeToken'], 'erro': 'A variável \'' + name + '\' já foi declarada.' }
+    def addVariables(self, varNameToken, var = {}):
+        key = varNameToken['lexema']
+        
+        if self.varOrConstExists(key):
+            erro = { 'token': varNameToken, 'erro': 'A variável/constante ' + key + ' já foi declarada.' }
+            self.erros.append(erro)
+            return False
+        if 'valueToken' in var:
+            if not self.checkValue(var['valueToken'], var['tipo']):
+                erro = { 'token': var['valueToken'], 'erro': 'Valor incorreto para a variavel do tipo ' + var['tipo'] }
                 self.erros.append(erro)
-            else:
-                fields[name] = {
-                    "nome": name,
-                    "tipo": field['tipo'],
-                    "categoria": field['categoria'],
-                    "escopo": field['escopo'],
-                    "dimensao": field['dimensao'],
-                    "init": field['init']
-                }
-        self.varConstTable[key] = { "nome": key, "atributos": fields }
+                return False
+            
+        variavel = {
+            "nome": key,
+            "tipo": var['tipo'],
+            "categoria": var['categoria'],
+            "escopo": var['escopo'],
+            "dimensao": '',
+            "init": var['init']
+        }
+        self.varConstTable[key] = variavel
         return True
 
-    def addConstants(self, constantsNameToken, constantsBlock = []):
-        key = constantsNameToken['lexema']
-        fields = {}
-        for field in constantsBlock:
-            name = field['nomeToken']['lexema']
-            if name in fields:
-                erro = { 'token': field['nomeToken'], 'erro': 'A constante \'' + name + '\' já foi declarada.' }
-                self.erros.append(erro)
-            else:
-                fields[name] = {
-                    "nome": name,
-                    "tipo": field['tipo'],
-                    "categoria": field['categoria'],
-                    "escopo": field['escopo'],
-                    "dimensao": field['dimensao'],
-                    "init": field['init']
-                }
-        self.varConstTable[key] = { "nome": key, "atributos": fields }
+    def addConstants(self, constNameToken, const = {}):
+        key = constNameToken['lexema']
+        
+        if self.varOrConstExists(key):
+            erro = { 'token': constNameToken, 'erro': 'A variável/constante ' + key + ' já foi declarada.' }
+            self.erros.append(erro)
+            return False
+        
+        if not self.checkValue(const['valueToken'], const['tipo']):
+            erro = { 'token': const['valueToken'], 'erro': 'Valor incorreto para a constante do tipo ' + const['tipo'] }
+            self.erros.append(erro)
+            return False
+            
+        constante = {
+            "nome": key,
+            "tipo": const['tipo'],
+            "categoria": 'constante',
+            "escopo": const['escopo'],
+            "dimensao": '',
+            "init": True
+        }
+        self.varConstTable[key] = constante
         return True    
 
     def is_int(self, n):
         try:
             int(n)
             return True
-        except ValueError:
+        except ValueError as e:
             return False
         
     def is_float(self, n):
         try:
             float(n)
             return True
-        except ValueError:
+        except ValueError as e:
             return False

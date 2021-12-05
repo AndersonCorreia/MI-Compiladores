@@ -9,25 +9,70 @@ linha 04: [ erro semântico: relacionado ao token  "d" ],
 linha 10: [ erro semântico: relacionado ao token  "teste_registro" ],
  O registro teste_registro já foi declarado.
 
-linha 34: [ erro semântico: relacionado ao token  "c" ],
+linha 21: [ erro semântico: relacionado ao token  ""txt"" ],
+ Valor incorreto para a constante do tipo inteiro
+
+linha 27: [ erro semântico: relacionado ao token  "teste" ],
+ A variável/constante teste já foi declarada.
+
+linha 28: [ erro semântico: relacionado ao token  "teste" ],
+ A variável/constante teste já foi declarada.
+
+linha 30: [ erro semântico: relacionado ao token  "c" ],
+ A variável/constante c já foi declarada.
+
+linha 31: [ erro semântico: relacionado ao token  ""verdadeirpo"" ],
+ Valor incorreto para a variavel do tipo booleano
+
+linha 32: [ erro semântico: relacionado ao token  "teste" ],
+ A variável/constante teste já foi declarada.
+
+linha 33: [ erro semântico: relacionado ao token  "teste" ],
+ A variável/constante teste já foi declarada.
+
+linha 34: [ erro semântico: relacionado ao token  "b" ],
+ A variável/constante b já foi declarada.
+
+linha 35: [ erro semântico: relacionado ao token  "erroMatriz" ],
  Acesso a vetor ou matriz deve ser inteiro
 
-linha 101: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
+linha 46: [ erro semântico: relacionado ao token  "c" ],
+ A variável/constante c já foi declarada.
+
+linha 78: [ erro semântico: relacionado ao token  "c" ],
+ A variável/constante c já foi declarada.
+
+linha 83: [ erro semântico: relacionado ao token  "c" ],
+ A variável/constante c já foi declarada.
+
+linha 105: [ erro semântico: relacionado ao token  "c" ],
+ A variável/constante c já foi declarada.
+
+linha 110: [ erro semântico: relacionado ao token  "c" ],
+ A variável/constante c já foi declarada.
+
+linha 102: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
  A função funcao_teste_2 já foi declarada com estes parâmetros.
 
-linha 136: [ erro semântico: relacionado ao token  "funcao_teste_1" ],
+linha 130: [ erro semântico: relacionado ao token  "a" ],
+ A variável/constante a já foi declarada.
+
+linha 131: [ erro semântico: relacionado ao token  "teste" ],
+ A variável/constante teste já foi declarada.
+
+linha 137: [ erro semântico: relacionado ao token  "funcao_teste_1" ],
  Não existe uma função 'funcao_teste_1' com esta lista de parametros.
  As funções existentes:
 	funcao_teste_1(inteiro)
 
 
-linha 137: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
+linha 138: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
  Não existe uma função 'funcao_teste_2' com esta lista de parametros.
  As funções existentes:
 	funcao_teste_2(Pessoa,inteiro,real,cadeia,inteiro)
 	funcao_teste_2(inteiro,real,cadeia,inteiro)
 
 
-linha 151: [ erro semântico: relacionado ao token  "+" ],
+linha 152: [ erro semântico: relacionado ao token  "+" ],
  Um operador aritmetico só pode ser usado com operandos inteiros ou reais
 

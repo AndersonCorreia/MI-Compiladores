@@ -3,7 +3,8 @@ class Constantes:
   
   def declaration_const(self):
     try:
-      self.semanticoHelper['blockConstants'] = []
+      self.semanticoHelper['constante'] = {}
+      self.semanticoHelper['constante']['escopo'] = self.semanticoHelper['escopo']
       if(self.token['lexema'] == 'constantes'):
         self.match("PRE", "constantes", proximoToken={"tipo": "DEL", "lexema": "{"})
         self.match("DEL", "{", proximoNT="declaration_const1")
@@ -23,21 +24,18 @@ class Constantes:
 
   def declaration_const1(self):
     try:
-      self.semanticoHelper['constantTemp'] = {}
-      self.semanticoHelper['constantTemp']['escopo'] = 'global'
       if(primeiro("primitive_type", self.token)):
-        self.type()
         self.salvarTokenTemp = True
-        self.semanticoHelper['constantTemp']['tipo'] = self.tokenTemp['lexema']
+        self.type()
+        self.semanticoHelper['constante']['tipo'] = self.tokenTemp['lexema']
         self.match("IDE", proximoToken={"tipo": "REL", "lexema": "="})
-        self.semanticoHelper['constantTemp']['nomeToken'] = self.tokenTemp
+        self.semanticoHelper['constante']['nomeToken'] = self.tokenTemp
         self.match("REL", "=", proximoNT="value")
         self.value()
+        self.semanticoHelper['constante']['valueToken'] = self.tokenTemp
         self.salvarTokenTemp = False
-        type = self.semanticoHelper['constantTemp']['tipo']
-        self.tabelaDeSimbolos.checkValue(self.tokenTemp, type)
-        self.semanticoHelper['constantTemp']['categoria'] = 'constante'
-        if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constantTemp']['nomeToken'], self.semanticoHelper['blockConstants']):
+        
+        if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constante']['nomeToken'], self.semanticoHelper['constante']):
           self.registrarErrosSemanticos()
         self.declaration_const2()
       elif(self.token['lexema'] == '}'):
@@ -58,19 +56,14 @@ class Constantes:
       if(self.token['lexema'] == ',' ):
           self.match("DEL", ",", proximoToken={"tipo": "IDE"})
           self.salvarTokenTemp = True
-          tipo = self.semanticoHelper['constantTemp']['tipo']
-          self.semanticoHelper['constantTemp'] = {}
-          self.semanticoHelper['constantTemp']['tipo'] = tipo
           self.match("IDE",  proximoToken={"tipo": "REL", "lexema": "="})
-          self.semanticoHelper['constantTemp']['nomeToken'] = self.tokenTemp
-          self.semanticoHelper['blockConstants'].append(self.semanticoHelper['constantTemp'])
+          self.semanticoHelper['constante']['nomeToken'] = self.tokenTemp
           self.match("REL", "=", proximoNT="value")
           self.value()
+          self.semanticoHelper['constante']['valueToken'] = self.tokenTemp
           self.salvarTokenTemp = False
-          type = self.semanticoHelper['constantTemp']['tipo']
-          self.tabelaDeSimbolos.checkValue(self.tokenTemp, type)
-          self.semanticoHelper['constantTemp']['categoria'] = 'constante'
-          if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constantTemp']['nomeToken'], self.semanticoHelper['blockConstants']):
+          
+          if not self.tabelaDeSimbolos.addConstants(self.semanticoHelper['constante']['nomeToken'], self.semanticoHelper['constante']):
             self.registrarErrosSemanticos()
           self.declaration_const2()
       elif(self.token['lexema'] == ';' ):

@@ -226,6 +226,7 @@ class Funcao:
             self.semanticoHelper['functionReturn'] = None
             self.semanticoHelper['functionParameters'] = []
             if(self.token['lexema'] == 'funcao'):
+                self.tabelaDeSimbolos.deleteVarsAndConstsEscopoLocal()
                 self.match("PRE", "funcao", proximoNT="type")
                 self.salvarTokenTemp = True
                 self.type()

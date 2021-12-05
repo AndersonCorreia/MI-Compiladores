@@ -38,9 +38,11 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
     def Program(self):
         
         try:
+            self.semanticoHelper['escopo'] = "global"
             self.declaracao_reg()
             self.declaration_const()
             self.declaration_var()
+            self.semanticoHelper['escopo'] = "local"
             self.function_declaration()
         except Exception as e:
             erro = "Erro inesperado ao analisar a gramatica"

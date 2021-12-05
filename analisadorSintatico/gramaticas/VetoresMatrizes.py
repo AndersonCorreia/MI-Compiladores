@@ -37,8 +37,10 @@ class VetoresMatrizes:
             elif(self.token['lexema'] == '=' ):
                 self.match( "REL", '=', proximoNT="init_vector")
                 self.init_vector()
+                self.semanticoHelper['variavel']['categoria'] = self.semanticoHelper['vector_matrix']['tipo']
                 self.declaration_var3()
             elif primeiro("declaration_var3", self.token):
+                self.semanticoHelper['variavel']['categoria'] = self.semanticoHelper['vector_matrix']['tipo']
                 self.declaration_var3()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: '[', '=' ou declaration_var3"
@@ -56,8 +58,10 @@ class VetoresMatrizes:
             if(self.token['lexema'] == '=' ):
                 self.match( "REL", '=', proximoNT="init_matrix" )
                 self.init_matrix()
+                self.semanticoHelper['variavel']['categoria'] = self.semanticoHelper['vector_matrix']['tipo']
                 self.declaration_var3()
             elif primeiro("declaration_var3", self.token):
+                self.semanticoHelper['variavel']['categoria'] = self.semanticoHelper['vector_matrix']['tipo']
                 self.declaration_var3()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: lexema '[' ou '="
