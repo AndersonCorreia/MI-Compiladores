@@ -39,6 +39,7 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         
         try:
             self.semanticoHelper['escopo'] = "global"
+            self.semanticoHelper['expressaoEsperandoValor'] = False
             self.declaracao_reg()
             self.declaration_const()
             self.declaration_var()

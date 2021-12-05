@@ -38,7 +38,8 @@ class SymbolTable:
             if( len(functionsSameName) == 0):
                 erroMsg = 'Não existe nenhuma função com o nome \'' + functionNameToken['lexema'] + '\''
             else:
-                erroMsg = 'Não existe uma função \'' + functionNameToken['lexema'] + '\' com esta lista de parametros.\n As funções existentes:\n'
+                erroMsg = 'Não existe uma função \'' + functionNameToken['lexema'] + '\' com esta lista de parametros('
+                erroMsg = erroMsg + ','.join(map(lambda x: x, functionParameters)) + ').\n As funções existentes:\n'
                 for func in functionsSameName:
                     erroMsg += '\t' + func['nome'] + '(' + ','.join(map(lambda x: x, func['parametros'])) + ')\n'
             erro = {'token': functionNameToken, 'erro': erroMsg }

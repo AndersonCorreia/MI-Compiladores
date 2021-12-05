@@ -45,6 +45,7 @@ class Valor:
         try:
             if primeiro("expressao", self.token):
                 self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
+                self.semanticoHelper['expressaoEsperandoValor']  = True
                 self.expressao()
             elif self.token['tipo'] == 'CAD':
                 self.match("CAD")

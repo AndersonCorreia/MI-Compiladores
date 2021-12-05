@@ -53,7 +53,7 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
         booleano local_d      = verdadeiro; 
     }
     
-    enquanto ( a == b ) {
+    enquanto ( local_c ++ == 8 ) {
         escreva( local_c, 45, local_a );
     }
 
@@ -127,17 +127,18 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
 }
 funcao vazio algoritmo (inteiro argc, cadeia argv[]) {
     variaveis {
-        inteiro local = 1, a;
-        char    teste;    
+        inteiro local = 1, a, nro;
+        char    teste_local;    
     }
     a = 2;
     a = Pessoa.idade;
     a[2] = "Cadeia_de_cadeia";
     b[2][2] = "Cadeia_de_cadeia";
+    nro = 6;
     funcao_teste_1( 10.5 );
     funcao_teste_2();
 
-    se( (a[1] >= 2) || ((2 + 3 * 4) / 2 <= a[1][0]) && Pessoa.hasCar != falso ) {
+    se( (a[1] >= 2) || ((teste_local + 3 * 4) / 2 <= a[1][0]) && Pessoa.hasCar != falso ) {
            
     }
     senao {

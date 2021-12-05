@@ -39,6 +39,9 @@ linha 35: [ erro semântico: relacionado ao token  "erroMatriz" ],
 linha 46: [ erro semântico: relacionado ao token  "c" ],
  A variável/constante c já foi declarada.
 
+linha 56: [ erro semântico: relacionado ao token  "local_c" ],
+ Numa expressão só é permitido identificadores do tipo inteiro, real ou booleano
+
 linha 78: [ erro semântico: relacionado ao token  "c" ],
  A variável/constante c já foi declarada.
 
@@ -57,22 +60,22 @@ linha 102: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
 linha 130: [ erro semântico: relacionado ao token  "a" ],
  A variável/constante a já foi declarada.
 
-linha 131: [ erro semântico: relacionado ao token  "teste" ],
- A variável/constante teste já foi declarada.
-
-linha 137: [ erro semântico: relacionado ao token  "funcao_teste_1" ],
- Não existe uma função 'funcao_teste_1' com esta lista de parametros.
+linha 138: [ erro semântico: relacionado ao token  "funcao_teste_1" ],
+ Não existe uma função 'funcao_teste_1' com esta lista de parametros(real).
  As funções existentes:
 	funcao_teste_1(inteiro)
 
 
-linha 138: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
- Não existe uma função 'funcao_teste_2' com esta lista de parametros.
+linha 139: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
+ Não existe uma função 'funcao_teste_2' com esta lista de parametros().
  As funções existentes:
 	funcao_teste_2(Pessoa,inteiro,real,cadeia,inteiro)
 	funcao_teste_2(inteiro,real,cadeia,inteiro)
 
 
-linha 152: [ erro semântico: relacionado ao token  "+" ],
+linha 141: [ erro semântico: relacionado ao token  "teste_local" ],
+ Numa expressão só é permitido identificadores do tipo inteiro, real ou booleano
+
+linha 153: [ erro semântico: relacionado ao token  "+" ],
  Um operador aritmetico só pode ser usado com operandos inteiros ou reais
 

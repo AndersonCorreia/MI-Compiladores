@@ -72,11 +72,13 @@ class Expressoes:
     def operator_soma(self):
         try:
             if ( self.token['lexema'] == '+'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
                     self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
                     self.registrarErrosSemanticos()
                 self.match('ART', '+')
             elif ( self.token['lexema'] == '-'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
                     self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
                     self.registrarErrosSemanticos()
@@ -96,11 +98,13 @@ class Expressoes:
     def operator_multi(self):
         try:
             if ( self.token['lexema'] == '*'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
                     self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
                     self.registrarErrosSemanticos()
                 self.match('ART', '*')
             elif ( self.token['lexema'] == '/'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
                     self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
                     self.registrarErrosSemanticos()
@@ -120,8 +124,10 @@ class Expressoes:
     def operator_auto0(self):
         try:
             if ( self.token['lexema'] == '++'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 self.match('ART', '++')
             elif ( self.token['lexema'] == '--'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 self.match('ART', '--')
             else:
                 erro = "Tokens ou Não-Terminais Esperados: ++ ou --"
@@ -138,11 +144,13 @@ class Expressoes:
     def operator_auto(self):
         try:
             if ( self.token['lexema'] == '++'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
                     self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
                     self.registrarErrosSemanticos()
                 self.match('ART', '++')
             elif ( self.token['lexema'] == '--'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 if ( self.semanticoHelper['expressaoParcialType'] != 'aritmetica' ):
                     self.tabelaDeSimbolos.addErro( self.token, "Um operador aritmetico só pode ser usado com operandos inteiros ou reais")
                     self.registrarErrosSemanticos()
@@ -171,14 +179,34 @@ class Expressoes:
             elif ( primeiro("operator_auto0", self.token) ):
                 self.operator_auto0()
                 self.read_value() # falta verificar o tipo do identificador
-                # se booleano 
-                # self.semanticoHelper['expressaoParcialType'] = 'logico_relacional'
-                # self.semanticoHelper['expressaoTypeReturn'] = 'booleano' 
+                key = self.semanticoHelper['tokenIDE']['lexema']
+                if key in self.tabelaDeSimbolos.varConstTable:
+                    tipo = self.tabelaDeSimbolos.varConstTable[key]['tipo']
+                    if tipo == 'real':
+                        if ( self.semanticoHelper['expressaoTypeReturn']  == 'inteiro'):
+                            self.semanticoHelper['expressaoTypeReturn'] = 'real' 
+                    elif tipo == 'booleano':
+                        self.semanticoHelper['expressaoParcialType'] = 'logico_relacional'
+                        if ( self.semanticoHelper['expressaoTypeReturn']  == 'inteiro' or self.semanticoHelper['expressaoTypeReturn']  == 'real'):
+                            self.semanticoHelper['expressaoTypeReturn'] = 'logico_relacional'
+                    elif self.semanticoHelper['expressaoEsperandoValor'] == False:
+                        self.tabelaDeSimbolos.addErro( self.semanticoHelper['tokenIDE'], "Numa expressão só é permitido identificadores do tipo inteiro, real ou booleano")
+                        self.registrarErrosSemanticos()
             elif ( primeiro("read_value", self.token) ):
                 self.read_value() # falta verificar o tipo do identificador
-                # se booleano 
-                # self.semanticoHelper['expressaoParcialType'] = 'logico_relacional'
-                # self.semanticoHelper['expressaoTypeReturn'] = 'booleano' 
+                key = self.semanticoHelper['tokenIDE']['lexema']
+                if key in self.tabelaDeSimbolos.varConstTable:
+                    tipo = self.tabelaDeSimbolos.varConstTable[key]['tipo']
+                    if tipo == 'real':
+                        if ( self.semanticoHelper['expressaoTypeReturn']  == 'inteiro'):
+                            self.semanticoHelper['expressaoTypeReturn'] = 'real' 
+                    elif tipo == 'booleano':
+                        self.semanticoHelper['expressaoParcialType'] = 'logico_relacional'
+                        if ( self.semanticoHelper['expressaoTypeReturn']  == 'inteiro' or self.semanticoHelper['expressaoTypeReturn']  == 'real'):
+                            self.semanticoHelper['expressaoTypeReturn'] = 'logico_relacional'
+                    elif self.semanticoHelper['expressaoEsperandoValor'] == False and tipo != 'inteiro':
+                        self.tabelaDeSimbolos.addErro( self.semanticoHelper['tokenIDE'], "Numa expressão só é permitido identificadores do tipo inteiro, real ou booleano")
+                        self.registrarErrosSemanticos() 
                 self.operator_auto()
             else:
                 erro = "Tokens ou Não-Terminais Esperados: NRO, operator_auto0 ou read_value"
@@ -334,6 +362,7 @@ class Expressoes:
     
     def operator_rel(self):
         try:
+            self.semanticoHelper['expressaoEsperandoValor'] = False
             if ( self.token['lexema'] == '=='):
                 self.match('REL', '==')
             elif ( self.token['lexema'] == '>='):
@@ -402,8 +431,10 @@ class Expressoes:
     def operator_log(self):
         try:
             if ( self.token['lexema'] == '&&'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 self.match('LOG', '&&')
             elif ( self.token['lexema'] == '||'):
+                self.semanticoHelper['expressaoEsperandoValor'] = False
                 self.match('LOG', '||')
             else:
                 erro = "Tokens ou Não-Terminais Esperados: && ou ||"
