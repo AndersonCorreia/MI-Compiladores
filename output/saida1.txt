@@ -61,7 +61,7 @@ linha 130: [ erro semântico: relacionado ao token  "a" ],
  A variável/constante a já foi declarada.
 
 linha 138: [ erro semântico: relacionado ao token  "funcao_teste_1" ],
- Não existe uma função 'funcao_teste_1' com esta lista de parametros(real).
+ Não existe uma função 'funcao_teste_1' com esta lista de parametros(char).
  As funções existentes:
 	funcao_teste_1(inteiro)
 

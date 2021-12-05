@@ -178,7 +178,7 @@ class Expressoes:
                     # se a expressão como um todo ainda é aritimetica(sem comparações), agora ira retornar um real
             elif ( primeiro("operator_auto0", self.token) ):
                 self.operator_auto0()
-                self.read_value() # falta verificar o tipo do identificador
+                self.read_value()
                 key = self.semanticoHelper['tokenIDE']['lexema']
                 if key in self.tabelaDeSimbolos.varConstTable:
                     tipo = self.tabelaDeSimbolos.varConstTable[key]['tipo']
@@ -193,7 +193,7 @@ class Expressoes:
                         self.tabelaDeSimbolos.addErro( self.semanticoHelper['tokenIDE'], "Numa expressão só é permitido identificadores do tipo inteiro, real ou booleano")
                         self.registrarErrosSemanticos()
             elif ( primeiro("read_value", self.token) ):
-                self.read_value() # falta verificar o tipo do identificador
+                self.read_value()
                 key = self.semanticoHelper['tokenIDE']['lexema']
                 if key in self.tabelaDeSimbolos.varConstTable:
                     tipo = self.tabelaDeSimbolos.varConstTable[key]['tipo']

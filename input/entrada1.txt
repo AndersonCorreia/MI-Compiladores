@@ -135,7 +135,7 @@ funcao vazio algoritmo (inteiro argc, cadeia argv[]) {
     a[2] = "Cadeia_de_cadeia";
     b[2][2] = "Cadeia_de_cadeia";
     nro = 6;
-    funcao_teste_1( 10.5 );
+    funcao_teste_1( teste_local );
     funcao_teste_2();
 
     se( (a[1] >= 2) || ((teste_local + 3 * 4) / 2 <= a[1][0]) && Pessoa.hasCar != falso ) {

@@ -329,7 +329,13 @@ class Funcao:
                 self.semanticoHelper['functionCallParameters'].append(tipo)
                 self.varList2
             elif( primeiro("read_value", self.token) ):
-                self.read_value()  # falta verificar o tipo do identificador
+                self.read_value()
+                key = self.semanticoHelper['tokenIDE']['lexema']
+                if key in self.tabelaDeSimbolos.varConstTable:
+                    tipo = self.tabelaDeSimbolos.varConstTable[key]['tipo']
+                    self.semanticoHelper['functionCallParameters'].append(tipo)
+                else:
+                    self.semanticoHelper['functionCallParameters'].append('vazio')
                 self.varList2
             else:
                 return # declaração vazia
@@ -351,7 +357,13 @@ class Funcao:
                 self.semanticoHelper['functionCallParameters'].append(tipo)
                 self.varList2
             elif( primeiro("read_value", self.token) ):
-                self.read_value()  # falta verificar o tipo do identificador
+                self.read_value()
+                key = self.semanticoHelper['tokenIDE']['lexema']
+                if key in self.tabelaDeSimbolos.varConstTable:
+                    tipo = self.tabelaDeSimbolos.varConstTable[key]['tipo']
+                    self.semanticoHelper['functionCallParameters'].append(tipo)
+                else:
+                    self.semanticoHelper['functionCallParameters'].append('vazio')
                 self.varList2
             else:
                 erro = "Tokens ou Não-Terminais Esperados: value ou read_value"
