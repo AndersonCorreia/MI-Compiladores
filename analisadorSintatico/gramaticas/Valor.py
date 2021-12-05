@@ -47,9 +47,12 @@ class Valor:
                 self.semanticoHelper['expressaoTypeReturn']  = '' #importante: reseta o tipo de retorno da expressao
                 self.semanticoHelper['expressaoEsperandoValor']  = True
                 self.expressao()
+                self.semanticoHelper['atrValor'] = self.semanticoHelper['expressaoTypeReturn']
             elif self.token['tipo'] == 'CAD':
+                self.semanticoHelper['atrValor'] = 'cadeia'
                 self.match("CAD")
             elif self.token['tipo'] == 'CAR':
+                self.semanticoHelper['atrValor'] = 'char'
                 self.match("CAR")
             else:
                 erro = "Tokens e Não-Terminais Esperados: expressao, CAD, CAR"

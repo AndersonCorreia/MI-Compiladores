@@ -145,12 +145,19 @@ class Funcao:
 
     def function_parameters1(self):
         try:
+            self.semanticoHelper['variavel'] = {}
+            self.semanticoHelper['variavel']['init'] = False
+            self.semanticoHelper['variavel']['escopo'] = 'local'
             if primeiro("type", self.token):
                 self.salvarTokenTemp = True
                 self.type()
                 self.semanticoHelper['functionParameters'].append(self.tokenTemp['lexema'])
-                self.salvarTokenTemp = False
+                self.semanticoHelper['variavel']['tipo'] = self.tokenTemp['lexema']
                 self.match("IDE", proximoNT="function_parameters2")
+                self.salvarTokenTemp = False
+                self.semanticoHelper['variavel']['nomeToken'] = self.tokenTemp
+                self.semanticoHelper['tokenIDE'] = self.tokenTemp
+                self.semanticoHelper['variavel']['categoria'] = 'variavel'
                 self.function_parameters2()
             elif self.token['lexema'] == ')':
                 self.match("DEL", ")")
@@ -170,6 +177,7 @@ class Funcao:
             if(self.token['lexema'] == '[' ):
                 self.match( "DEL", '[')
                 self.match( "DEL", ']', proximoNT="function_parameters3")
+                self.semanticoHelper['variavel']['categoria'] = 'array'
                 self.function_parameters3()
             elif primeiro("function_parameters4", self.token):
                 self.function_parameters4()
@@ -189,6 +197,7 @@ class Funcao:
             if(self.token['lexema'] == '[' ):
                 self.match( "DEL", '[')
                 self.match( "DEL", ']', proximoNT="function_parameters4")
+                self.semanticoHelper['variavel']['categoria'] = 'matriz'
                 self.function_parameters4()
             elif primeiro("function_parameters4", self.token):
                 self.function_parameters4()
@@ -206,6 +215,8 @@ class Funcao:
     def function_parameters4(self):
         try:
             if(self.token['lexema'] == ',' ):
+                if not self.tabelaDeSimbolos.addVariables(self.semanticoHelper['variavel']['nomeToken'], self.semanticoHelper['variavel']):
+                    self.registrarErrosSemanticos()
                 self.match("DEL", ",", proximoNT="function_parameters1")
                 self.function_parameters1()
             elif self.token['lexema'] == ')':
@@ -306,7 +317,13 @@ class Funcao:
                 self.match("DEL", ")", proximoToken={"tipo": "DEL", "lexema": ";"})
                 self.match("DEL", ";")
                 if not self.tabelaDeSimbolos.callFunction(self.semanticoHelper['functionCallNameToken'], self.semanticoHelper['functionCallParameters']):
+                    self.semanticoHelper['funcaoChamada'] = None
                     self.registrarErrosSemanticos()
+                else:
+                    funcao = self.tabelaDeSimbolos.functionExists(
+                        self.semanticoHelper['functionCallNameToken'], self.semanticoHelper['functionCallParameters'], True
+                    )
+                    self.semanticoHelper['funcaoChamada'] = funcao
             else:
                 erro = 'Tokens e Não-Terminais Esperados: IDE'
                 self.registrarErro(erro)

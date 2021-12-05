@@ -126,15 +126,21 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
     retorno;
 }
 funcao vazio algoritmo (inteiro argc, cadeia argv[]) {
+    constantes {
+        inteiro const = 1;  
+    }
     variaveis {
         inteiro local = 1, a, nro;
-        char    teste_local;    
+        char teste_local; 
     }
     a = 2;
+    argc = "teste";
+    const = 50;
     a = Pessoa.idade;
     a[2] = "Cadeia_de_cadeia";
     b[2][2] = "Cadeia_de_cadeia";
-    nro = 6;
+    nro = funcao_teste_1(20);
+    teste_local = funcao_teste_1(20);
     funcao_teste_1( teste_local );
     funcao_teste_2();
 

@@ -36,17 +36,26 @@ linha 34: [ erro semântico: relacionado ao token  "b" ],
 linha 35: [ erro semântico: relacionado ao token  "erroMatriz" ],
  Acesso a vetor ou matriz deve ser inteiro
 
+linha 43: [ erro semântico: relacionado ao token  "a" ],
+ A variável/constante a já foi declarada.
+
 linha 46: [ erro semântico: relacionado ao token  "c" ],
  A variável/constante c já foi declarada.
 
 linha 56: [ erro semântico: relacionado ao token  "local_c" ],
  Numa expressão só é permitido identificadores do tipo inteiro, real ou booleano
 
+linha 75: [ erro semântico: relacionado ao token  "a" ],
+ A variável/constante a já foi declarada.
+
 linha 78: [ erro semântico: relacionado ao token  "c" ],
  A variável/constante c já foi declarada.
 
 linha 83: [ erro semântico: relacionado ao token  "c" ],
  A variável/constante c já foi declarada.
+
+linha 102: [ erro semântico: relacionado ao token  "a" ],
+ A variável/constante a já foi declarada.
 
 linha 105: [ erro semântico: relacionado ao token  "c" ],
  A variável/constante c já foi declarada.
@@ -57,25 +66,76 @@ linha 110: [ erro semântico: relacionado ao token  "c" ],
 linha 102: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
  A função funcao_teste_2 já foi declarada com estes parâmetros.
 
-linha 130: [ erro semântico: relacionado ao token  "a" ],
+linha 133: [ erro semântico: relacionado ao token  "a" ],
  A variável/constante a já foi declarada.
 
-linha 138: [ erro semântico: relacionado ao token  "funcao_teste_1" ],
+linha 136: [ erro semântico: relacionado ao token  "a" ],
+ Não é possivel fazer uma atribuição a uma constante
+
+linha 137: [ erro semântico: relacionado ao token  "argc" ],
+ Tipo de atribuição incompatível, esperado: inteiro, encontrado: cadeia
+
+linha 138: [ erro semântico: relacionado ao token  "const" ],
+ Não é possivel fazer uma atribuição a uma constante
+
+linha 139: [ erro semântico: relacionado ao token  "a" ],
+ Não é possivel fazer uma atribuição a uma constante
+
+linha 140: [ erro semântico: relacionado ao token  "a" ],
+ Tipo de atribuição incompatível, esperado: inteiro, encontrado: cadeia
+
+linha 140: [ erro semântico: relacionado ao token  "a" ],
+ Tipo de atribuição incompatível, esperado: inteiro, encontrado: cadeia
+
+linha 141: [ erro semântico: relacionado ao token  "b" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: cadeia
+
+linha 141: [ erro semântico: relacionado ao token  "b" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: cadeia
+
+linha 143: [ erro semântico: relacionado ao token  "teste_local" ],
+ Tipo de atribuição incompatível, esperado: char, encontrado: inteiro
+
+linha 144: [ erro semântico: relacionado ao token  "funcao_teste_1" ],
  Não existe uma função 'funcao_teste_1' com esta lista de parametros(char).
  As funções existentes:
 	funcao_teste_1(inteiro)
 
 
-linha 139: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
+linha 145: [ erro semântico: relacionado ao token  "funcao_teste_2" ],
  Não existe uma função 'funcao_teste_2' com esta lista de parametros().
  As funções existentes:
 	funcao_teste_2(Pessoa,inteiro,real,cadeia,inteiro)
 	funcao_teste_2(inteiro,real,cadeia,inteiro)
 
 
-linha 141: [ erro semântico: relacionado ao token  "teste_local" ],
+linha 147: [ erro semântico: relacionado ao token  "teste_local" ],
  Numa expressão só é permitido identificadores do tipo inteiro, real ou booleano
 
-linha 153: [ erro semântico: relacionado ao token  "+" ],
+linha 152: [ erro semântico: relacionado ao token  "b" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: inteiro
+
+linha 152: [ erro semântico: relacionado ao token  "b" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: inteiro
+
+linha 153: [ erro semântico: relacionado ao token  "b" ],
+ Não é possivel fazer uma atribuição a uma constante
+
+linha 153: [ erro semântico: relacionado ao token  "idade" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: inteiro
+
+linha 154: [ erro semântico: relacionado ao token  "b" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: char
+
+linha 154: [ erro semântico: relacionado ao token  "b" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: char
+
+linha 155: [ erro semântico: relacionado ao token  "b" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: cadeia
+
+linha 155: [ erro semântico: relacionado ao token  "b" ],
+ Tipo de atribuição incompatível, esperado: real, encontrado: cadeia
+
+linha 159: [ erro semântico: relacionado ao token  "+" ],
  Um operador aritmetico só pode ser usado com operandos inteiros ou reais
 

@@ -200,10 +200,21 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
         try:
             if( primeiro("read_value", self.token)):
                 self.read_value()
-                
+                key = self.semanticoHelper['tokenIDE']['lexema']
+                if key in self.tabelaDeSimbolos.varConstTable:
+                    categoria = self.tabelaDeSimbolos.varConstTable[key]['categoria']
+                    if categoria == 'constante':
+                        self.tabelaDeSimbolos.addErro( self.semanticoHelper['tokenIDE'], "Não é possivel fazer uma atribuição a uma constante")
+                        self.registrarErrosSemanticos()
                 self.match("REL", "=", proximoNT="atr_value")
                 self.atr_value()
-                self.atr_1()
+                if 'atrValor' in self.semanticoHelper and self.semanticoHelper['atrValor'] != None and key in self.tabelaDeSimbolos.varConstTable:
+                    if self.tabelaDeSimbolos.varConstTable[key]['tipo'] != self.semanticoHelper['atrValor']:
+                        self.tabelaDeSimbolos.addErro( 
+                            self.semanticoHelper['tokenIDE'], "Tipo de atribuição incompatível, esperado: " 
+                            + self.tabelaDeSimbolos.varConstTable[key]['tipo'] + ", encontrado: " + self.semanticoHelper['atrValor']
+                        )
+                        self.registrarErrosSemanticos()
             else:
                 erro = 'Tokens e Não-Terminais Esperados: read_value'
                 self.registrarErro(erro)
@@ -217,10 +228,15 @@ class AnalisadorSintatico (Registro, Constantes, Variaveis, Expressoes, SeSenao,
             
     def atr_value(self):
         try:
-            if( primeiro("value_with_expressao", self.token)):
-                self.value_with_expressao()
-            elif( primeiro("functionCall", self.token)):
+            if( primeiro("functionCall", self.token)  and self.tokens[1]['lexema'] == '(' ):
                 self.functionCall()
+                if self.semanticoHelper['funcaoChamada'] != None:
+                    self.semanticoHelper['atrValor'] = self.semanticoHelper['funcaoChamada']['retorno']
+                else:
+                    self.semanticoHelper['atrValor'] = None
+            elif( primeiro("value_with_expressao", self.token)):
+                self.value_with_expressao()
+                self.atr_1()
             else:
                 erro = 'Tokens e Não-Terminais Esperados: value_with_expressao ou functionCall'
                 self.registrarErro(erro)

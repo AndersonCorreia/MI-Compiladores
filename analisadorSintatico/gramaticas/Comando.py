@@ -18,11 +18,11 @@ class Comando:
             elif( primeiro("read_cmd", self.token) ):
                 self.read_cmd()
                 self.com_body()
+            elif( primeiro("functionCall", self.token) and self.tokens[1]['lexema'] == '(' ):
+                self.functionCall()
+                self.com_body()
             elif( primeiro("var_atr", self.token) ):
                 self.var_atr()
-                self.com_body()
-            elif( primeiro("functionCall", self.token) ):
-                self.functionCall()
                 self.com_body()
             elif( primeiro("com_retornar", self.token) ):
                 self.com_retornar()
